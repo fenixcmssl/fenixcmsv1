@@ -41,3 +41,8 @@
 - Implementado formulario de creación de productos con diseño responsivo.
 - Desarrollado Server Action seguro en actions.ts para procesar inserciones de productos inyectando automáticamente el tenantId y aislando los datos.
 - Refresco automático de la vista implementado con revalidatePath.
+## Fase 2.0.7 (Resolución) Finalizada con éxito - 2026-11-07 20:15:43
+- Solucionado el problema de caché estática de Next.js/Turbopack en Windows que mostraba imágenes rotas (404) tras la subida.
+- Eliminado el atributo encType manual para delegar la transferencia nativa multiparte a React Server Actions.
+- Implementado un Enrutador Dinámico (API Route) en src/app/api/images/[tenantId]/[filename]/route.ts con cabeceras anti-caché.
+- Actualizada la tabla del Backoffice para consumir las imágenes desde la API Route en lugar de la carpeta public, garantizando el renderizado inmediato tras la subida.
