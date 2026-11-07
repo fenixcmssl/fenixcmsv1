@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id               String         @id @default(uuid())
+  name             String
+  slug             String         @unique
+  subdomain        String?        @unique
+  customDomain     String?        @unique
+  status           String         @default("active")
+  planTier         String         @default("starter")
+  activeModules    String[]
+  defaultLocale    String         @default("es")
+  supportedLocales String[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  domains          TenantDomain[]
+
+  @@map("tenants")
+}
+
+model TenantDomain {
+  id         String   @id @default(uuid())
+  domain     String   @unique
+  isPrimary  Boolean  @default(false)
+  isVerified Boolean  @default(false)
+  sslActive  Boolean  @default(false)
+  tenantId   String
+  tenant     Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([tenantId])
+  @@map("tenant_domains")
+}
