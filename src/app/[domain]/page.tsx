@@ -1,35 +1,60 @@
-import { getAdminClient, getTenantClient } from "../../lib/prisma";
+import { getTenantClient, getAdminClient } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
 export default async function TenantPage({ params }: { params: Promise<{ domain: string }> }) {
-  const { domain } = await params;
+  const resolvedParams = await params;
+  const domain = decodeURIComponent(resolvedParams.domain);
   
-  const adminClient = getAdminClient();
-  const tenantDomainInfo = await adminClient.tenantDomain.findUnique({
+  // 1. Resolver el Inquilino (Modo Admin / Bypass)
+  const adminPrisma = getAdminClient();
+  const tenantDomain = await adminPrisma.tenantDomain.findUnique({
     where: { domain },
-    include: { tenant: true },
+    include: { tenant: true }
   });
 
-  if (!tenantDomainInfo) {
-    return notFound();
-  }
+  if (!tenantDomain) return notFound();
 
-  const tenantClient = getTenantClient(tenantDomainInfo.tenant.id);
-  const tenantData = await tenantClient.tenant.findUnique({
-    where: { id: tenantDomainInfo.tenant.id },
+  const tenant = tenantDomain.tenant;
+  
+  // 2. Extraer Catálogo protegido (Modo Tenant / RLS Activo)
+  const tenantPrisma = getTenantClient(tenant.id);
+  const products = await tenantPrisma.product.findMany({
+    where: { isActive: true },
+    include: { category: true }
   });
 
   return (
-    <main style={{ padding: "3rem", fontFamily: "system-ui, sans-serif", maxWidth: "800px", margin: "0 auto" }}>
-      <div style={{ padding: "1rem", border: "1px solid #e5e7eb", borderRadius: "8px", background: "#f9fafb" }}>
-        <h1 style={{ color: "#111827" }}>Bienvenido a {tenantDomainInfo.tenant.name}</h1>
-        <p style={{ color: "#4b5563" }}><strong>Dominio resuelto:</strong> {domain}</p>
-        <p style={{ color: "#4b5563" }}><strong>Estado del Tenant:</strong> <span style={{ color: "#059669" }}>{tenantData?.status}</span></p>
+    <main className="min-h-screen p-8 bg-gray-50 text-gray-900 font-sans">
+      <div className="max-w-5xl mx-auto">
+        <header className="mb-10 border-b pb-6">
+          <h1 className="text-4xl font-extrabold tracking-tight">{tenant.name}</h1>
+          <p className="text-gray-500 mt-2">Visión de cliente (RLS Activo) - {domain}</p>
+        </header>
+        
+        <section>
+          <h2 className="text-2xl font-bold mb-6">Nuestro Catálogo</h2>
+          {products.length === 0 ? (
+            <p className="text-gray-600 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+              No hay productos disponibles en este momento.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {products.map((product) => (
+                <article key={product.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                  <div className="text-xs font-semibold text-blue-600 mb-2 uppercase tracking-wide">
+                    {product.category?.name || "Sin categoría"}
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">{product.name}</h3>
+                  <p className="text-gray-500 text-sm mb-4">SKU: {product.sku}</p>
+                  <div className="text-2xl font-black text-gray-900">
+                    ${product.price.toString()}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
       </div>
-      <p style={{ marginTop: "2rem", fontSize: "0.875rem", color: "#6b7280" }}>
-        Identificador seguro de BBDD: {tenantData?.id} <br/>
-        <em>(Esta consulta se ejecuto respetando Row-Level Security en PostgreSQL)</em>
-      </p>
     </main>
   );
 }

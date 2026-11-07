@@ -31,3 +31,8 @@
 - Permisos globales del esquema public y políticas RLS restauradas correctamente tras el reset de la base de datos.
 - Datos iniciales (Seed) de prueba inyectados de forma relacional (Tenants, Dominios, Categorías y Productos).
 - Auditoría del catálogo E-Commerce superada (2/2): Contención absoluta de datos de productos entre inquilinos verificada mediante cliente transaccional extendido.
+## Fase 2.0.5 Finalizada con éxito - 2026-11-07 17:17:56
+- Vista pública del catálogo implementada en src/app/[domain]/page.tsx consumiendo getTenantClient y RLS activo.
+- Renderizado validado vía HTTP 200 en http://localhost:3000 con datos aislados por tienda.
+- Resuelto error de codificación de caracteres especiales en PowerShell y PostgreSQL forzando UTF-8 universal (PGCLIENTENCODING).
+- Datos de prueba actualizados con tipografía acentuada correcta.
