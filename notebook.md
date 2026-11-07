@@ -46,3 +46,8 @@
 - Eliminado el atributo encType manual para delegar la transferencia nativa multiparte a React Server Actions.
 - Implementado un Enrutador Dinámico (API Route) en src/app/api/images/[tenantId]/[filename]/route.ts con cabeceras anti-caché.
 - Actualizada la tabla del Backoffice para consumir las imágenes desde la API Route en lugar de la carpeta public, garantizando el renderizado inmediato tras la subida.
+## Fase 2.0.8 Finalizada con éxito - 2026-11-07 20:26:48
+- Actualizada la vista pública del catálogo (Storefront) en src/app/[domain]/page.tsx.
+- Implementado diseño responsivo en cuadrícula (CSS Grid) para las tarjetas de productos.
+- Integrado el consumo de imágenes estáticas a través de la API Route dinámica (/api/images/) para sortear el caché de Turbopack.
+- Configurada lógica condicional para mostrar un placeholder elegante ("Sin imagen") en productos sin archivo asociado.
