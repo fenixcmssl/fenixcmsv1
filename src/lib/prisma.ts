@@ -12,7 +12,7 @@ export const getTenantClient = (tenantId: string) => {
           if (!model) return query(args);
           const modelKey = model.charAt(0).toLowerCase() + model.slice(1);
           return prisma.$transaction(async (tx) => {
-            await tx.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, TRUE)`;
+            await tx.$executeRawUnsafe(`SET LOCAL app.current_tenant_id = '${tenantId}'`);
             return (tx as any)[modelKey][operation](args);
           });
         },
@@ -29,7 +29,7 @@ export const getAdminClient = () => {
           if (!model) return query(args);
           const modelKey = model.charAt(0).toLowerCase() + model.slice(1);
           return prisma.$transaction(async (tx) => {
-            await tx.$executeRaw`SELECT set_config('app.bypass_rls', 'on', TRUE)`;
+            await tx.$executeRawUnsafe(`SET LOCAL app.bypass_rls = 'on'`);
             return (tx as any)[modelKey][operation](args);
           });
         },
