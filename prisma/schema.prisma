@@ -8,19 +8,23 @@ datasource db {
 }
 
 model Tenant {
-  id               String         @id @default(uuid())
+  id               String           @id @default(uuid())
   name             String
-  slug             String         @unique
-  subdomain        String?        @unique
-  customDomain     String?        @unique
-  status           String         @default("active")
-  planTier         String         @default("starter")
+  slug             String           @unique
+  subdomain        String?          @unique
+  customDomain     String?          @unique
+  status           String           @default("active")
+  planTier         String           @default("starter")
   activeModules    String[]
-  defaultLocale    String         @default("es")
+  defaultLocale    String           @default("es")
   supportedLocales String[]
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  
   domains          TenantDomain[]
+  categories       Category[]
+  products         Product[]
+  variants         ProductVariant[]
 
   @@map("tenants")
 }
@@ -38,4 +42,71 @@ model TenantDomain {
 
   @@index([tenantId])
   @@map("tenant_domains")
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String
+  slug        String
+  description String?
+  parentId    String?
+  tenantId    String
+  
+  tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[] @relation("CategoryHierarchy")
+  products    Product[]
+  
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([tenantId, slug])
+  @@index([tenantId])
+  @@map("categories")
+}
+
+model Product {
+  id          String           @id @default(uuid())
+  name        String
+  slug        String
+  description String?
+  price       Decimal          @db.Decimal(10, 2)
+  sku         String?
+  isActive    Boolean          @default(true)
+  categoryId  String?
+  tenantId    String
+  
+  tenant      Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  category    Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  variants    ProductVariant[]
+  
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@unique([tenantId, slug])
+  @@unique([tenantId, sku])
+  @@index([tenantId])
+  @@index([categoryId])
+  @@map("products")
+}
+
+model ProductVariant {
+  id          String   @id @default(uuid())
+  name        String
+  sku         String?
+  price       Decimal? @db.Decimal(10, 2)
+  stock       Int      @default(0)
+  productId   String
+  tenantId    String
+  
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([tenantId, sku])
+  @@index([tenantId])
+  @@index([productId])
+  @@map("product_variants")
 }

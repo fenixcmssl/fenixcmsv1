@@ -22,3 +22,8 @@
 - Middleware transaccional de Prisma refactorizado para utilizar SET LOCAL en inyecciones de sesión seguras.
 - Auditoría automatizada de seguridad superada (4/4): contención absoluta de acceso anónimo, prevención de ataques de lectura cruzada confirmada, acceso legítimo y modo bypass validados.
 - Módulo Core de Tenancy y Seguridad cerrado.
+## Fases 2.0.0 a 2.0.3 Finalizadas con éxito - 2026-11-07 16:09:12
+- Modelado relacional del catálogo E-Commerce agregado a Prisma (Categorías, Productos, Variantes).
+- Restricciones de unicidad compuestas aplicadas por inquilino (@@unique([tenantId, slug])).
+- Desincronización de base de datos resuelta mediante reset forzado y migración estructural como superusuario.
+- Tablas del catálogo protegidas rigurosamente con políticas Row-Level Security (RLS) vinculadas al tenantId en el rol fenix_app.
