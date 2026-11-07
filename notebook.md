@@ -27,3 +27,7 @@
 - Restricciones de unicidad compuestas aplicadas por inquilino (@@unique([tenantId, slug])).
 - Desincronización de base de datos resuelta mediante reset forzado y migración estructural como superusuario.
 - Tablas del catálogo protegidas rigurosamente con políticas Row-Level Security (RLS) vinculadas al tenantId en el rol fenix_app.
+## Fase 2.0.4 Finalizada con éxito - 2026-11-07 16:57:43
+- Permisos globales del esquema public y políticas RLS restauradas correctamente tras el reset de la base de datos.
+- Datos iniciales (Seed) de prueba inyectados de forma relacional (Tenants, Dominios, Categorías y Productos).
+- Auditoría del catálogo E-Commerce superada (2/2): Contención absoluta de datos de productos entre inquilinos verificada mediante cliente transaccional extendido.
