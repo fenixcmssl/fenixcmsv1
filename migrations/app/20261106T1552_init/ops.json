@@ -1,0 +1,409 @@
+[
+  {
+    "id": "schema.public",
+    "label": "Create schema \"public\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres"
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "Create schema \"public\"",
+        "sql": "CREATE SCHEMA IF NOT EXISTS \"public\"",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "table.tenant_domains",
+    "label": "Create table \"tenant_domains\"",
+    "summary": "Creates table \"tenant_domains\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "tenant_domains"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"tenant_domains\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"tenant_domains\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"tenant_domains\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"tenant_domains\"",
+        "sql": "CREATE TABLE \"public\".\"tenant_domains\" (\n  \"createdAt\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"domain\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"isPrimary\" bool DEFAULT false NOT NULL,\n  \"isVerified\" bool DEFAULT false NOT NULL,\n  \"sslActive\" bool DEFAULT false NOT NULL,\n  \"tenantId\" text NOT NULL,\n  \"updatedAt\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"tenant_domains\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"tenant_domains\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"tenant_domains\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.tenants",
+    "label": "Create table \"tenants\"",
+    "summary": "Creates table \"tenants\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "tenants"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"tenants\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"tenants\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"tenants\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"tenants\"",
+        "sql": "CREATE TABLE \"public\".\"tenants\" (\n  \"activeModules\" text[] NOT NULL,\n  \"activeThemeId\" text DEFAULT 'default' NOT NULL,\n  \"createdAt\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"customDomain\" text,\n  \"defaultLocale\" text DEFAULT 'es' NOT NULL,\n  \"id\" text NOT NULL,\n  \"name\" text NOT NULL,\n  \"planTier\" text DEFAULT 'starter' NOT NULL,\n  \"slug\" text NOT NULL,\n  \"status\" text DEFAULT 'pending_setup' NOT NULL,\n  \"subdomain\" text NOT NULL,\n  \"supportedLocales\" text[] DEFAULT ARRAY['es']::text[] NOT NULL,\n  \"updatedAt\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"tenants_activeModules_elem_not_null_cf0e3740\" CHECK (array_position(\"activeModules\", NULL) IS NULL),\n  CONSTRAINT \"tenants_supportedLocales_elem_not_null_d9348cd9\" CHECK (array_position(\"supportedLocales\", NULL) IS NULL)\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"tenants\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"tenants\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"tenants\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "unique.tenant_domains.tenant_domains_domain_key",
+    "label": "Add unique constraint on \"tenant_domains\" (domain)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "tenant_domains_domain_key",
+        "table": "tenant_domains"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"tenant_domains_domain_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "tenant_domains_domain_key",
+          "public",
+          "\"public\".\"tenant_domains\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"tenant_domains_domain_key\" on \"tenant_domains\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"tenant_domains_domain_key\"",
+        "sql": "ALTER TABLE \"public\".\"tenant_domains\" ADD CONSTRAINT \"tenant_domains_domain_key\" UNIQUE (\"domain\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"tenant_domains_domain_key\" exists on (domain)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "tenant_domains_domain_key",
+          "public",
+          "\"public\".\"tenant_domains\"",
+          "u",
+          "[\"domain\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.tenants.tenants_slug_key",
+    "label": "Add unique constraint on \"tenants\" (slug)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "tenants_slug_key",
+        "table": "tenants"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"tenants_slug_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "tenants_slug_key",
+          "public",
+          "\"public\".\"tenants\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"tenants_slug_key\" on \"tenants\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"tenants_slug_key\"",
+        "sql": "ALTER TABLE \"public\".\"tenants\" ADD CONSTRAINT \"tenants_slug_key\" UNIQUE (\"slug\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"tenants_slug_key\" exists on (slug)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "tenants_slug_key",
+          "public",
+          "\"public\".\"tenants\"",
+          "u",
+          "[\"slug\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.tenants.tenants_subdomain_key",
+    "label": "Add unique constraint on \"tenants\" (subdomain)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "tenants_subdomain_key",
+        "table": "tenants"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"tenants_subdomain_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "tenants_subdomain_key",
+          "public",
+          "\"public\".\"tenants\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"tenants_subdomain_key\" on \"tenants\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"tenants_subdomain_key\"",
+        "sql": "ALTER TABLE \"public\".\"tenants\" ADD CONSTRAINT \"tenants_subdomain_key\" UNIQUE (\"subdomain\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"tenants_subdomain_key\" exists on (subdomain)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "tenants_subdomain_key",
+          "public",
+          "\"public\".\"tenants\"",
+          "u",
+          "[\"subdomain\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.tenants.tenants_customDomain_key",
+    "label": "Add unique constraint on \"tenants\" (customDomain)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "tenants_customDomain_key",
+        "table": "tenants"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"tenants_customDomain_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "tenants_customDomain_key",
+          "public",
+          "\"public\".\"tenants\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"tenants_customDomain_key\" on \"tenants\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"tenants_customDomain_key\"",
+        "sql": "ALTER TABLE \"public\".\"tenants\" ADD CONSTRAINT \"tenants_customDomain_key\" UNIQUE (\"customDomain\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"tenants_customDomain_key\" exists on (customDomain)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "tenants_customDomain_key",
+          "public",
+          "\"public\".\"tenants\"",
+          "u",
+          "[\"customDomain\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.tenant_domains.tenant_domains_tenantId_idx_c93ed4f1",
+    "label": "Create index \"tenant_domains_tenantId_idx_c93ed4f1\" on \"tenant_domains\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "tenant_domains_tenantId_idx_c93ed4f1",
+        "table": "tenant_domains"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"tenant_domains_tenantId_idx_c93ed4f1\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"tenant_domains_tenantId_idx_c93ed4f1\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"tenant_domains_tenantId_idx_c93ed4f1\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"tenant_domains_tenantId_idx_c93ed4f1\"",
+        "sql": "CREATE INDEX \"tenant_domains_tenantId_idx_c93ed4f1\" ON \"public\".\"tenant_domains\" (\"tenantId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"tenant_domains_tenantId_idx_c93ed4f1\" exists on \"tenant_domains\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"tenant_domains_tenantId_idx_c93ed4f1\"",
+          "i",
+          "I",
+          "\"public\".\"tenant_domains\"",
+          "btree",
+          "[\"tenantId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.tenant_domains.tenant_domains_tenantId_fkey",
+    "label": "Add foreign key \"tenant_domains_tenantId_fkey\" on \"tenant_domains\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "tenant_domains_tenantId_fkey",
+        "table": "tenant_domains"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"tenant_domains_tenantId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "tenant_domains_tenantId_fkey",
+          "public",
+          "\"public\".\"tenant_domains\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"tenant_domains_tenantId_fkey\" on \"tenant_domains\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"tenant_domains_tenantId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"tenant_domains\"\nADD CONSTRAINT \"tenant_domains_tenantId_fkey\"\nFOREIGN KEY (\"tenantId\")\nREFERENCES \"public\".\"tenants\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"tenant_domains_tenantId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "tenant_domains_tenantId_fkey",
+          "public",
+          "\"public\".\"tenant_domains\"",
+          "f",
+          "[\"tenantId\"]",
+          "\"public\".\"tenants\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  }
+]
