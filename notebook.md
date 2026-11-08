@@ -55,3 +55,8 @@
 - Implementada la función de borrado de productos (Server Action 'deleteProduct').
 - Integrada la limpieza física de archivos huérfanos utilizando 'fs/promises' (unlink) para liberar espacio en el disco al borrar un producto.
 - Mejorada la usabilidad del panel de administración (UI) inyectando 'cursor-pointer' y 'file:cursor-pointer' en botones, enlaces y campos de subida.
+## Fase 2.1.0 Finalizada con éxito - 2026-11-08 12:27:20
+- Implementada la funcionalidad de Edición de Productos (Update completo del CRUD).
+- Creada ruta dinámica dedicada para el formulario de edición (src/app/[domain]/admin/edit/[id]/page.tsx) pre-cargada con los datos actuales de la base de datos.
+- Desarrollada la Server Action 'updateProduct' con lógica avanzada de sustitución de archivos (eliminación de la imagen física anterior al subir una nueva) para optimizar el almacenamiento.
+- Corregido el enrutamiento relativo en los botones de acción para respetar la resolución transparente de dominios manejada por el Middleware de Next.js.

@@ -1,6 +1,7 @@
 import { getTenantClient, getAdminClient } from "@/lib/prisma";
 import { createProduct, deleteProduct } from "./actions";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export default async function AdminPage({ params }: { params: Promise<{ domain: string }> }) {
   const resolvedParams = await params;
@@ -54,7 +55,6 @@ export default async function AdminPage({ params }: { params: Promise<{ domain: 
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Imagen del Producto</label>
-                {/* Agregado file:cursor-pointer para afectar directamente al boton nativo del navegador */}
                 <input type="file" name="image" accept="image/*" className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 outline-none cursor-pointer file:cursor-pointer" />
               </div>
               <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium cursor-pointer">
@@ -91,8 +91,12 @@ export default async function AdminPage({ params }: { params: Promise<{ domain: 
                         <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{p.name}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-gray-500">{p.sku}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-bold">${p.price.toString()}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <form action={deleteAction}>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end items-center gap-4 h-full mt-2">
+                          {/* Enlace corregido: usando ruta relativa para respetar el middleware */}
+                          <Link href={`/admin/edit/${p.id}`} className="text-blue-600 hover:text-blue-900 font-medium cursor-pointer">
+                            Editar
+                          </Link>
+                          <form action={deleteAction} className="inline">
                             <button type="submit" className="text-red-600 hover:text-red-900 font-medium cursor-pointer">Eliminar</button>
                           </form>
                         </td>
