@@ -1,36 +1,46 @@
 "use server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
-import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { getAdminClient } from "@/lib/prisma";
 
-export async function updateGlobalBranding(formData: FormData) {
-  const logo = formData.get("logo") as File;
-  const favicon = formData.get("favicon") as File;
-
-  // Aseguramos que la carpeta public exista por seguridad
-  const publicDir = path.join(process.cwd(), "public");
-  await mkdir(publicDir, { recursive: true });
-
-  if (logo && logo.size > 0) {
-    // Solo permitimos imágenes
-    if (logo.type.startsWith("image/")) {
-      const logoBuffer = Buffer.from(await logo.arrayBuffer());
-      // Guardamos la imagen
-      await writeFile(path.join(publicDir, "global-logo.png"), logoBuffer);
-    }
-  }
-
-  if (favicon && favicon.size > 0) {
-    const faviconBuffer = Buffer.from(await favicon.arrayBuffer());
-    // Guardamos la versión como favicon global en public para que Next.js lo sirva
-    await writeFile(path.join(publicDir, "favicon.ico"), faviconBuffer);
+export async function saveItemAction(formData: FormData) {
+  const type = formData.get("itemType") as string;
+  const tab = formData.get("tabName") as string;
+  const id = formData.get("id") as string | null;
+  const data = Object.fromEntries(formData.entries());
+  
+  // 1. Si es una EDICIÓN de un Tenant real en Prisma PostgreSQL
+  if (tab === "tenants" && id && !id.startsWith("tenants_")) {
+    const prisma = getAdminClient();
+    try {
+      await prisma.tenant.update({
+        where: { id },
+        data: { name: data.name as string }
+      });
+    } catch (e) { console.error("Error al actualizar tenant:", e) }
+  } 
+  // 2. Si es edición o creación de datos estáticos/mocks gestionados por Cookies
+  else {
+    const cookieStore = await cookies();
+    const cookieName = `mock_new_${type}`;
+    const existing = cookieStore.get(cookieName)?.value;
+    let items: any[] = existing ? JSON.parse(existing) : [];
     
-    // También por seguridad en el layout si Next.js lo requiere en la raíz de app
-    const appDir = path.join(process.cwd(), "src", "app");
-    await mkdir(appDir, { recursive: true });
-    await writeFile(path.join(appDir, "favicon.ico"), faviconBuffer);
+    if (id) {
+      // Es una Edición
+      const index = items.findIndex((i: any) => i.id === id);
+      if (index >= 0) {
+        items[index] = { ...items[index], ...data }; // Actualiza el existente
+      } else {
+        items.push({ ...data, id }); // Crea la modificación del base
+      }
+    } else {
+      // Es una Creación Nueva
+      const newItem = { id: `${type}_${Date.now()}`, ...data, status: data.status || "Activo" };
+      items.push(newItem);
+    }
+    cookieStore.set(cookieName, JSON.stringify(items), { path: '/' });
   }
-
-  // Desactivamos la cache en memoria de la pagina superadmin para ver los cambios de inmediato
-  revalidatePath("/superadmin");
+  
+  redirect(`?tab=${tab}`);
 }
