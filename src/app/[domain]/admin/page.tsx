@@ -1,6 +1,8 @@
 import { getTenantClient, getAdminClient } from "@/lib/prisma";
 import { createProduct, deleteProduct } from "./actions";
-import { notFound } from "next/navigation";
+import { logoutAction } from "./login/actions";
+import { notFound, redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
 export default async function AdminPage({ params }: { params: Promise<{ domain: string }> }) {
@@ -16,13 +18,22 @@ export default async function AdminPage({ params }: { params: Promise<{ domain: 
   if (!tenantDomain) return notFound();
 
   const tenant = tenantDomain.tenant;
-  const tenantPrisma = getTenantClient(tenant.id);
   
+  // -- GUARDIÁN DE SEGURIDAD --
+  const cookieStore = await cookies();
+  const isAuth = cookieStore.get(`auth_${tenant.id}`);
+  if (!isAuth || isAuth.value !== "true") {
+    redirect(`/admin/login`);
+  }
+  // ---------------------------
+
+  const tenantPrisma = getTenantClient(tenant.id);
   const products = await tenantPrisma.product.findMany({
     orderBy: { createdAt: 'desc' }
   });
 
   const createProductWithDomain = createProduct.bind(null, domain);
+  const handleLogout = logoutAction.bind(null, tenant.id);
 
   return (
     <main className="min-h-screen p-8 bg-gray-100 text-gray-900 font-sans">
@@ -32,9 +43,16 @@ export default async function AdminPage({ params }: { params: Promise<{ domain: 
             <h1 className="text-3xl font-bold">Panel de Administración - {tenant.name}</h1>
             <p className="text-gray-500 mt-1">Gestión de Catálogo Multi-Tenant</p>
           </div>
-          <a href={`http://${domain}:3000`} target="_blank" className="text-blue-600 hover:underline text-sm font-medium cursor-pointer">
-            Ver Tienda Pública ↗
-          </a>
+          <div className="flex items-center gap-6">
+            <a href={`http://${domain}:3000`} target="_blank" className="text-blue-600 hover:underline text-sm font-medium cursor-pointer">
+              Ver Tienda Pública ↗
+            </a>
+            <form action={handleLogout}>
+              <button type="submit" className="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition-colors cursor-pointer border border-red-100">
+                Cerrar Sesión
+              </button>
+            </form>
+          </div>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -92,7 +110,6 @@ export default async function AdminPage({ params }: { params: Promise<{ domain: 
                         <td className="px-6 py-4 whitespace-nowrap text-gray-500">{p.sku}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-bold">${p.price.toString()}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end items-center gap-4 h-full mt-2">
-                          {/* Enlace corregido: usando ruta relativa para respetar el middleware */}
                           <Link href={`/admin/edit/${p.id}`} className="text-blue-600 hover:text-blue-900 font-medium cursor-pointer">
                             Editar
                           </Link>
