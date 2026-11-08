@@ -73,3 +73,14 @@
 - Creada pÃ¡gina de ConfiguraciÃ³n Visual (/admin/settings) protegida por el Gatekeeper.
 - Implementada Server Action para carga fÃ­sica de logotipos (reemplazo automÃ¡tico de archivos antiguos) y actualizaciÃ³n de color.
 - Modificado el Front-end pÃºblico (page.tsx) para absorber de forma dinÃ¡mica el logo y el color corporativo del Tenant.
+### Fase 1.0.0: Definición de Arquitectura E-commerce
+- **Decisión:** Desarrollo de módulo e-commerce a medida nativo.
+- **Stack:** NestJS, Prisma ORM, PostgreSQL.
+- **Motivo:** Garantizar la base más sólida posible, control total del código y permitir actualizaciones de productos sin fricción ni dependencias de terceros.
+
+
+### Fases 1.0.0 a 1.0.2: Definición de Arquitectura E-commerce
+- **Decisión:** Desarrollo de módulo e-commerce a medida nativo conservando el trabajo previo.
+- **Stack:** NestJS, Prisma ORM, PostgreSQL.
+- **Motivo:** Garantizar la base más sólida posible y permitir actualizaciones de productos sin dependencias de terceros.
+
