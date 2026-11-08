@@ -44,6 +44,9 @@ export default async function AdminPage({ params }: { params: Promise<{ domain: 
             <p className="text-gray-500 mt-1">Gestión de Catálogo Multi-Tenant</p>
           </div>
           <div className="flex items-center gap-6">
+            <Link href={`/admin/settings`} className="text-gray-600 hover:text-gray-900 text-sm font-medium cursor-pointer flex items-center gap-1">
+              ⚙️ Configuración
+            </Link>
             <a href={`http://${domain}:3000`} target="_blank" className="text-blue-600 hover:underline text-sm font-medium cursor-pointer">
               Ver Tienda Pública ↗
             </a>

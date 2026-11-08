@@ -8,13 +8,15 @@ datasource db {
 }
 
 model Tenant {
-  id        String   @id @default(uuid())
-  name      String
-  password  String   @default("admin123") // Contraseña por defecto para pruebas
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  domains   TenantDomain[]
-  products  Product[]
+  id          String   @id @default(uuid())
+  name        String
+  password    String   @default("admin123")
+  logoUrl     String?  
+  themeColor  String   @default("#2563eb") // Azul por defecto de Tailwind
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  domains     TenantDomain[]
+  products    Product[]
 }
 
 model TenantDomain {
