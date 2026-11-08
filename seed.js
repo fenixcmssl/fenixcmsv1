@@ -7,14 +7,19 @@ async function main() {
   
   const tenant = await prisma.tenant.create({
     data: {
-      name: "Fenix Store Demo",
-      password: "admin123", // Contraseña inicial configurada en el esquema
+      name: "Fenix Global Multi-Tenant",
+      password: "admin123",
+      moduleType: "ECOMMERCE",
+      currency: "EUR",
+      language: "es",
       domains: {
         create: { domain: "localhost" }
       }
     }
   });
-  console.log("Tenant restaurado exitosamente:", tenant.name);
+  console.log("Tenant Base Creado exitosamente:", tenant.name);
+  console.log("Modulo Activo:", tenant.moduleType);
+  console.log("Moneda:", tenant.currency);
 }
 
 main().catch(console.error).finally(() => prisma.$disconnect());

@@ -28,7 +28,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ do
   // ---------------------------
 
   const tenantPrisma = getTenantClient(tenant.id);
-  const product = await tenantPrisma.product.findUnique({
+  const product = await tenantPrisma.ecommerceProduct.findUnique({
     where: { id: productId }
   });
 

@@ -28,7 +28,7 @@ export default async function AdminPage({ params }: { params: Promise<{ domain: 
   // ---------------------------
 
   const tenantPrisma = getTenantClient(tenant.id);
-  const products = await tenantPrisma.product.findMany({
+  const products = await tenantPrisma.ecommerceProduct.findMany({
     orderBy: { createdAt: 'desc' }
   });
 

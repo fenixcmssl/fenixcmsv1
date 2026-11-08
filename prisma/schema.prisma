@@ -12,11 +12,22 @@ model Tenant {
   name        String
   password    String   @default("admin123")
   logoUrl     String?  
-  themeColor  String   @default("#2563eb") // Azul por defecto de Tailwind
+  themeColor  String   @default("#2563eb")
+  
+  // Configuración Multi-Modelo Global
+  moduleType  String   @default("ECOMMERCE") // Valores: ECOMMERCE, REAL_ESTATE, AUCTION
+  currency    String   @default("USD")
+  language    String   @default("es")
+  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  domains     TenantDomain[]
-  products    Product[]
+  
+  domains             TenantDomain[]
+  
+  // Relaciones Aisladas por Módulo
+  ecommerceProducts   EcommerceProduct[]
+  realEstateProps     RealEstateProperty[]
+  auctionItems        AuctionItem[]
 }
 
 model TenantDomain {
@@ -28,16 +39,69 @@ model TenantDomain {
   updatedAt DateTime @updatedAt
 }
 
-model Product {
-  id        String   @id @default(uuid())
-  name      String
-  slug      String
-  price     Float
-  sku       String?
-  imageUrl  String?
-  isActive  Boolean  @default(true)
-  tenantId  String
-  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// ==========================================
+// MÓDULO 1: E-COMMERCE (Catálogo de productos físicos/digitales)
+// ==========================================
+model EcommerceProduct {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String
+  price       Float
+  sku         String?
+  imageUrl    String?
+  stock       Int      @default(0)
+  isActive    Boolean  @default(true)
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ==========================================
+// MÓDULO 2: INMOBILIARIA (Clasificados de Propiedades)
+// ==========================================
+model RealEstateProperty {
+  id            String   @id @default(uuid())
+  title         String
+  description   String?
+  price         Float
+  propertyType  String   // Venta, Alquiler
+  bedrooms      Int      @default(0)
+  bathrooms     Int      @default(0)
+  squareMeters  Float    @default(0)
+  address       String?
+  imageUrl      String?
+  isActive      Boolean  @default(true)
+  tenantId      String
+  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ==========================================
+// MÓDULO 3: SUBASTAS (Motor de pujas con límite de tiempo)
+// ==========================================
+model AuctionItem {
+  id            String   @id @default(uuid())
+  title         String
+  description   String?
+  startingBid   Float
+  currentBid    Float?
+  endTime       DateTime
+  imageUrl      String?
+  isActive      Boolean  @default(true)
+  tenantId      String
+  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+// ==========================================
+// SEGURIDAD Y AUDITORÍA (Superadministrador)
+// ==========================================
+model SuperAdminLog {
+  id           String   @id @default(uuid())
+  adminUser    String   @default("SystemAdmin")
+  action       String
+  targetTenant String
+  createdAt    DateTime @default(now())
 }

@@ -39,7 +39,7 @@ export async function createProduct(domain: string, formData: FormData) {
   }
 
   const tenantPrisma = getTenantClient(tenantId);
-  await tenantPrisma.product.create({
+  await tenantPrisma.ecommerceProduct.create({
     data: {
       name,
       slug,
@@ -67,7 +67,7 @@ export async function updateProduct(domain: string, productId: string, formData:
   const tenantId = tenantDomain.tenant.id;
   const tenantPrisma = getTenantClient(tenantId);
 
-  const existingProduct = await tenantPrisma.product.findUnique({
+  const existingProduct = await tenantPrisma.ecommerceProduct.findUnique({
     where: { id: productId }
   });
 
@@ -102,7 +102,7 @@ export async function updateProduct(domain: string, productId: string, formData:
     imageUrl = `/uploads/${tenantId}/${fileName}`;
   }
 
-  await tenantPrisma.product.update({
+  await tenantPrisma.ecommerceProduct.update({
     where: { id: productId },
     data: { name, slug, price, sku, imageUrl }
   });
@@ -122,7 +122,7 @@ export async function deleteProduct(domain: string, productId: string) {
 
   const tenantPrisma = getTenantClient(tenantDomain.tenant.id);
 
-  const product = await tenantPrisma.product.findUnique({
+  const product = await tenantPrisma.ecommerceProduct.findUnique({
     where: { id: productId }
   });
 
@@ -134,7 +134,7 @@ export async function deleteProduct(domain: string, productId: string) {
     }
   }
 
-  await tenantPrisma.product.delete({
+  await tenantPrisma.ecommerceProduct.delete({
     where: { id: productId }
   });
 
