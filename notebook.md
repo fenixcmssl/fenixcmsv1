@@ -90,3 +90,9 @@
 - Se unificó la gestión eliminando paneles redundantes en favor de un God Mode global optimizado.
 - Se integraron los patrones visuales y de diseño del prototipo de AI Studio en la ruta /superadmin.
 - Se optimizó la gestión de identidad visual y el acceso maestro por inquilino con auditoría RGPD.
+
+
+## Hito: Conexión de Base de Datos Prisma con Vistas Dinámicas (E-commerce) - 2026-11-08 18:58:54
+- Se conectó TiendaEcommerceView directamente con el cliente aislado de Prisma por tenant.
+- Se configuró la consulta en tiempo real del catálogo de productos y precios dinámicos por moneda.
+- Se validó el flujo completo desde el Centro de Control Maestro (God Mode) hacia la visualización de la tienda.
