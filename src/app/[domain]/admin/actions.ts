@@ -2,7 +2,7 @@
 
 import { getTenantClient, getAdminClient } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { writeFile, mkdir } from "fs/promises";
+import { writeFile, mkdir, unlink } from "fs/promises";
 import { join } from "path";
 
 export async function createProduct(domain: string, formData: FormData) {
@@ -52,4 +52,40 @@ export async function createProduct(domain: string, formData: FormData) {
   });
 
   revalidatePath(`/${domain}/admin`);
+  revalidatePath(`/${domain}`);
+}
+
+export async function deleteProduct(domain: string, productId: string) {
+  const adminPrisma = getAdminClient();
+  const tenantDomain = await adminPrisma.tenantDomain.findUnique({
+    where: { domain },
+    include: { tenant: true }
+  });
+
+  if (!tenantDomain) throw new Error("Tenant no encontrado");
+
+  const tenantPrisma = getTenantClient(tenantDomain.tenant.id);
+
+  const product = await tenantPrisma.product.findUnique({
+    where: { id: productId }
+  });
+
+  if (product?.imageUrl) {
+    const fileName = product.imageUrl.split('/').pop();
+    if (fileName) {
+      const filePath = join(process.cwd(), "public", "uploads", tenantDomain.tenant.id, fileName);
+      try {
+        await unlink(filePath);
+      } catch (error) {
+        console.error("El archivo fisico no se encontro o ya fue borrado.", error);
+      }
+    }
+  }
+
+  await tenantPrisma.product.delete({
+    where: { id: productId }
+  });
+
+  revalidatePath(`/${domain}/admin`);
+  revalidatePath(`/${domain}`);
 }

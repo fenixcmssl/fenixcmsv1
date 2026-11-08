@@ -51,3 +51,7 @@
 - Implementado diseño responsivo en cuadrícula (CSS Grid) para las tarjetas de productos.
 - Integrado el consumo de imágenes estáticas a través de la API Route dinámica (/api/images/) para sortear el caché de Turbopack.
 - Configurada lógica condicional para mostrar un placeholder elegante ("Sin imagen") en productos sin archivo asociado.
+## Fase 2.0.9 Finalizada con éxito - 2026-11-08 12:19:07
+- Implementada la función de borrado de productos (Server Action 'deleteProduct').
+- Integrada la limpieza física de archivos huérfanos utilizando 'fs/promises' (unlink) para liberar espacio en el disco al borrar un producto.
+- Mejorada la usabilidad del panel de administración (UI) inyectando 'cursor-pointer' y 'file:cursor-pointer' en botones, enlaces y campos de subida.
