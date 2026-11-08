@@ -1,20 +1,52 @@
-export default function TiendaSubastasView({ tenant }: { tenant: any }) {
+import { getTenantClient } from "@/lib/prisma";
+
+export default async function TiendaSubastasView({ tenant }: { tenant: any }) {
+  const tenantPrisma = getTenantClient(tenant.id);
+  let auctions = [];
+  try {
+    auctions = await tenantPrisma.auctionItem.findMany({
+      take: 10,
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (e) {
+    console.error("Error al cargar subastas:", e);
+  }
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-8">
-      <header className="max-w-7xl mx-auto flex justify-between items-center pb-6 border-b border-zinc-800">
-        <h1 className="text-2xl font-black text-purple-400">{tenant.name} - Sala de Subastas</h1>
-        <span className="bg-purple-900/50 text-purple-300 px-3 py-1 rounded-full text-sm border border-purple-700">Modo Subasta</span>
+    <div style={{ minHeight: '100vh', backgroundColor: '#09090b', color: '#fafafa', padding: '2rem', fontFamily: 'sans-serif' }}>
+      <header style={{ maxWidth: '80rem', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1.5rem', borderBottom: '1px solid #27272a' }}>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#c084fc' }}>{tenant.name} - Sala de Subastas</h1>
+        <span style={{ backgroundColor: 'rgba(107, 33, 168, 0.3)', color: '#d8b4fe', padding: '0.5rem 1rem', borderRadius: '9999px', fontSize: '0.875rem', border: '1px solid #9333ea' }}>Modo Subasta</span>
       </header>
-      <main className="max-w-7xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-xl">
-          <div className="h-48 bg-zinc-800 rounded-xl mb-4 flex items-center justify-center text-zinc-500">Lote en Puja</div>
-          <h3 className="text-lg font-bold">Pieza de Colección</h3>
-          <p className="text-zinc-400 text-sm mt-1">Puja activa con límite de tiempo.</p>
-          <div className="mt-4 flex justify-between items-center">
-            <span className="text-xl font-black text-purple-400">Puja Actual</span>
-            <button className="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded-xl text-sm font-bold transition-all">Pujar Ahora</button>
+
+      <main style={{ maxWidth: '80rem', margin: '3rem auto 0' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1.5rem', color: '#f4f4f5' }}>⚡ Lotes en Puja Activa</h2>
+        
+        {auctions.length === 0 ? (
+          <div style={{ backgroundColor: '#18181b', border: '1px solid #27272a', padding: '3rem', borderRadius: '1rem', textAlign: 'center', color: '#a1a1aa' }}>
+            <p style={{ fontSize: '1.125rem' }}>No hay subastas activas en este momento.</p>
           </div>
-        </div>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+            {auctions.map((auc: any) => (
+              <div key={auc.id} style={{ backgroundColor: '#18181b', border: '1px solid #27272a', padding: '1.5rem', borderRadius: '1rem', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)' }}>
+                <div style={{ height: '12rem', backgroundColor: '#27272a', borderRadius: '0.75rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#71717a' }}>
+                  {auc.image ? <img src={auc.image} alt={auc.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span>Sin Imagen</span>}
+                </div>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff' }}>{auc.title}</h3>
+                <p style={{ color: '#a1a1aa', fontSize: '0.875rem', marginTop: '0.25rem' }}>Puja actual registrada.</p>
+                <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '1.25rem', fontWeight: '900', color: '#c084fc' }}>
+                    {Number(auc.currentBid || auc.startPrice || 0).toFixed(2)} {tenant.currency || 'EUR'}
+                  </span>
+                  <button style={{ backgroundColor: '#9333ea', color: '#ffffff', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.75rem', fontSize: '0.875rem', fontWeight: 'bold', cursor: 'pointer' }}>
+                    Pujar Ahora
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );

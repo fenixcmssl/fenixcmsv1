@@ -96,3 +96,9 @@
 - Se conectó TiendaEcommerceView directamente con el cliente aislado de Prisma por tenant.
 - Se configuró la consulta en tiempo real del catálogo de productos y precios dinámicos por moneda.
 - Se validó el flujo completo desde el Centro de Control Maestro (God Mode) hacia la visualización de la tienda.
+
+
+## Hito: Conexión de Módulos Inmobiliaria y Subastas - 2026-11-08 19:07:27
+- Se implementaron y conectaron las vistas TiendaInmobiliariaView y TiendaSubastasView con Prisma.
+- Se configuró el enrutamiento dinámico de catálogos especializados por tipo de inquilino (REAL_ESTATE y AUCTION).
+- Se sincronizó el repositorio remoto en GitHub.
