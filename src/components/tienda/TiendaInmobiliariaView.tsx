@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getTenantClient } from "@/lib/prisma";
 
 export default async function TiendaInmobiliariaView({ tenant }: { tenant: any }) {

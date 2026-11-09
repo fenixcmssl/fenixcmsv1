@@ -7,10 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ==========================================
-// MODELOS DEL SUPERADMIN (GLOBALES)
-// ==========================================
-
 model SuperAdmin {
   id         String   @id @default(cuid())
   name       String
@@ -53,26 +49,27 @@ model AuditLog {
   createdAt DateTime @default(now())
 }
 
-// ==========================================
-// MODELOS MULTI-TENANT (AISLAMIENTO)
-// ==========================================
-
 model Tenant {
-  id           String         @id @default(cuid())
-  name         String
-  moduleType   String         // ECOMMERCE, INMOBILIARIA, SUBASTAS
-  currency     String         @default("EUR")
-  language     String         @default("es")
-  color        String         @default("#000000")
-  logoUrl      String?
-  status       String         @default("ACTIVE")
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  domains      Domain[]
-  subscriptions Subscription[]
+  id               String             @id @default(cuid())
+  name             String
+  password         String?
+  moduleType       String
+  currency         String             @default("EUR")
+  language         String             @default("es")
+  color            String             @default("#000000")
+  themeColor       String             @default("#000000")
+  logoUrl          String?
+  status           String             @default("ACTIVE")
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  tenantDomains    TenantDomain[]
+  subscriptions    Subscription[]
+  ecommerceProducts EcommerceProduct[]
+  properties       Property[]
+  auctionItems     AuctionItem[]
 }
 
-model Domain {
+model TenantDomain {
   id        String   @id @default(cuid())
   domain    String   @unique
   tenantId  String
@@ -100,6 +97,47 @@ model Subscription {
   planId      String
   status      String   @default("ACTIVE")
   nextBilling DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model EcommerceProduct {
+  id          String   @id @default(cuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String?
+  sku         String?
+  imageUrl    String?
+  description String?
+  price       Float
+  stock       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Property {
+  id          String   @id @default(cuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  price       Float
+  location    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AuctionItem {
+  id          String   @id @default(cuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  startingBid Float
+  currentBid  Float?
+  endTime     DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

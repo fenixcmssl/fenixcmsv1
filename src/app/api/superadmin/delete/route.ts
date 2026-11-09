@@ -16,7 +16,7 @@ export async function DELETE(request: Request) {
   try {
     if (type === "tenant") {
       // 1. Borrar las dependencias (Dominios) para evitar error de PostgreSQL (Foreign Key)
-      await prisma.domain.deleteMany({
+      await prisma.tenantDomain.deleteMany({
         where: { tenantId: id }
       });
       // 2. Ahora sí podemos borrar el Inquilino
