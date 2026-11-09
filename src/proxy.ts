@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
+// AQUI ESTA LA CORRECCION CLAVE: export function proxy
+export function proxy(req: NextRequest) {
   const url = req.nextUrl;
   const path = url.pathname;
   
