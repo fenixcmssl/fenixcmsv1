@@ -126,3 +126,9 @@
 - Implementación de las vistas de seguridad **Users** (RBAC) y **Audit Logs**.
 - Implementación del formulario avanzado **Settings** (Configuración Maestra del Motor SaaS) con controles de pasarelas, infraestructura y aprovisionamiento SSL.
 - Resolución de errores de compilación de Turbopack (Unterminated regexp literal) aplicando estructuración multilínea segura en JSX.
+
+### Hito - Fase 5.0.0: Login del Superadmin
+- Creación de la interfaz gráfica de autenticación para el Super Admin en src/app/[domain]/superadmin/login/page.tsx.
+- Implementación del diseño corporativo premium (FenixCMS Dark Theme con acentos naranja).
+- Desarrollo del Server Action (ctions.ts) para validación segura de credenciales maestras y generación de sesión por Cookies (superadmin_auth).
+- Sistema de feedback visual para credenciales incorrectas usando SearchParams (?error=credenciales).
