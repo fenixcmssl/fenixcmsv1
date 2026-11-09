@@ -70,7 +70,6 @@ export default async function SuperAdminMasterPage({
   const labelStyle = { fontSize: '0.75rem', fontWeight: 'bold', color: '#9ca3af', textTransform: 'uppercase' as const, display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
   const descStyle = { fontSize: '0.75rem', color: '#6b7280', marginTop: '0.5rem' };
   
-  // Estilos reutilizables para el panel de Cuenta
   const inputStyle = { width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', backgroundColor: '#1f2937', border: '1px solid #374151', color: '#ffffff', outline: 'none', fontSize: '0.875rem' };
   const labelText = { display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '0.5rem' };
 
@@ -100,21 +99,21 @@ export default async function SuperAdminMasterPage({
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             
-            {/* NUEVO BOTON MI CUENTA */}
+            {/* 1. BOTON VER TIENDA */}
+            <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#111827', color: '#f59e0b', border: '1px solid #1f2937', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
+              Ver Tienda
+            </button>
+
+            {/* 2. BOTON MI CUENTA */}
             <Link href="?tab=account" style={{ textDecoration: 'none' }}>
               <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: currentTab === 'account' ? '#1f2937' : 'transparent', color: '#ffffff', border: '1px solid #374151', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', transition: 'all 0.2s' }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 Mi Cuenta
               </button>
             </Link>
-
-            {/* BOTON VER TIENDA */}
-            <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#111827', color: '#f59e0b', border: '1px solid #1f2937', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
-              Ver Tienda
-            </button>
             
-            {/* BOTON SALIR */}
+            {/* 3. BOTON SALIR */}
             <form action={async () => {
               "use server";
               const cookieStore = await cookies();
@@ -180,7 +179,7 @@ export default async function SuperAdminMasterPage({
               </>
             )}
 
-            {/* === NUEVA PESTAÑA: MI CUENTA === */}
+            {/* === PESTAÑA: MI CUENTA === */}
             {currentTab === 'account' && (
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>

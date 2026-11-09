@@ -164,3 +164,6 @@
 - Implementación del formulario de Datos Fiscales (Nombre, Apellidos, Teléfono, Dirección, NIE, CIF).
 - Implementación de la tarjeta de Imagen Corporativa con botones dedicados para carga de Logo y Favicon.
 - Implementación del formulario de Seguridad para actualización de contraseña.
+
+### Hito - Fase 5.3.1: Reordenación en Header
+- Se invirtió el orden de los botones en la barra superior para priorizar "Ver Tienda", seguido de "Mi Cuenta" y finalizar con "Salir".
