@@ -1,21 +1,48 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export const config = {
-  matcher: [
-    "/((?!api/|_next/|_static/|_vercel|favicon.ico|sitemap.xml|robots.txt).*)",
-  ],
-};
-
-export default function proxy(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const url = req.nextUrl;
-  const hostname = req.headers.get("host") || "localhost:3000";
-
-  // Extraer el host base sin puerto (ej: localhost:3000 -> localhost)
-  const currentHost = hostname.split(":")[0];
-
-  // Reescribir internamente hacia src/app/[domain]/
-  url.pathname = `/${currentHost}${url.pathname}`;
+  const path = url.pathname;
   
-  return NextResponse.rewrite(url);
+  // 1. IGNORAR ARCHIVOS ESTÁTICOS Y DE SISTEMA
+  if (
+    path.startsWith("/_next") || 
+    path.startsWith("/api") || 
+    path.includes(".") || 
+    path === "/favicon.ico"
+  ) {
+    return NextResponse.next();
+  }
+
+  let hostname = req.headers.get("host") || "";
+  hostname = hostname.split(":")[0]; 
+  const searchParams = req.nextUrl.searchParams.toString();
+  const fullPath = `${path}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
+
+  console.log(`\n[PROXY] ➡️ Peticion entrante: ${fullPath} | Host: ${hostname}`);
+
+  // 2. SEGURIDAD DEL SUPERADMIN
+  if (path.startsWith("/superadmin")) {
+    const isAuth = req.cookies.has("superadmin_auth");
+    console.log(`[PROXY] 🛡️ Ruta Superadmin. Autenticado: ${isAuth}`);
+
+    if (!isAuth && !path.startsWith("/superadmin/login")) {
+      console.log(`[PROXY] ⛔ Bloqueado. Redirigiendo a Login...`);
+      return NextResponse.redirect(new URL("/superadmin/login", req.url));
+    }
+  }
+
+  // 3. REESCRITURA MULTI-TENANT
+  if (!path.startsWith(`/${hostname}`)) {
+    console.log(`[PROXY] 🔄 Reescribiendo a: /${hostname}${fullPath}`);
+    return NextResponse.rewrite(new URL(`/${hostname}${fullPath}`, req.url));
+  }
+
+  console.log(`[PROXY] ✅ Dejando pasar sin reescribir.`);
+  return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};

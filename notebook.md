@@ -147,3 +147,8 @@
 ### Hito - Fase 5.1.2: Escaneo de Middleware
 - Inyección de sensores de consola (console.log) en el Middleware para trazar el origen del bucle infinito.
 - Implementación de filtro de exclusión de archivos con punto (path.includes(".")) para evitar atrapar payloads de React/Turbopack.
+
+### Hito - Fase 5.1.3: Migración a Proxy.ts (Next.js 16)
+- Eliminación del archivo obsoleto src/middleware.ts que causaba conflicto fatal en Turbopack.
+- Consolidación de la lógica de seguridad (Superadmin RBAC) y el motor Multi-Tenant en src/proxy.ts.
+- Inclusión de consola de diagnóstico [PROXY] para trazabilidad del enrutamiento.
