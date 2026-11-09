@@ -96,14 +96,31 @@ export default async function SuperAdminMasterPage({
             <div style={{ color: '#ffffff', fontWeight: 'bold', fontSize: '0.875rem' }}>Super Admin FenixCMS</div>
             <div style={{ color: '#f59e0b', fontSize: '0.75rem' }}>info@fenixcms.es</div>
           </div>
-          <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#111827', color: '#f59e0b', border: '1px solid #1f2937', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
-            Ver Tienda
-          </button>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#111827', color: '#f59e0b', border: '1px solid #1f2937', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
+              Ver Tienda
+            </button>
+            
+            {/* NUEVO BOTON SALIR */}
+            <form action={async () => {
+              "use server";
+              const cookieStore = await cookies();
+              cookieStore.delete('superadmin_auth');
+              redirect('/superadmin/login');
+            }}>
+              <button type="submit" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', transition: 'all 0.2s' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Salir
+              </button>
+            </form>
+          </div>
+
         </div>
       </header>
 
-      {/* SIDEBAR ACTUALIZADO CON SETTINGS */}
+      {/* SIDEBAR */}
       <aside style={{ width: '250px', backgroundColor: '#07090e', borderRight: '1px solid #1f2937', display: 'flex', flexDirection: 'column', position: 'fixed', top: '70px', bottom: 0, left: 0, overflowY: 'auto' }}>
         <nav style={{ padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           <Link href="?tab=dashboard" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'dashboard' ? '#f59e0b' : 'transparent', color: currentTab === 'dashboard' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>㗊</span> Dashboard</div></Link>
@@ -121,7 +138,6 @@ export default async function SuperAdminMasterPage({
           <Link href="?tab=plugins" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'plugins' ? '#f59e0b' : 'transparent', color: currentTab === 'plugins' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🧩</span> Plugins</div></Link>
           <Link href="?tab=users" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'users' ? '#f59e0b' : 'transparent', color: currentTab === 'users' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>👥</span> Users</div></Link>
           <Link href="?tab=audit_logs" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'audit_logs' ? '#f59e0b' : 'transparent', color: currentTab === 'audit_logs' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>⏱️</span> Audit Logs</div></Link>
-          
           <Link href="?tab=settings" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'settings' ? '#f59e0b' : 'transparent', color: currentTab === 'settings' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '1rem' }}><span>⚙️</span> Settings</div></Link>
         </nav>
       </aside>
@@ -153,7 +169,7 @@ export default async function SuperAdminMasterPage({
               </>
             )}
 
-            {/* === NUEVA PESTAÑA SETTINGS (CONFIGURACIÓN MAESTRA) === */}
+            {/* === SETTINGS (CONFIGURACIÓN MAESTRA) === */}
             {currentTab === 'settings' && (
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
@@ -170,8 +186,6 @@ export default async function SuperAdminMasterPage({
                 </header>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                  
-                  {/* Tarjeta 1: Identidad */}
                   <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '1.5rem' }}>
                     <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
                       <span style={{ color: '#f59e0b' }}>🌐</span> Identidad y Localización Global
@@ -202,10 +216,7 @@ export default async function SuperAdminMasterPage({
                     </div>
                   </div>
 
-                  {/* Columna Derecha */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    
-                    {/* Tarjeta 2: Políticas */}
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '1.5rem' }}>
                       <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
                         <span style={{ color: '#10b981' }}>$</span> Políticas de Licenciamiento y Cobro
@@ -222,7 +233,6 @@ export default async function SuperAdminMasterPage({
                       </div>
                     </div>
 
-                    {/* Tarjeta 3: Pasarelas */}
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '1.5rem', flex: 1 }}>
                       <h3 style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '1rem' }}>Pasarelas de Pago del Portal SaaS</h3>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -243,7 +253,6 @@ export default async function SuperAdminMasterPage({
                   </div>
                 </div>
 
-                {/* Tarjeta 4: Infraestructura */}
                 <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
                   <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
                     <span style={{ color: '#a855f7' }}>🔒</span> Infraestructura y Aprovisionamiento SSL

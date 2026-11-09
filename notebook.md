@@ -152,3 +152,8 @@
 - Eliminación del archivo obsoleto src/middleware.ts que causaba conflicto fatal en Turbopack.
 - Consolidación de la lógica de seguridad (Superadmin RBAC) y el motor Multi-Tenant en src/proxy.ts.
 - Inclusión de consola de diagnóstico [PROXY] para trazabilidad del enrutamiento.
+
+### Hito - Fase 5.2.0: Implementación Logout
+- Adición de un botón de "Salir" en el Header global del Superadmin.
+- Conexión del botón con un inline Server Action (use server) que destruye la cookie superadmin_auth de manera segura desde el servidor.
+- Redirección automática integrada al flujo de /superadmin/login tras el cierre de sesión.
