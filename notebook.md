@@ -143,3 +143,7 @@
 - Restauración de la lógica de reescritura de URLs para la arquitectura [domain].
 - Unificación del enrutador de Tenants con la barrera de validación de Cookies para /superadmin.
 - Resolución de bucle infinito (spinning page) causado por la falta del identificador de dominio en el motor de Turbopack.
+
+### Hito - Fase 5.1.2: Escaneo de Middleware
+- Inyección de sensores de consola (console.log) en el Middleware para trazar el origen del bucle infinito.
+- Implementación de filtro de exclusión de archivos con punto (path.includes(".")) para evitar atrapar payloads de React/Turbopack.
