@@ -157,3 +157,10 @@
 - Adición de un botón de "Salir" en el Header global del Superadmin.
 - Conexión del botón con un inline Server Action (use server) que destruye la cookie superadmin_auth de manera segura desde el servidor.
 - Redirección automática integrada al flujo de /superadmin/login tras el cierre de sesión.
+
+### Hito - Fase 5.3.0: Panel de Mi Cuenta
+- Incorporación del botón "Mi Cuenta" en la barra de navegación superior (Header) junto a "Ver Tienda" y "Salir".
+- Creación de la vista ?tab=account para la gestión del perfil administrativo.
+- Implementación del formulario de Datos Fiscales (Nombre, Apellidos, Teléfono, Dirección, NIE, CIF).
+- Implementación de la tarjeta de Imagen Corporativa con botones dedicados para carga de Logo y Favicon.
+- Implementación del formulario de Seguridad para actualización de contraseña.

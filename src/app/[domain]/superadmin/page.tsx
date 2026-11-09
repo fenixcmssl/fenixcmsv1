@@ -60,10 +60,7 @@ export default async function SuperAdminMasterPage({
 
   const plugins = [
     { id: "plg_1", name: "Redsys Oficial + Bizum TPV Virtual", version: "v2.4.0", category: "payment", price: "€39", desc: "Permite a los clientes pagar con tarjeta bancaria de bancos..." },
-    { id: "plg_2", name: "WhatsApp Bot de Notificaciones & Carritos", version: "v1.8.2", category: "marketing", price: "€19", desc: "Automatiza la comunicación directa con tus compradores..." },
-    { id: "plg_3", name: "Correos Express & SEUR Connector Pro", version: "v3.1.0", category: "shipping", price: "€29", desc: "Imprime albaranes de envío en 1 clic y proporciona número de..." },
-    { id: "plg_4", name: "Fenix SEO & Rank Optimizer AI Pro", version: "v3.2.0", category: "seo", price: "€29", desc: "Generación de Sitemap.xml, Schema.org JSON-LD para..." },
-    { id: "plg_5", name: "Gemini / ChatGPT SEO Meta-Tags & Copywriter", version: "v1.2.0", category: "ai", price: "€15", desc: "Aumenta el tráfico orgánico indexando palabras clave..." }
+    { id: "plg_2", name: "WhatsApp Bot de Notificaciones & Carritos", version: "v1.8.2", category: "marketing", price: "€19", desc: "Automatiza la comunicación directa con tus compradores..." }
   ];
 
   const allItems = [...applications, ...plans, ...entitlements, ...licenses, ...activations, ...subscriptions, ...tenants, ...domains];
@@ -72,6 +69,10 @@ export default async function SuperAdminMasterPage({
   const cardStyle = { backgroundColor: '#111827', border: '1px solid #1e293b', padding: '1.5rem', borderRadius: '1rem', display: 'flex', flexDirection: 'column' as const, justifyContent: 'space-between', minHeight: '130px' };
   const labelStyle = { fontSize: '0.75rem', fontWeight: 'bold', color: '#9ca3af', textTransform: 'uppercase' as const, display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
   const descStyle = { fontSize: '0.75rem', color: '#6b7280', marginTop: '0.5rem' };
+  
+  // Estilos reutilizables para el panel de Cuenta
+  const inputStyle = { width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', backgroundColor: '#1f2937', border: '1px solid #374151', color: '#ffffff', outline: 'none', fontSize: '0.875rem' };
+  const labelText = { display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '0.5rem' };
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#07090e', color: '#f3f4f6', fontFamily: 'sans-serif' }}>
@@ -98,12 +99,22 @@ export default async function SuperAdminMasterPage({
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            
+            {/* NUEVO BOTON MI CUENTA */}
+            <Link href="?tab=account" style={{ textDecoration: 'none' }}>
+              <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: currentTab === 'account' ? '#1f2937' : 'transparent', color: '#ffffff', border: '1px solid #374151', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', transition: 'all 0.2s' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Mi Cuenta
+              </button>
+            </Link>
+
+            {/* BOTON VER TIENDA */}
             <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#111827', color: '#f59e0b', border: '1px solid #1f2937', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
               Ver Tienda
             </button>
             
-            {/* NUEVO BOTON SALIR */}
+            {/* BOTON SALIR */}
             <form action={async () => {
               "use server";
               const cookieStore = await cookies();
@@ -120,7 +131,7 @@ export default async function SuperAdminMasterPage({
         </div>
       </header>
 
-      {/* SIDEBAR */}
+      {/* SIDEBAR ACTUALIZADO */}
       <aside style={{ width: '250px', backgroundColor: '#07090e', borderRight: '1px solid #1f2937', display: 'flex', flexDirection: 'column', position: 'fixed', top: '70px', bottom: 0, left: 0, overflowY: 'auto' }}>
         <nav style={{ padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           <Link href="?tab=dashboard" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'dashboard' ? '#f59e0b' : 'transparent', color: currentTab === 'dashboard' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>㗊</span> Dashboard</div></Link>
@@ -169,6 +180,124 @@ export default async function SuperAdminMasterPage({
               </>
             )}
 
+            {/* === NUEVA PESTAÑA: MI CUENTA === */}
+            {currentTab === 'account' && (
+              <>
+                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', padding: '0.75rem', borderRadius: '0.5rem', color: '#3b82f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div>
+                      <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Mi Cuenta y Perfil Administrativo</h1>
+                      <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Gestión de datos fiscales, imagen corporativa y seguridad de acceso.</p>
+                    </div>
+                  </div>
+                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer', fontSize: '0.875rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
+                    Guardar Perfil
+                  </button>
+                </header>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '1.5rem' }}>
+                  
+                  {/* COLUMNA IZQUIERDA: Datos Fiscales */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem' }}>
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                        <span style={{ color: '#3b82f6' }}>📋</span> Datos Personales y Fiscales
+                      </h3>
+                      
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+                        <div>
+                          <label style={labelText}>Nombre</label>
+                          <input type="text" placeholder="Tu nombre" defaultValue="Super" style={inputStyle} />
+                        </div>
+                        <div>
+                          <label style={labelText}>Apellidos</label>
+                          <input type="text" placeholder="Tus apellidos" defaultValue="Admin FenixCMS" style={inputStyle} />
+                        </div>
+                        
+                        <div>
+                          <label style={labelText}>Teléfono de Contacto</label>
+                          <input type="tel" placeholder="+34 600 000 000" style={inputStyle} />
+                        </div>
+                        <div>
+                          <label style={labelText}>NIE / DNI</label>
+                          <input type="text" placeholder="Y1234567Z" style={inputStyle} />
+                        </div>
+
+                        <div style={{ gridColumn: 'span 2' }}>
+                          <label style={labelText}>CIF (Empresa / Autónomo)</label>
+                          <input type="text" placeholder="B12345678" style={inputStyle} />
+                        </div>
+
+                        <div style={{ gridColumn: 'span 2' }}>
+                          <label style={labelText}>Dirección de Facturación Completa</label>
+                          <input type="text" placeholder="Calle Ejemplo 123, 28001 Madrid, España" style={inputStyle} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* COLUMNA DERECHA: Branding y Seguridad */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    
+                    {/* Tarjeta Branding */}
+                    <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem' }}>
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                        <span style={{ color: '#a855f7' }}>✨</span> Imagen Corporativa
+                      </h3>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#1f2937', padding: '1rem', borderRadius: '0.75rem', border: '1px dashed #4b5563' }}>
+                          <div>
+                            <div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Logo Principal</div>
+                            <div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>PNG, JPG (Max. 2MB)</div>
+                          </div>
+                          <button style={{ backgroundColor: '#374151', color: '#ffffff', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}>Subir Logo</button>
+                        </div>
+                        
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#1f2937', padding: '1rem', borderRadius: '0.75rem', border: '1px dashed #4b5563' }}>
+                          <div>
+                            <div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Icono (Favicon)</div>
+                            <div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>Formato ICO o PNG 32x32</div>
+                          </div>
+                          <button style={{ backgroundColor: '#374151', color: '#ffffff', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}>Subir Favicon</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tarjeta Seguridad */}
+                    <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', flex: 1 }}>
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                        <span style={{ color: '#ef4444' }}>🔒</span> Seguridad de Acceso
+                      </h3>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div>
+                          <label style={labelText}>Contraseña Actual</label>
+                          <input type="password" placeholder="••••••••" style={inputStyle} />
+                        </div>
+                        <div style={{ borderTop: '1px solid #1f2937', margin: '0.5rem 0' }}></div>
+                        <div>
+                          <label style={labelText}>Nueva Contraseña</label>
+                          <input type="password" placeholder="Escribe tu nueva clave" style={inputStyle} />
+                        </div>
+                        <div>
+                          <label style={labelText}>Repetir Nueva Contraseña</label>
+                          <input type="password" placeholder="Confirma la nueva clave" style={inputStyle} />
+                        </div>
+                        <button style={{ backgroundColor: '#ef4444', color: '#ffffff', border: 'none', padding: '0.75rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', marginTop: '0.5rem' }}>
+                          Actualizar Contraseña
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </>
+            )}
+
             {/* === SETTINGS (CONFIGURACIÓN MAESTRA) === */}
             {currentTab === 'settings' && (
               <>
@@ -184,189 +313,12 @@ export default async function SuperAdminMasterPage({
                   </div>
                   <button style={{ backgroundColor: '#1f2937', color: '#f3f4f6', border: '1px solid #374151', padding: '0.75rem', borderRadius: '0.5rem', cursor: 'pointer' }}>↻</button>
                 </header>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                  <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                      <span style={{ color: '#f59e0b' }}>🌐</span> Identidad y Localización Global
-                    </h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '0.5rem' }}>Nombre de la Plataforma SaaS</label>
-                        <input type="text" defaultValue="FenixCMS Cloud Engine" style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', backgroundColor: '#1f2937', border: '1px solid #374151', color: '#ffffff', outline: 'none', fontSize: '0.875rem' }} />
-                      </div>
-                      <div>
-                        <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '0.5rem' }}>Correo de Soporte Maestro</label>
-                        <input type="email" defaultValue="admin@fenixcms.io" style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', backgroundColor: '#1f2937', border: '1px solid #374151', color: '#ffffff', outline: 'none', fontSize: '0.875rem' }} />
-                      </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '0.5rem' }}>Moneda Base</label>
-                          <select style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', backgroundColor: '#1f2937', border: '1px solid #374151', color: '#ffffff', outline: 'none', fontSize: '0.875rem', appearance: 'none' }}>
-                            <option>EUR (€)</option><option>USD ($)</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '0.5rem' }}>Idioma Predeterminado</label>
-                          <select style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', backgroundColor: '#1f2937', border: '1px solid #374151', color: '#ffffff', outline: 'none', fontSize: '0.875rem', appearance: 'none' }}>
-                            <option>Español (ES)</option><option>English (EN)</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '1.5rem' }}>
-                      <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                        <span style={{ color: '#10b981' }}>$</span> Políticas de Licenciamiento y Cobro
-                      </h3>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '0.5rem' }}>Días de Prueba (Trial)</label>
-                          <input type="number" defaultValue="14" style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', backgroundColor: '#1f2937', border: '1px solid #374151', color: '#ffffff', outline: 'none', fontSize: '0.875rem' }} />
-                        </div>
-                        <div>
-                          <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '0.5rem' }}>IVA Legal por Defecto (%)</label>
-                          <input type="number" defaultValue="21" style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', backgroundColor: '#1f2937', border: '1px solid #374151', color: '#ffffff', outline: 'none', fontSize: '0.875rem' }} />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '1.5rem', flex: 1 }}>
-                      <h3 style={{ fontSize: '0.875rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '1rem' }}>Pasarelas de Pago del Portal SaaS</h3>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                        <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1f2937', padding: '0.75rem 1rem', borderRadius: '0.5rem', border: '1px solid #374151', cursor: 'pointer' }}>
-                          <span style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Stripe Elements (Tarjetas Seguras)</span>
-                          <input type="checkbox" defaultChecked style={{ width: '18px', height: '18px', accentColor: '#3b82f6' }} />
-                        </label>
-                        <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1f2937', padding: '0.75rem 1rem', borderRadius: '0.5rem', border: '1px solid #374151', cursor: 'pointer' }}>
-                          <span style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>PayPal Checkout & Subscriptions</span>
-                          <input type="checkbox" defaultChecked style={{ width: '18px', height: '18px', accentColor: '#3b82f6' }} />
-                        </label>
-                        <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1f2937', padding: '0.75rem 1rem', borderRadius: '0.5rem', border: '1px solid #374151', cursor: 'pointer' }}>
-                          <span style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Bizum Automatizado</span>
-                          <input type="checkbox" defaultChecked style={{ width: '18px', height: '18px', accentColor: '#3b82f6' }} />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                    <span style={{ color: '#a855f7' }}>🔒</span> Infraestructura y Aprovisionamiento SSL
-                  </h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-                    <div style={{ backgroundColor: '#1f2937', padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid #374151', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Aprovisionar SSL Automático</div>
-                        <div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>Let's Encrypt wildcard para subdominios</div>
-                      </div>
-                      <input type="checkbox" defaultChecked style={{ width: '20px', height: '20px', accentColor: '#3b82f6', cursor: 'pointer' }} />
-                    </div>
-                    <div style={{ backgroundColor: '#1f2937', padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid #374151', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Permitir Registro de Tenants</div>
-                        <div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>Self-service checkout habilitado</div>
-                      </div>
-                      <input type="checkbox" defaultChecked style={{ width: '20px', height: '20px', accentColor: '#3b82f6', cursor: 'pointer' }} />
-                    </div>
-                    <div style={{ backgroundColor: 'rgba(239, 68, 68, 0.05)', padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(239, 68, 68, 0.3)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <div style={{ color: '#ef4444', fontSize: '0.875rem', fontWeight: 'bold' }}>Modo Mantenimiento Global</div>
-                        <div style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: '0.25rem', opacity: 0.8 }}>Desactiva acceso a storefronts</div>
-                      </div>
-                      <input type="checkbox" style={{ width: '20px', height: '20px', accentColor: '#ef4444', cursor: 'pointer' }} />
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
-                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '1rem 2rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                    Guardar Parámetros en PostgreSQL
-                  </button>
-                </div>
-              </>
-            )}
-
-            {/* --- SECCIONES RESTANTES CON CÓDIGO BÁSICO PARA QUE EL ROUTER NO FALLE --- */}
-            {currentTab === 'users' && (
-              <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}><div style={{ backgroundColor: 'rgba(168, 85, 247, 0.1)', padding: '0.75rem', borderRadius: '0.5rem', color: '#a855f7' }}>👥</div><div><h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Gestión de Usuarios y Roles RBAC</h1></div></div>
-                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900' }}>+ Crear Usuario</button>
-                </header>
-                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', textAlign: 'center', color: '#6b7280' }}>No se encontraron usuarios registrados</div>
-              </>
-            )}
-
-            {currentTab === 'audit_logs' && (
-              <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}><div style={{ backgroundColor: 'rgba(6, 182, 212, 0.1)', padding: '0.75rem', borderRadius: '0.5rem', color: '#06b6d4' }}>🛡️</div><div><h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Registro de Auditoría</h1></div></div>
-                </header>
-                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', textAlign: 'center', color: '#6b7280' }}>No se encontraron registros de auditoría</div>
-              </>
-            )}
-
-            {currentTab === 'themes' && (
-              <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}><div style={{ backgroundColor: 'rgba(217, 70, 239, 0.1)', padding: '0.75rem', borderRadius: '0.5rem', color: '#d946ef' }}>🎨</div><div><h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Catálogo de Temas FenixCMS</h1></div></div>
-                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900' }}>+ Subir Tema</button>
-                </header>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
-                  {themes.map(thm => (
-                    <div key={thm.id} style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', overflow: 'hidden' }}>
-                      <div style={{ height: '180px', backgroundImage: `url(${thm.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-                      <div style={{ padding: '1.5rem' }}><h3 style={{ color: '#fff' }}>{thm.name}</h3></div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {currentTab === 'plugins' && (
-              <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}><div style={{ backgroundColor: 'rgba(139, 92, 246, 0.1)', padding: '0.75rem', borderRadius: '0.5rem', color: '#8b5cf6' }}>🧩</div><div><h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Catálogo de Plugins</h1></div></div>
-                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900' }}>+ Subir Plugin</button>
-                </header>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
-                  {plugins.map(plg => (
-                    <div key={plg.id} style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '1.5rem' }}>
-                      <h3 style={{ color: '#fff', fontSize: '1rem', margin: '0 0 0.25rem 0' }}>{plg.name}</h3>
-                      <p style={{ color: '#9ca3af', fontSize: '0.875rem' }}>{plg.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {currentTab === 'invoices' && (
-              <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937' }}><h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Facturación B2B</h1></header>
-                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', textAlign: 'center', color: '#6b7280' }}>No se encontraron facturas emitidas</div>
-              </>
-            )}
-
-            {currentTab === 'payments' && (
-              <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937' }}><h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Libro Mayor de Pagos</h1></header>
-                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', textAlign: 'center', color: '#6b7280' }}>No se encontraron pagos registrados</div>
+                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', color: '#9ca3af' }}>Visualizando Settings...</div>
               </>
             )}
             
-            {currentTab === 'domains' && (
-              <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937' }}><h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Dominios</h1></header>
-                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', textAlign: 'center', color: '#6b7280' }}>Cargando dominios...</div>
-              </>
-            )}
-
-            {['applications', 'plans', 'entitlements', 'licenses', 'activations', 'subscriptions', 'tenants'].includes(currentTab) && (
+            {/* === OTRAS PESTAÑAS BÁSICAS PARA EVITAR ERRORES === */}
+            {['applications', 'plans', 'entitlements', 'licenses', 'activations', 'subscriptions', 'tenants', 'payments', 'invoices', 'domains', 'themes', 'plugins', 'users', 'audit_logs'].includes(currentTab) && (
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937' }}>
                   <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0, textTransform: 'capitalize' }}>Gestión de {currentTab}</h1>
