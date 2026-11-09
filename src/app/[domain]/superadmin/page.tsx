@@ -48,21 +48,6 @@ export default async function SuperAdminMasterPage({
   })));
   const domains = [...dbDomains, ...getNewItems('domains')].filter(d => !cookieStore.has(`hide_mock_${d.id}`));
 
-  const payments: any[] = [];
-  const invoices: any[] = []; 
-  const users: any[] = []; 
-  const auditLogs: any[] = []; 
-
-  const themes = [
-    { id: "thm_1", name: "Nordic Clean Marketplace Theme", version: "v2.1.0", price: "€49", desc: "Diseño escandinavo limpio con cuadrícula adaptativa, filtros...", image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=600&q=80" },
-    { id: "thm_2", name: "Cyberpunk Dark Electronics Theme", version: "v1.5.0", price: "€59", desc: "Especialmente concebido para tiendas de hardware, component...", image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" }
-  ];
-
-  const plugins = [
-    { id: "plg_1", name: "Redsys Oficial + Bizum TPV Virtual", version: "v2.4.0", category: "payment", price: "€39", desc: "Permite a los clientes pagar con tarjeta bancaria de bancos..." },
-    { id: "plg_2", name: "WhatsApp Bot de Notificaciones & Carritos", version: "v1.8.2", category: "marketing", price: "€19", desc: "Automatiza la comunicación directa con tus compradores..." }
-  ];
-
   const allItems = [...applications, ...plans, ...entitlements, ...licenses, ...activations, ...subscriptions, ...tenants, ...domains];
   const editItem = editId ? allItems.find(i => i.id === editId) : null;
 
@@ -76,7 +61,6 @@ export default async function SuperAdminMasterPage({
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#07090e', color: '#f3f4f6', fontFamily: 'sans-serif' }}>
       
-      {/* TOP BAR */}
       <header style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '70px', backgroundColor: '#0b0f19', borderBottom: '1px solid #1f2937', zIndex: 50, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <div style={{ backgroundColor: '#f59e0b', color: '#000000', fontWeight: '900', padding: '0.5rem', borderRadius: '0.5rem', fontSize: '1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px' }}>
@@ -98,14 +82,11 @@ export default async function SuperAdminMasterPage({
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            
-            {/* 1. BOTON VER TIENDA */}
             <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#111827', color: '#f59e0b', border: '1px solid #1f2937', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
               Ver Tienda
             </button>
 
-            {/* 2. BOTON MI CUENTA */}
             <Link href="?tab=account" style={{ textDecoration: 'none' }}>
               <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: currentTab === 'account' ? '#1f2937' : 'transparent', color: '#ffffff', border: '1px solid #374151', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', transition: 'all 0.2s' }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -113,7 +94,6 @@ export default async function SuperAdminMasterPage({
               </button>
             </Link>
             
-            {/* 3. BOTON SALIR */}
             <form action={async () => {
               "use server";
               const cookieStore = await cookies();
@@ -126,11 +106,9 @@ export default async function SuperAdminMasterPage({
               </button>
             </form>
           </div>
-
         </div>
       </header>
 
-      {/* SIDEBAR ACTUALIZADO */}
       <aside style={{ width: '250px', backgroundColor: '#07090e', borderRight: '1px solid #1f2937', display: 'flex', flexDirection: 'column', position: 'fixed', top: '70px', bottom: 0, left: 0, overflowY: 'auto' }}>
         <nav style={{ padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           <Link href="?tab=dashboard" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'dashboard' ? '#f59e0b' : 'transparent', color: currentTab === 'dashboard' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>㗊</span> Dashboard</div></Link>
@@ -152,7 +130,6 @@ export default async function SuperAdminMasterPage({
         </nav>
       </aside>
 
-      {/* CONTENIDO PRINCIPAL */}
       <main style={{ marginLeft: '250px', marginTop: '70px', flex: 1, padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         
         {action === 'edit' && editItem ? (
@@ -161,7 +138,6 @@ export default async function SuperAdminMasterPage({
           </div>
         ) : (
           <>
-            {/* === DASHBOARD === */}
             {currentTab === 'dashboard' && (
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -179,7 +155,6 @@ export default async function SuperAdminMasterPage({
               </>
             )}
 
-            {/* === PESTAÑA: MI CUENTA === */}
             {currentTab === 'account' && (
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
@@ -198,106 +173,48 @@ export default async function SuperAdminMasterPage({
                 </header>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '1.5rem' }}>
-                  
-                  {/* COLUMNA IZQUIERDA: Datos Fiscales */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem' }}>
-                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                        <span style={{ color: '#3b82f6' }}>📋</span> Datos Personales y Fiscales
-                      </h3>
-                      
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}><span style={{ color: '#3b82f6' }}>📋</span> Datos Personales y Fiscales</h3>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
-                        <div>
-                          <label style={labelText}>Nombre</label>
-                          <input type="text" placeholder="Tu nombre" defaultValue="Super" style={inputStyle} />
-                        </div>
-                        <div>
-                          <label style={labelText}>Apellidos</label>
-                          <input type="text" placeholder="Tus apellidos" defaultValue="Admin FenixCMS" style={inputStyle} />
-                        </div>
-                        
-                        <div>
-                          <label style={labelText}>Teléfono de Contacto</label>
-                          <input type="tel" placeholder="+34 600 000 000" style={inputStyle} />
-                        </div>
-                        <div>
-                          <label style={labelText}>NIE / DNI</label>
-                          <input type="text" placeholder="Y1234567Z" style={inputStyle} />
-                        </div>
-
-                        <div style={{ gridColumn: 'span 2' }}>
-                          <label style={labelText}>CIF (Empresa / Autónomo)</label>
-                          <input type="text" placeholder="B12345678" style={inputStyle} />
-                        </div>
-
-                        <div style={{ gridColumn: 'span 2' }}>
-                          <label style={labelText}>Dirección de Facturación Completa</label>
-                          <input type="text" placeholder="Calle Ejemplo 123, 28001 Madrid, España" style={inputStyle} />
-                        </div>
+                        <div><label style={labelText}>Nombre</label><input type="text" placeholder="Tu nombre" defaultValue="Super" style={inputStyle} /></div>
+                        <div><label style={labelText}>Apellidos</label><input type="text" placeholder="Tus apellidos" defaultValue="Admin FenixCMS" style={inputStyle} /></div>
+                        <div><label style={labelText}>Teléfono de Contacto</label><input type="tel" placeholder="+34 600 000 000" style={inputStyle} /></div>
+                        <div><label style={labelText}>NIE / DNI</label><input type="text" placeholder="Y1234567Z" style={inputStyle} /></div>
+                        <div style={{ gridColumn: 'span 2' }}><label style={labelText}>CIF (Empresa / Autónomo)</label><input type="text" placeholder="B12345678" style={inputStyle} /></div>
+                        <div style={{ gridColumn: 'span 2' }}><label style={labelText}>Dirección de Facturación Completa</label><input type="text" placeholder="Calle Ejemplo 123, 28001 Madrid, España" style={inputStyle} /></div>
                       </div>
                     </div>
                   </div>
-
-                  {/* COLUMNA DERECHA: Branding y Seguridad */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    
-                    {/* Tarjeta Branding */}
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem' }}>
-                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                        <span style={{ color: '#a855f7' }}>✨</span> Imagen Corporativa
-                      </h3>
-                      
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}><span style={{ color: '#a855f7' }}>✨</span> Imagen Corporativa</h3>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#1f2937', padding: '1rem', borderRadius: '0.75rem', border: '1px dashed #4b5563' }}>
-                          <div>
-                            <div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Logo Principal</div>
-                            <div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>PNG, JPG (Max. 2MB)</div>
-                          </div>
+                          <div><div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Logo Principal</div><div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>PNG, JPG (Max. 2MB)</div></div>
                           <button style={{ backgroundColor: '#374151', color: '#ffffff', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}>Subir Logo</button>
                         </div>
-                        
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#1f2937', padding: '1rem', borderRadius: '0.75rem', border: '1px dashed #4b5563' }}>
-                          <div>
-                            <div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Icono (Favicon)</div>
-                            <div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>Formato ICO o PNG 32x32</div>
-                          </div>
+                          <div><div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Icono (Favicon)</div><div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>Formato ICO o PNG 32x32</div></div>
                           <button style={{ backgroundColor: '#374151', color: '#ffffff', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}>Subir Favicon</button>
                         </div>
                       </div>
                     </div>
-
-                    {/* Tarjeta Seguridad */}
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', flex: 1 }}>
-                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                        <span style={{ color: '#ef4444' }}>🔒</span> Seguridad de Acceso
-                      </h3>
-                      
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}><span style={{ color: '#ef4444' }}>🔒</span> Seguridad de Acceso</h3>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <div>
-                          <label style={labelText}>Contraseña Actual</label>
-                          <input type="password" placeholder="••••••••" style={inputStyle} />
-                        </div>
+                        <div><label style={labelText}>Contraseña Actual</label><input type="password" placeholder="••••••••" style={inputStyle} /></div>
                         <div style={{ borderTop: '1px solid #1f2937', margin: '0.5rem 0' }}></div>
-                        <div>
-                          <label style={labelText}>Nueva Contraseña</label>
-                          <input type="password" placeholder="Escribe tu nueva clave" style={inputStyle} />
-                        </div>
-                        <div>
-                          <label style={labelText}>Repetir Nueva Contraseña</label>
-                          <input type="password" placeholder="Confirma la nueva clave" style={inputStyle} />
-                        </div>
-                        <button style={{ backgroundColor: '#ef4444', color: '#ffffff', border: 'none', padding: '0.75rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', marginTop: '0.5rem' }}>
-                          Actualizar Contraseña
-                        </button>
+                        <div><label style={labelText}>Nueva Contraseña</label><input type="password" placeholder="Escribe tu nueva clave" style={inputStyle} /></div>
+                        <div><label style={labelText}>Repetir Nueva Contraseña</label><input type="password" placeholder="Confirma la nueva clave" style={inputStyle} /></div>
+                        <button style={{ backgroundColor: '#ef4444', color: '#ffffff', border: 'none', padding: '0.75rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', marginTop: '0.5rem' }}>Actualizar Contraseña</button>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </>
             )}
 
-            {/* === SETTINGS (CONFIGURACIÓN MAESTRA) === */}
             {currentTab === 'settings' && (
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
@@ -316,14 +233,49 @@ export default async function SuperAdminMasterPage({
               </>
             )}
             
-            {/* === OTRAS PESTAÑAS BÁSICAS PARA EVITAR ERRORES === */}
+            {/* === ESTO ARREGLA LAS PANTALLAS NEGRAS CON UNA INTERFAZ DE TABLA UNIVERSAL === */}
             {['applications', 'plans', 'entitlements', 'licenses', 'activations', 'subscriptions', 'tenants', 'payments', 'invoices', 'domains', 'themes', 'plugins', 'users', 'audit_logs'].includes(currentTab) && (
               <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937' }}>
-                  <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0, textTransform: 'capitalize' }}>Gestión de {currentTab}</h1>
+                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0, textTransform: 'capitalize' }}>Gestión de {currentTab.replace('_', ' ')}</h1>
+                    <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Estructura lista para inyectar datos reales desde PostgreSQL.</p>
+                  </div>
+                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer' }}>
+                    + Nuevo Registro
+                  </button>
                 </header>
-                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', color: '#9ca3af' }}>
-                  Visualizando datos de {currentTab}...
+
+                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', overflow: 'hidden' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ backgroundColor: '#1f2937', borderBottom: '1px solid #374151' }}>
+                        <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ID / Referencia</th>
+                        <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Estado</th>
+                        <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Fecha de Creación</th>
+                        <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[1, 2, 3].map((row) => (
+                        <tr key={row} style={{ borderBottom: '1px solid #1f2937' }}>
+                          <td style={{ padding: '1rem 1.5rem', color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>{currentTab.substring(0,3).toUpperCase()}-00{row}</td>
+                          <td style={{ padding: '1rem 1.5rem' }}>
+                            <span style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981', padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 'bold', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                              Esperando BD
+                            </span>
+                          </td>
+                          <td style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.875rem' }}>-</td>
+                          <td style={{ padding: '1rem 1.5rem', textAlign: 'right' }}>
+                            <button style={{ backgroundColor: 'transparent', color: '#3b82f6', border: 'none', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 'bold' }}>Editar</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <div style={{ padding: '1.5rem', textAlign: 'center', color: '#6b7280', fontSize: '0.875rem' }}>
+                    Los datos reales se mostrarán aquí una vez completada la conexión con Prisma (Fase 6).
+                  </div>
                 </div>
               </>
             )}
