@@ -3,27 +3,35 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl;
-  const path = url.pathname;
+  
+  // Obtenemos el dominio actual (ej. localhost o mitienda.com)
+  let hostname = req.headers.get('host') || '';
+  // Limpiamos el puerto en entornos de desarrollo local (ej. de localhost:3000 a localhost)
+  hostname = hostname.split(':')[0]; 
+  
+  // Reconstruimos la ruta exacta solicitada junto con sus parametros (ej. ?tab=dashboard)
+  const searchParams = req.nextUrl.searchParams.toString();
+  const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ''}`;
 
-  // Si la ruta contiene "/superadmin" pero NO es la página de login
-  if (path.includes('/superadmin') && !path.includes('/superadmin/login')) {
-    
-    // Verificamos si existe la cookie de autenticación que creamos en el paso anterior
+  // ==========================================
+  // 1. BARRERA DE SEGURIDAD PARA SUPERADMIN
+  // ==========================================
+  if (url.pathname.startsWith('/superadmin') && !url.pathname.startsWith('/superadmin/login')) {
     const isAuth = req.cookies.has('superadmin_auth');
-    
     if (!isAuth) {
-      // Si no tiene la cookie, calculamos la ruta base (por si el dominio está en la URL)
-      const basePath = path.split('/superadmin')[0]; 
-      // Y lo redirigimos obligatoriamente al login
-      return NextResponse.redirect(new URL(`${basePath}/superadmin/login`, req.url));
+      // Si no tiene sesion, lo pateamos a la pantalla de login
+      return NextResponse.redirect(new URL('/superadmin/login', req.url));
     }
   }
 
-  // Si todo está correcto o es otra ruta pública de tiendas, dejamos pasar la petición
-  return NextResponse.next();
+  // ==========================================
+  // 2. MOTOR DE REESCRITURA MULTI-TENANT
+  // ==========================================
+  // Reescribe la URL para que Next.js entre a la carpeta src/app/[domain]/...
+  return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }
 
-// Configuramos el middleware para que no bloquee archivos estáticos, imágenes ni APIs
+// Bloqueamos la ejecucion del middleware en assets estaticos e imagenes
 export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|favicon.ico).*)',

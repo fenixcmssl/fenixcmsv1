@@ -138,3 +138,8 @@
 - Configuración de barrera de seguridad para interceptar cualquier petición a /superadmin.
 - Redirección automática obligatoria a /superadmin/login si la cookie superadmin_auth no está presente.
 - Protección compatible con el enrutamiento dinámico [domain] del SaaS.
+
+### Hito - Fase 5.1.1: Parche Middleware Multi-Tenant
+- Restauración de la lógica de reescritura de URLs para la arquitectura [domain].
+- Unificación del enrutador de Tenants con la barrera de validación de Cookies para /superadmin.
+- Resolución de bucle infinito (spinning page) causado por la falta del identificador de dominio en el motor de Turbopack.
