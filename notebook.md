@@ -132,3 +132,9 @@
 - Implementación del diseño corporativo premium (FenixCMS Dark Theme con acentos naranja).
 - Desarrollo del Server Action (ctions.ts) para validación segura de credenciales maestras y generación de sesión por Cookies (superadmin_auth).
 - Sistema de feedback visual para credenciales incorrectas usando SearchParams (?error=credenciales).
+
+### Hito - Fase 5.1.0: Middleware de Seguridad
+- Implementación de src/middleware.ts en Next.js.
+- Configuración de barrera de seguridad para interceptar cualquier petición a /superadmin.
+- Redirección automática obligatoria a /superadmin/login si la cookie superadmin_auth no está presente.
+- Protección compatible con el enrutamiento dinámico [domain] del SaaS.
