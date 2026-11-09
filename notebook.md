@@ -167,3 +167,8 @@
 
 ### Hito - Fase 5.3.1: Reordenación en Header
 - Se invirtió el orden de los botones en la barra superior para priorizar "Ver Tienda", seguido de "Mi Cuenta" y finalizar con "Salir".
+
+### Hito - Fase 6.0.0: Configuración del Esquema Prisma
+- Creación de prisma/schema.prisma con estructura relacional optimizada para SaaS Multi-Tenant.
+- Definición de tablas globales: SuperAdmin (RBAC/Perfil), GlobalSetting (Configuraciones maestras) y AuditLog.
+- Definición de tablas de inquilinos: Tenant (con indicador moduleType para mantener tablas independientes por modelo de negocio), Domain, Plan y Subscription.

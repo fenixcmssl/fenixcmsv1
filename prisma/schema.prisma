@@ -7,101 +7,99 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Tenant {
-  id          String   @id @default(uuid())
-  name        String
-  password    String   @default("admin123")
-  logoUrl     String?  
-  themeColor  String   @default("#2563eb")
-  
-  // Configuración Multi-Modelo Global
-  moduleType  String   @default("ECOMMERCE") // Valores: ECOMMERCE, REAL_ESTATE, AUCTION
-  currency    String   @default("USD")
-  language    String   @default("es")
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  domains             TenantDomain[]
-  
-  // Relaciones Aisladas por Módulo
-  ecommerceProducts   EcommerceProduct[]
-  realEstateProps     RealEstateProperty[]
-  auctionItems        AuctionItem[]
+// ==========================================
+// MODELOS DEL SUPERADMIN (GLOBALES)
+// ==========================================
+
+model SuperAdmin {
+  id         String   @id @default(cuid())
+  name       String
+  lastName   String?
+  email      String   @unique
+  password   String
+  phone      String?
+  nie        String?
+  cif        String?
+  address    String?
+  logoUrl    String?
+  faviconUrl String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
-model TenantDomain {
-  id        String   @id @default(uuid())
+model GlobalSetting {
+  id                 String   @id @default("global")
+  platformName       String   @default("FenixCMS Cloud Engine")
+  supportEmail       String   @default("admin@fenixcms.io")
+  baseCurrency       String   @default("EUR")
+  defaultLanguage    String   @default("es")
+  trialDays          Int      @default(14)
+  defaultTax         Float    @default(21.0)
+  stripeEnabled      Boolean  @default(true)
+  paypalEnabled      Boolean  @default(true)
+  bizumEnabled       Boolean  @default(true)
+  autoSsl            Boolean  @default(true)
+  allowRegistrations Boolean  @default(true)
+  maintenanceMode    Boolean  @default(false)
+  updatedAt          DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  operator  String
+  details   Json?
+  createdAt DateTime @default(now())
+}
+
+// ==========================================
+// MODELOS MULTI-TENANT (AISLAMIENTO)
+// ==========================================
+
+model Tenant {
+  id           String         @id @default(cuid())
+  name         String
+  moduleType   String         // ECOMMERCE, INMOBILIARIA, SUBASTAS
+  currency     String         @default("EUR")
+  language     String         @default("es")
+  color        String         @default("#000000")
+  logoUrl      String?
+  status       String         @default("ACTIVE")
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  domains      Domain[]
+  subscriptions Subscription[]
+}
+
+model Domain {
+  id        String   @id @default(cuid())
   domain    String   @unique
   tenantId  String
   tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  isCustom  Boolean  @default(false)
+  sslStatus String   @default("PENDING")
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
-// ==========================================
-// MÓDULO 1: E-COMMERCE (Catálogo de productos físicos/digitales)
-// ==========================================
-model EcommerceProduct {
-  id          String   @id @default(uuid())
-  name        String
-  slug        String
-  price       Float
-  sku         String?
-  imageUrl    String?
-  stock       Int      @default(0)
-  isActive    Boolean  @default(true)
+model Plan {
+  id           String   @id @default(cuid())
+  name         String
+  monthlyPrice Float
+  yearlyPrice  Float
+  features     Json
+  status       String   @default("ACTIVE")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Subscription {
+  id          String   @id @default(cuid())
   tenantId    String
   tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  planId      String
+  status      String   @default("ACTIVE")
+  nextBilling DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-}
-
-// ==========================================
-// MÓDULO 2: INMOBILIARIA (Clasificados de Propiedades)
-// ==========================================
-model RealEstateProperty {
-  id            String   @id @default(uuid())
-  title         String
-  description   String?
-  price         Float
-  propertyType  String   // Venta, Alquiler
-  bedrooms      Int      @default(0)
-  bathrooms     Int      @default(0)
-  squareMeters  Float    @default(0)
-  address       String?
-  imageUrl      String?
-  isActive      Boolean  @default(true)
-  tenantId      String
-  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-}
-
-// ==========================================
-// MÓDULO 3: SUBASTAS (Motor de pujas con límite de tiempo)
-// ==========================================
-model AuctionItem {
-  id            String   @id @default(uuid())
-  title         String
-  description   String?
-  startingBid   Float
-  currentBid    Float?
-  endTime       DateTime
-  imageUrl      String?
-  isActive      Boolean  @default(true)
-  tenantId      String
-  tenant        Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-}
-// ==========================================
-// SEGURIDAD Y AUDITORÍA (Superadministrador)
-// ==========================================
-model SuperAdminLog {
-  id           String   @id @default(uuid())
-  adminUser    String   @default("SystemAdmin")
-  action       String
-  targetTenant String
-  createdAt    DateTime @default(now())
 }
