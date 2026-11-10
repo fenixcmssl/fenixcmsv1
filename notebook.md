@@ -239,3 +239,5 @@
 - Fase 11.1.0: Instalación de SDK @paypal/react-paypal-js para iniciar la integración de pasarelas de pago escalables.
 
 - Fase 11.1.1: Resolución automática de vulnerabilidades en dependencias mediante npm audit fix.
+
+- Fase 11.1.2: Inyección de NEXT_PUBLIC_PAYPAL_CLIENT_ID en .env y creación del componente PaypalCheckout.tsx.
