@@ -9,7 +9,7 @@ import NewEntitlementForm from "./NewEntitlementForm";
 import NewLicenseForm from "./NewLicenseForm";
 import EditItemForm from "./EditItemForm";
 import NewItemForm from "./NewItemForm";
-import { updateSuperAdminPassword } from './accountActions';
+import { updateSuperAdminPassword, updateSuperAdminProfile } from './accountActions';
 
 export default async function SuperAdminMasterPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const resolvedParams = await searchParams;
@@ -20,6 +20,7 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
   const cookieStore = await cookies();
 
   const prisma = getAdminClient();
+  const superAdmin = await prisma.superAdmin.findFirst();
   const tenantsCount = await prisma.tenant.count();
   const tenants = await prisma.tenant.findMany({ include: { tenantDomains: true }, orderBy: { createdAt: 'desc' } });
 
@@ -114,8 +115,8 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ color: '#ffffff', fontWeight: 'bold', fontSize: '0.875rem' }}>Super Admin FenixCMS</div>
-            <div style={{ color: '#f59e0b', fontSize: '0.75rem' }}>info@fenixcms.es</div>
+            <div style={{ color: '#ffffff', fontWeight: 'bold', fontSize: '0.875rem' }}>{superAdmin?.name || 'Super Admin'}</div>
+            <div style={{ color: '#f59e0b', fontSize: '0.75rem' }}>{superAdmin?.email || 'admin@fenixcms.io'}</div>
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -203,29 +204,43 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
                     </div>
                     <div><h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Mi Cuenta y Perfil Administrativo</h1><p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Gestión de datos fiscales, imagen corporativa y seguridad de acceso.</p></div>
                   </div>
-                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer', fontSize: '0.875rem' }}>Guardar Perfil</button>
                 </header>
                 <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '1.5rem' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem' }}>
                       <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}><span style={{ color: '#3b82f6' }}>📋</span> Datos Personales y Fiscales</h3>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
-                        <div><label style={labelText}>Nombre</label><input type="text" placeholder="Tu nombre" defaultValue="Super" style={inputStyle} /></div>
-                        <div><label style={labelText}>Apellidos</label><input type="text" placeholder="Tus apellidos" defaultValue="Admin FenixCMS" style={inputStyle} /></div>
+                      
+                      {msg === 'profile_success' && <div style={{ color: '#10b981', marginBottom: '1rem', fontSize: '0.875rem', fontWeight: 'bold' }}>✓ Perfil y correo electrónico actualizados correctamente en PostgreSQL.</div>}
+                      {msg === 'profile_empty' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem', fontWeight: 'bold' }}>⚠ El correo y el nombre son obligatorios.</div>}
+                      
+                      <form action={updateSuperAdminProfile} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+                        <div style={{ gridColumn: 'span 2' }}>
+                          <label style={labelText}>Correo Electrónico (Para Iniciar Sesión)</label>
+                          <input type="email" name="email" defaultValue={superAdmin?.email || ''} placeholder="admin@fenixcms.io" style={inputStyle} required />
+                        </div>
+                        <div style={{ gridColumn: 'span 2' }}>
+                          <label style={labelText}>Nombre Completo</label>
+                          <input type="text" name="name" defaultValue={superAdmin?.name || ''} placeholder="Super Admin Maestro" style={inputStyle} required />
+                        </div>
                         <div><label style={labelText}>Teléfono de Contacto</label><input type="tel" placeholder="+34 600 000 000" style={inputStyle} /></div>
-                        <div><label style={labelText}>NIE / DNI</label><input type="text" placeholder="Y1234567Z" style={inputStyle} /></div>
-                        <div style={{ gridColumn: 'span 2' }}><label style={labelText}>CIF</label><input type="text" placeholder="B12345678" style={inputStyle} /></div>
+                        <div><label style={labelText}>NIE / DNI / CIF</label><input type="text" placeholder="B12345678" style={inputStyle} /></div>
                         <div style={{ gridColumn: 'span 2' }}><label style={labelText}>Dirección de Facturación Completa</label><input type="text" placeholder="Calle Ejemplo 123" style={inputStyle} /></div>
-                      </div>
+                        
+                        <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
+                          <button type="submit" style={{ backgroundColor: '#3b82f6', color: '#ffffff', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer', fontSize: '0.875rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
+                            Actualizar Datos
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', flex: 1 }}>
                       <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}><span style={{ color: '#ef4444' }}>🔒</span> Seguridad de Acceso</h3>
-                      {msg === 'success' && <div style={{ color: '#10b981', marginBottom: '1rem', fontSize: '0.875rem' }}>✓ Contraseña actualizada correctamente en PostgreSQL.</div>}
-                      {msg === 'mismatch' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>⚠ Las contraseñas nuevas no coinciden.</div>}
-                      {msg === 'invalid' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>⚠ La contraseña actual es incorrecta.</div>}
-                      {msg === 'empty' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>⚠ Por favor, rellena todos los campos.</div>}
+                      {msg === 'success' && <div style={{ color: '#10b981', marginBottom: '1rem', fontSize: '0.875rem', fontWeight: 'bold' }}>✓ Contraseña actualizada correctamente en PostgreSQL.</div>}
+                      {msg === 'mismatch' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem', fontWeight: 'bold' }}>⚠ Las contraseñas nuevas no coinciden.</div>}
+                      {msg === 'invalid' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem', fontWeight: 'bold' }}>⚠ La contraseña actual es incorrecta.</div>}
+                      {msg === 'empty' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem', fontWeight: 'bold' }}>⚠ Por favor, rellena todos los campos.</div>}
                       <form action={updateSuperAdminPassword} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <div><label style={labelText}>Contraseña Actual</label><input type="password" name="currentPassword" placeholder="••••••••" style={inputStyle} required /></div>
                         <div style={{ borderTop: '1px solid #1f2937', margin: '0.5rem 0' }}></div>

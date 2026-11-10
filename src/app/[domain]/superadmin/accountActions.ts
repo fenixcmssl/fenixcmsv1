@@ -12,27 +12,37 @@ export async function updateSuperAdminPassword(formData: FormData) {
   if (newPassword !== confirmPassword) redirect("/superadmin?tab=account&msg=mismatch");
 
   const prisma = getAdminClient();
-  const email = "admin@fenixcms.io";
+  // Buscamos dinámicamente al superadmin principal, sin importar qué correo tenga
+  const admin = await prisma.superAdmin.findFirst();
+  if (!admin) redirect("/superadmin?tab=account&msg=invalid");
 
-  // Asegurar que el Superadmin existe en su tabla independiente
-  let admin = await prisma.superAdmin.findUnique({ where: { email } });
-  if (!admin) {
-    const hashedTemp = await bcrypt.hash("superadmin2026", 10);
-    admin = await prisma.superAdmin.create({
-      data: { name: "Super Admin Maestro", email, password: hashedTemp }
-    });
-  }
-
-  // Verificar credencial actual
   const isValid = await bcrypt.compare(currentPassword, admin.password);
   if (!isValid) redirect("/superadmin?tab=account&msg=invalid");
 
-  // Encriptar y guardar nueva credencial segura
   const hashedNew = await bcrypt.hash(newPassword, 10);
   await prisma.superAdmin.update({
-    where: { email },
+    where: { id: admin.id },
     data: { password: hashedNew }
   });
 
   redirect("/superadmin?tab=account&msg=success");
+}
+
+export async function updateSuperAdminProfile(formData: FormData) {
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+  
+  if (!email || !name) redirect("/superadmin?tab=account&msg=profile_empty");
+
+  const prisma = getAdminClient();
+  const admin = await prisma.superAdmin.findFirst();
+  
+  if (admin) {
+    await prisma.superAdmin.update({
+      where: { id: admin.id },
+      data: { name, email }
+    });
+  }
+  
+  redirect("/superadmin?tab=account&msg=profile_success");
 }

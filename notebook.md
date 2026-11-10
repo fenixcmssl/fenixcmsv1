@@ -199,3 +199,5 @@
 - Fase 8.3.0: Implementación del Motor de Formularios Dinámicos (NewItemForm.tsx) activando el botón 'Nuevo Registro' en todas las pestañas del panel lateral.
 
 - Fase 8.3.1: Reparación de error de sintaxis en page.tsx (Unterminated regexp) que causaba 502 Bad Gateway y consolidación de la arquitectura condicional para formularios dinámicos.
+
+- Fase 8.4.0: Conexión de formulario de Perfil a Prisma. Habilitado el cambio dinámico de Correo y Nombre del Superadmin.
