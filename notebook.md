@@ -261,3 +261,5 @@
 - Fase 11.3.4: Corrección del error de compilación (Unterminated regexp) protegiendo los backticks de Next.js mediante un string literal en PowerShell.
 
 - Fase 11.3.6: Actualización de schema.prisma con la creación del modelo Application y la expansión de campos en el modelo Plan.
+
+- Fase 11.3.8: Limpieza de caché profunda (.next) y regeneración de Prisma en el VPS para forzar el reconocimiento de los modelos Application y Plan.
