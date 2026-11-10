@@ -255,3 +255,5 @@
 - Fase 11.3.0: Formularios de creación (NewItemForm.tsx) conectados exitosamente a PostgreSQL a través de Server Actions.
 
 - Fase 11.3.1: Resolución de error de PowerShell utilizando LiteralPath y Out-File para la correcta inyección de NewItemForm.tsx.
+
+- Fase 11.3.2: Restauración de checkDatabaseHealth en superadminActions.ts para resolver caída 502 de Next.js.

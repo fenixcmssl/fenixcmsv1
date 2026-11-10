@@ -2,6 +2,17 @@
 import { getAdminClient } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+export async function checkDatabaseHealth() {
+  const prisma = getAdminClient();
+  try {
+    const tenantsCount = await prisma.tenant.count();
+    return { success: true, status: "PostgreSQL Online y Operativo", count: tenantsCount };
+  } catch (error) {
+    console.error("Error de conexión a PostgreSQL:", error);
+    return { success: false, status: "Error de Conexión" };
+  }
+}
+
 export async function createSuperAdminItem(tabName: string, formData: any) {
   const prisma = getAdminClient();
   try {
@@ -31,7 +42,6 @@ export async function createSuperAdminItem(tabName: string, formData: any) {
       });
     }
     
-    // Forzar a Next.js a recargar los datos frescos de la base de datos
     revalidatePath('/[domain]/superadmin', 'page');
     return { success: true };
   } catch (error: any) {
