@@ -7,8 +7,8 @@ import NewAppForm from "./NewAppForm";
 import NewPlanForm from "./NewPlanForm";
 import NewEntitlementForm from "./NewEntitlementForm";
 import NewLicenseForm from "./NewLicenseForm";
-import ActionButtons from "./ActionButtons";
 import EditItemForm from "./EditItemForm";
+import { updateSuperAdminPassword } from './accountActions';
 
 export default async function SuperAdminMasterPage({
   searchParams,
@@ -19,6 +19,7 @@ export default async function SuperAdminMasterPage({
   const currentTab = typeof resolvedParams.tab === 'string' ? resolvedParams.tab : 'dashboard';
   const action = typeof resolvedParams.action === 'string' ? resolvedParams.action : null;
   const editId = typeof resolvedParams.id === 'string' ? resolvedParams.id : null;
+  const msg = typeof resolvedParams.msg === 'string' ? resolvedParams.msg : null;
   const cookieStore = await cookies();
 
   const prisma = getAdminClient();
@@ -49,7 +50,7 @@ export default async function SuperAdminMasterPage({
   })));
   const domains = [...dbDomains, ...getNewItems('domains')].filter(d => !cookieStore.has(`hide_mock_${d.id}`));
 
-  const allItems = [...applications, ...plans, ...entitlements, ...licenses, ...activations, ...subscriptions, ...tenants, ...tenantDomains];
+  const allItems = [...applications, ...plans, ...entitlements, ...licenses, ...activations, ...subscriptions, ...tenants, ...domains];
   const editItem = editId ? allItems.find(i => i.id === editId) : null;
 
   const cardStyle = { backgroundColor: '#111827', border: '1px solid #1e293b', padding: '1.5rem', borderRadius: '1rem', display: 'flex', flexDirection: 'column' as const, justifyContent: 'space-between', minHeight: '130px' };
@@ -203,13 +204,19 @@ export default async function SuperAdminMasterPage({
                     </div>
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', flex: 1 }}>
                       <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}><span style={{ color: '#ef4444' }}>🔒</span> Seguridad de Acceso</h3>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <div><label style={labelText}>Contraseña Actual</label><input type="password" placeholder="••••••••" style={inputStyle} /></div>
+                      
+                      {msg === 'success' && <div style={{ color: '#10b981', marginBottom: '1rem', fontSize: '0.875rem' }}>✓ Contraseña actualizada correctamente en PostgreSQL.</div>}
+                      {msg === 'mismatch' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>⚠ Las contraseñas nuevas no coinciden.</div>}
+                      {msg === 'invalid' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>⚠ La contraseña actual es incorrecta.</div>}
+                      {msg === 'empty' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>⚠ Por favor, rellena todos los campos.</div>}
+
+                      <form action={updateSuperAdminPassword} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div><label style={labelText}>Contraseña Actual</label><input type="password" name="currentPassword" placeholder="••••••••" style={inputStyle} required /></div>
                         <div style={{ borderTop: '1px solid #1f2937', margin: '0.5rem 0' }}></div>
-                        <div><label style={labelText}>Nueva Contraseña</label><input type="password" placeholder="Escribe tu nueva clave" style={inputStyle} /></div>
-                        <div><label style={labelText}>Repetir Nueva Contraseña</label><input type="password" placeholder="Confirma la nueva clave" style={inputStyle} /></div>
-                        <button style={{ backgroundColor: '#ef4444', color: '#ffffff', border: 'none', padding: '0.75rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', marginTop: '0.5rem' }}>Actualizar Contraseña</button>
-                      </div>
+                        <div><label style={labelText}>Nueva Contraseña</label><input type="password" name="newPassword" placeholder="Escribe tu nueva clave" style={inputStyle} required /></div>
+                        <div><label style={labelText}>Repetir Nueva Contraseña</label><input type="password" name="confirmPassword" placeholder="Confirma la nueva clave" style={inputStyle} required /></div>
+                        <button type="submit" style={{ backgroundColor: '#ef4444', color: '#ffffff', border: 'none', padding: '0.75rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', marginTop: '0.5rem' }}>Actualizar Contraseña</button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -234,7 +241,6 @@ export default async function SuperAdminMasterPage({
               </>
             )}
             
-            {/* === ESTO ARREGLA LAS PANTALLAS NEGRAS CON UNA INTERFAZ DE TABLA UNIVERSAL === */}
             {['applications', 'plans', 'entitlements', 'licenses', 'activations', 'subscriptions', 'tenants', 'payments', 'invoices', 'domains', 'themes', 'plugins', 'users', 'audit_logs'].includes(currentTab) && (
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -275,7 +281,7 @@ export default async function SuperAdminMasterPage({
                     </tbody>
                   </table>
                   <div style={{ padding: '1.5rem', textAlign: 'center', color: '#6b7280', fontSize: '0.875rem' }}>
-                    Los datos reales se mostrarán aquí una vez completada la conexión con Prisma (Fase 6).
+                    Los datos reales se mostrarán aquí una vez completada la conexión con Prisma.
                   </div>
                 </div>
               </>
