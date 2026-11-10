@@ -3,6 +3,7 @@ import { getAdminClient } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import LanguageSwitcher from "./LanguageSwitcher";
 import NewAppForm from "./NewAppForm";
 import NewPlanForm from "./NewPlanForm";
 import NewEntitlementForm from "./NewEntitlementForm";
@@ -120,6 +121,7 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <LanguageSwitcher currentLocale={cookieStore.get('NEXT_LOCALE')?.value || 'es'} />
             <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#111827', color: '#f59e0b', border: '1px solid #1f2937', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
               Ver Tienda
