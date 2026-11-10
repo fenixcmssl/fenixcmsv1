@@ -14,11 +14,11 @@ export default function middleware(req: NextRequest) {
   const hostname = rawHostname.includes("localhost") ? "fenixcms.es" : rawHostname;
   const mainDomain = "fenixcms.es";
 
-  // CASO 1: Si es la portada principal exacta (Landing Page pública)
+  // CASO 1: Portada principal exacta (Landing Page)
   if (hostname === mainDomain && url.pathname === "/") {
     return NextResponse.next();
   }
 
-  // CASO 2: Todo lo demás (Panel Superadmin y tiendas de clientes)
+  // CASO 2: Panel Superadmin y tiendas de clientes
   return NextResponse.rewrite(new URL(`/${hostname}${url.pathname}`, req.url));
 }
