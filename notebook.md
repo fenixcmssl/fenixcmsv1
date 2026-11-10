@@ -259,3 +259,5 @@
 - Fase 11.3.2: Restauración de checkDatabaseHealth en superadminActions.ts para resolver caída 502 de Next.js.
 
 - Fase 11.3.4: Corrección del error de compilación (Unterminated regexp) protegiendo los backticks de Next.js mediante un string literal en PowerShell.
+
+- Fase 11.3.6: Actualización de schema.prisma con la creación del modelo Application y la expansión de campos en el modelo Plan.

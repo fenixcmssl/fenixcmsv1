@@ -1,4 +1,4 @@
-generator client {
+﻿generator client {
   provider = "prisma-client-js"
 }
 
@@ -50,23 +50,23 @@ model AuditLog {
 }
 
 model Tenant {
-  id               String             @id @default(cuid())
-  name             String
-  password         String?
-  moduleType       String
-  currency         String             @default("EUR")
-  language         String             @default("es")
-  color            String             @default("#000000")
-  themeColor       String             @default("#000000")
-  logoUrl          String?
-  status           String             @default("ACTIVE")
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  tenantDomains    TenantDomain[]
-  subscriptions    Subscription[]
+  id                String             @id @default(cuid())
+  name              String
+  password          String?
+  moduleType        String
+  currency          String             @default("EUR")
+  language          String             @default("es")
+  color             String             @default("#000000")
+  themeColor        String             @default("#000000")
+  logoUrl           String?
+  status            String             @default("ACTIVE")
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  tenantDomains     TenantDomain[]
+  subscriptions     Subscription[]
   ecommerceProducts EcommerceProduct[]
-  properties       Property[]
-  auctionItems     AuctionItem[]
+  properties        Property[]
+  auctionItems      AuctionItem[]
 }
 
 model TenantDomain {
@@ -79,12 +79,28 @@ model TenantDomain {
   createdAt DateTime @default(now())
 }
 
+model Application {
+  id        String   @id @default(cuid())
+  name      String
+  type      String   @default("ECOMMERCE")
+  version   String   @default("1.0.0")
+  status    String   @default("ACTIVA")
+  desc      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Plan {
   id           String   @id @default(cuid())
   name         String
+  slug         String?  @unique
   monthlyPrice Float
   yearlyPrice  Float
-  features     Json
+  trialDays    Int?     @default(14)
+  tag          String?
+  appName      String?
+  desc         String?
+  features     Json?
   status       String   @default("ACTIVE")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
