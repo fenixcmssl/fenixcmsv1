@@ -223,3 +223,5 @@
 - Fase 10.0.5: Migración de middleware.ts a proxy.ts según estándar Next.js 16 y bypass de tests de TS en compilación de producción para asegurar estabilidad.
 
 - Fase 10.1.0: Actualización de Landing Page a Client Component para implementar Smooth Scroll mediante JavaScript, manteniendo la URL raíz limpia sin hashes.
+
+- Fase 10.1.1: Corrección de rutas absolutas (/superadmin?tab=...) en la barra lateral y botón de Mi Cuenta para evitar fallos de enrutamiento y errores de carga.
