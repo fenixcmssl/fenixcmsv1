@@ -12,7 +12,6 @@ export async function updateSuperAdminPassword(formData: FormData) {
   if (newPassword !== confirmPassword) redirect("/superadmin?tab=account&msg=mismatch");
 
   const prisma = getAdminClient();
-  // Buscamos dinámicamente al superadmin principal, sin importar qué correo tenga
   const admin = await prisma.superAdmin.findFirst();
   if (!admin) redirect("/superadmin?tab=account&msg=invalid");
 
@@ -30,10 +29,12 @@ export async function updateSuperAdminPassword(formData: FormData) {
 
 export async function updateSuperAdminProfile(formData: FormData) {
   const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
+  const rawEmail = formData.get("email") as string;
   
-  if (!email || !name) redirect("/superadmin?tab=account&msg=profile_empty");
-
+  if (!rawEmail || !name) redirect("/superadmin?tab=account&msg=profile_empty");
+  
+  // Limpiar el correo antes de guardar en PostgreSQL
+  const email = rawEmail.trim().toLowerCase();
   const prisma = getAdminClient();
   const admin = await prisma.superAdmin.findFirst();
   

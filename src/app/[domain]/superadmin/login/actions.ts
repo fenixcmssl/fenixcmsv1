@@ -5,33 +5,25 @@ import { getAdminClient } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
 export async function handleSuperAdminLogin(formData: FormData) {
-  const email = formData.get("email") as string;
+  const rawEmail = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  if (!email || !password) {
-    redirect("/superadmin/login?error=credenciales");
-  }
+  if (!rawEmail || !password) redirect("/superadmin/login?error=credenciales");
 
+  // Limpiar espacios y forzar minúsculas para comparar de forma segura
+  const email = rawEmail.trim().toLowerCase();
   const prisma = getAdminClient();
   
-  // Consultar la tabla independiente del Superadmin
-  const admin = await prisma.superAdmin.findUnique({ where: { email } });
+  const admin = await prisma.superAdmin.findFirst();
 
-  if (admin && admin.password) {
-    // Comparar el hash criptográfico
+  if (admin && admin.email === email) {
     const isValid = await bcrypt.compare(password, admin.password);
-    
     if (isValid) {
       const cookieStore = await cookies();
-      cookieStore.set("superadmin_auth", "true", { 
-          path: "/", 
-          maxAge: 60 * 60 * 24,
-          httpOnly: true 
-      });
+      cookieStore.set("superadmin_auth", "true", { path: "/", maxAge: 60 * 60 * 24, httpOnly: true });
       redirect("/superadmin?tab=dashboard");
     }
   }
 
-  // Si falla la validación, devuelve error
   redirect("/superadmin/login?error=credenciales");
 }

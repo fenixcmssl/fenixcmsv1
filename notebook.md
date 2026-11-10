@@ -203,3 +203,5 @@
 - Fase 8.4.0: Conexión de formulario de Perfil a Prisma. Habilitado el cambio dinámico de Correo y Nombre del Superadmin.
 
 - Fase 8.4.0: Conexión de formulario de Perfil a Prisma. Habilitado el cambio dinámico de Correo y Nombre del Superadmin.
+
+- Fase 8.4.1: Parche de seguridad para login. Limpieza automática de espacios y minúsculas en correos para evitar bloqueos de PostgreSQL.
