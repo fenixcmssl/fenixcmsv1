@@ -273,3 +273,5 @@
 - Fase 11.5.2: Desactivación de caché estática en page.tsx mediante export const dynamic = 'force-dynamic' para mostrar los Planes de BD en tiempo real.
 
 - Fase 11.6.0: Modificación del modelo Tenant para almacenar email. Implementación de generación de contraseñas automáticas post-pago y visualización de credenciales en el Frontend.
+
+- Fase 11.6.1: Implementación del portal central de Login para clientes (/login) con validación de credenciales en PostgreSQL y redirección dinámica hacia el panel de administración del subdominio respectivo (/[domain]/admin).
