@@ -12,13 +12,26 @@ import NewItemForm from "./NewItemForm";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { updateSuperAdminPassword, updateSuperAdminProfile } from './accountActions';
 
+// DICCIONARIO MULTI-IDIOMA
+const dict = {
+  es: { title: "FENIX CMS", sub: "Plataforma Global Multi-Tenant", btnStore: "Ver Tienda", btnAccount: "Mi Cuenta", btnLogout: "Salir", menu: { dashboard: "Dashboard", applications: "Aplicaciones", plans: "Planes", entitlements: "Límites", licenses: "Licencias", activations: "Activaciones", subscriptions: "Suscripciones", payments: "Pagos", invoices: "Facturas", tenants: "Tenants", domains: "Dominios", themes: "Temas", plugins: "Plugins", users: "Usuarios", audit_logs: "Auditoría", settings: "Ajustes" }, dashTitle: "Panel de Control Ejecutivo Super Admin", dashSub: "Métricas en tiempo real desde PostgreSQL", mrr: "MRR (INGRESO)", arr: "ARR (ANUAL)", tCount: "TENANTS", lCount: "LICENCIAS", manage: "Gestión de", newBtn: "+ Nuevo Registro", noData: "No hay registros disponibles." },
+  en: { title: "FENIX CMS", sub: "Global Multi-Tenant Platform", btnStore: "View Store", btnAccount: "My Account", btnLogout: "Logout", menu: { dashboard: "Dashboard", applications: "Applications", plans: "Plans", entitlements: "Entitlements", licenses: "Licenses", activations: "Activations", subscriptions: "Subscriptions", payments: "Payments", invoices: "Invoices", tenants: "Tenants", domains: "Domains", themes: "Themes", plugins: "Plugins", users: "Users", audit_logs: "Audit Logs", settings: "Settings" }, dashTitle: "Super Admin Executive Dashboard", dashSub: "Real-time metrics from PostgreSQL", mrr: "MRR (REVENUE)", arr: "ARR (ANNUAL)", tCount: "TENANTS", lCount: "LICENSES", manage: "Management of", newBtn: "+ New Record", noData: "No records available." },
+  it: { title: "FENIX CMS", sub: "Piattaforma Globale Multi-Tenant", btnStore: "Vedi Negozio", btnAccount: "Il Mio Account", btnLogout: "Esci", menu: { dashboard: "Dashboard", applications: "Applicazioni", plans: "Piani", entitlements: "Diritti", licenses: "Licenze", activations: "Attivazioni", subscriptions: "Abbonamenti", payments: "Pagamenti", invoices: "Fatture", tenants: "Tenants", domains: "Domini", themes: "Temi", plugins: "Plugins", users: "Utenti", audit_logs: "Audit Logs", settings: "Impostazioni" }, dashTitle: "Pannello di Controllo Super Admin", dashSub: "Metriche in tempo reale da PostgreSQL", mrr: "MRR (RICAVO)", arr: "ARR (ANNUALE)", tCount: "TENANTS", lCount: "LICENZE", manage: "Gestione di", newBtn: "+ Nuovo Registro", noData: "Nessun record disponibile." },
+  fr: { title: "FENIX CMS", sub: "Plateforme Globale Multi-Tenant", btnStore: "Voir Boutique", btnAccount: "Mon Compte", btnLogout: "Déconnexion", menu: { dashboard: "Tableau de Bord", applications: "Applications", plans: "Plans", entitlements: "Droits", licenses: "Licences", activations: "Activations", subscriptions: "Abonnements", payments: "Paiements", invoices: "Factures", tenants: "Locataires", domains: "Domaines", themes: "Thèmes", plugins: "Plugins", users: "Utilisateurs", audit_logs: "Journaux d'Audit", settings: "Paramètres" }, dashTitle: "Tableau de Bord Super Admin", dashSub: "Métriques en temps réel de PostgreSQL", mrr: "MRR (REVENU)", arr: "ARR (ANNUEL)", tCount: "LOCATAIRES", lCount: "LICENCES", manage: "Gestion de", newBtn: "+ Nouvel Enregistrement", noData: "Aucun enregistrement disponible." },
+  pt: { title: "FENIX CMS", sub: "Plataforma Global Multi-Tenant", btnStore: "Ver Loja", btnAccount: "Minha Conta", btnLogout: "Sair", menu: { dashboard: "Dashboard", applications: "Aplicações", plans: "Planos", entitlements: "Direitos", licenses: "Licenças", activations: "Ativações", subscriptions: "Assinaturas", payments: "Pagamentos", invoices: "Faturas", tenants: "Inquilinos", domains: "Domínios", themes: "Temas", plugins: "Plugins", users: "Usuários", audit_logs: "Logs de Auditoria", settings: "Configurações" }, dashTitle: "Painel de Controle Super Admin", dashSub: "Métricas em tempo real do PostgreSQL", mrr: "MRR (RECEITA)", arr: "ARR (ANUAL)", tCount: "INQUILINOS", lCount: "LICENÇAS", manage: "Gestão de", newBtn: "+ Novo Registro", noData: "Nenhum registro disponível." },
+  de: { title: "FENIX CMS", sub: "Globale Multi-Tenant-Plattform", btnStore: "Shop ansehen", btnAccount: "Mein Konto", btnLogout: "Abmelden", menu: { dashboard: "Dashboard", applications: "Anwendungen", plans: "Pläne", entitlements: "Berechtigungen", licenses: "Lizenzen", activations: "Aktivierungen", subscriptions: "Abonnements", payments: "Zahlungen", invoices: "Rechnungen", tenants: "Mieter", domains: "Domänen", themes: "Themen", plugins: "Plugins", users: "Benutzer", audit_logs: "Überwachungsprotokolle", settings: "Einstellungen" }, dashTitle: "Super Admin Dashboard", dashSub: "Echtzeit-Metriken aus PostgreSQL", mrr: "MRR (UMSATZ)", arr: "ARR (JÄHRLICH)", tCount: "MIETER", lCount: "LIZENZEN", manage: "Verwaltung von", newBtn: "+ Neuer Datensatz", noData: "Keine Datensätze verfügbar." },
+};
+
 export default async function SuperAdminMasterPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const resolvedParams = await searchParams;
   const currentTab = typeof resolvedParams.tab === 'string' ? resolvedParams.tab : 'dashboard';
   const action = typeof resolvedParams.action === 'string' ? resolvedParams.action : null;
   const editId = typeof resolvedParams.id === 'string' ? resolvedParams.id : null;
   const msg = typeof resolvedParams.msg === 'string' ? resolvedParams.msg : null;
+  
   const cookieStore = await cookies();
+  const currentLocale = cookieStore.get('NEXT_LOCALE')?.value || 'es';
+  const t = dict[currentLocale] || dict['es'];
 
   const prisma = getAdminClient();
   const superAdmin = await prisma.superAdmin.findFirst();
@@ -107,10 +120,10 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#ffffff', margin: 0, letterSpacing: '0.05em' }}>FENIX CMS</h2>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#ffffff', margin: 0, letterSpacing: '0.05em' }}>{t.title}</h2>
               <span style={{ fontSize: '0.65rem', color: '#f59e0b', fontWeight: 'bold', border: '1px solid #f59e0b', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>SUPER ADMIN</span>
             </div>
-            <p style={{ color: '#9ca3af', fontSize: '0.75rem', margin: 0 }}>Plataforma Global Multi-Tenant & Licenciamiento SaaS</p>
+            <p style={{ color: '#9ca3af', fontSize: '0.75rem', margin: 0 }}>{t.sub}</p>
           </div>
         </div>
         
@@ -121,17 +134,17 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <LanguageSwitcher currentLocale={cookieStore.get('NEXT_LOCALE')?.value || 'es'} />
+            <LanguageSwitcher currentLocale={currentLocale} />
             
             <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#111827', color: '#f59e0b', border: '1px solid #1f2937', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
-              Ver Tienda
+              {t.btnStore}
             </button>
 
             <Link href="/superadmin?tab=account" style={{ textDecoration: 'none' }}>
               <button style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: currentTab === 'account' ? '#1f2937' : 'transparent', color: '#ffffff', border: '1px solid #374151', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', transition: 'all 0.2s' }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                Mi Cuenta
+                {t.btnAccount}
               </button>
             </Link>
             
@@ -143,7 +156,7 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
             }}>
               <button type="submit" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.875rem', transition: 'all 0.2s' }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                Salir
+                {t.btnLogout}
               </button>
             </form>
           </div>
@@ -152,22 +165,22 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
 
       <aside style={{ width: '250px', backgroundColor: '#07090e', borderRight: '1px solid #1f2937', display: 'flex', flexDirection: 'column', position: 'fixed', top: '70px', bottom: 0, left: 0, overflowY: 'auto' }}>
         <nav style={{ padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-          <Link href="/superadmin?tab=dashboard" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'dashboard' ? '#f59e0b' : 'transparent', color: currentTab === 'dashboard' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>㗊</span> Dashboard</div></Link>
-          <Link href="/superadmin?tab=applications" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'applications' ? '#f59e0b' : 'transparent', color: currentTab === 'applications' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>⚙️</span> Applications</div></Link>
-          <Link href="/superadmin?tab=plans" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'plans' ? '#f59e0b' : 'transparent', color: currentTab === 'plans' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🏷️</span> Plans</div></Link>
-          <Link href="/superadmin?tab=entitlements" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'entitlements' ? '#f59e0b' : 'transparent', color: currentTab === 'entitlements' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🎛️</span> Entitlements</div></Link>
-          <Link href="/superadmin?tab=licenses" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'licenses' ? '#f59e0b' : 'transparent', color: currentTab === 'licenses' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🔑</span> Licenses</div></Link>
-          <Link href="/superadmin?tab=activations" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'activations' ? '#f59e0b' : 'transparent', color: currentTab === 'activations' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>📉</span> Activations</div></Link>
-          <Link href="/superadmin?tab=subscriptions" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'subscriptions' ? '#f59e0b' : 'transparent', color: currentTab === 'subscriptions' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>💳</span> Subscriptions</div></Link>
-          <Link href="/superadmin?tab=payments" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'payments' ? '#f59e0b' : 'transparent', color: currentTab === 'payments' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>💲</span> Payments</div></Link>
-          <Link href="/superadmin?tab=invoices" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'invoices' ? '#f59e0b' : 'transparent', color: currentTab === 'invoices' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🧾</span> Invoices</div></Link>
-          <Link href="/superadmin?tab=tenants" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'tenants' ? '#f59e0b' : 'transparent', color: currentTab === 'tenants' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🏢</span> Tenants</div></Link>
-          <Link href="/superadmin?tab=domains" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'domains' ? '#f59e0b' : 'transparent', color: currentTab === 'domains' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '1rem' }}><span>🌐</span> Domains</div></Link>
-          <Link href="/superadmin?tab=themes" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'themes' ? '#f59e0b' : 'transparent', color: currentTab === 'themes' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🎨</span> Themes</div></Link>
-          <Link href="/superadmin?tab=plugins" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'plugins' ? '#f59e0b' : 'transparent', color: currentTab === 'plugins' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🧩</span> Plugins</div></Link>
-          <Link href="/superadmin?tab=users" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'users' ? '#f59e0b' : 'transparent', color: currentTab === 'users' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>👥</span> Users</div></Link>
-          <Link href="/superadmin?tab=audit_logs" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'audit_logs' ? '#f59e0b' : 'transparent', color: currentTab === 'audit_logs' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>⏱️</span> Audit Logs</div></Link>
-          <Link href="/superadmin?tab=settings" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'settings' ? '#f59e0b' : 'transparent', color: currentTab === 'settings' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '1rem' }}><span>⚙️</span> Settings</div></Link>
+          <Link href="/superadmin?tab=dashboard" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'dashboard' ? '#f59e0b' : 'transparent', color: currentTab === 'dashboard' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>㗊</span> {t.menu.dashboard}</div></Link>
+          <Link href="/superadmin?tab=applications" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'applications' ? '#f59e0b' : 'transparent', color: currentTab === 'applications' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>⚙️</span> {t.menu.applications}</div></Link>
+          <Link href="/superadmin?tab=plans" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'plans' ? '#f59e0b' : 'transparent', color: currentTab === 'plans' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🏷️</span> {t.menu.plans}</div></Link>
+          <Link href="/superadmin?tab=entitlements" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'entitlements' ? '#f59e0b' : 'transparent', color: currentTab === 'entitlements' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🎛️</span> {t.menu.entitlements}</div></Link>
+          <Link href="/superadmin?tab=licenses" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'licenses' ? '#f59e0b' : 'transparent', color: currentTab === 'licenses' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🔑</span> {t.menu.licenses}</div></Link>
+          <Link href="/superadmin?tab=activations" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'activations' ? '#f59e0b' : 'transparent', color: currentTab === 'activations' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>📉</span> {t.menu.activations}</div></Link>
+          <Link href="/superadmin?tab=subscriptions" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'subscriptions' ? '#f59e0b' : 'transparent', color: currentTab === 'subscriptions' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>💳</span> {t.menu.subscriptions}</div></Link>
+          <Link href="/superadmin?tab=payments" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'payments' ? '#f59e0b' : 'transparent', color: currentTab === 'payments' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>💲</span> {t.menu.payments}</div></Link>
+          <Link href="/superadmin?tab=invoices" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'invoices' ? '#f59e0b' : 'transparent', color: currentTab === 'invoices' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🧾</span> {t.menu.invoices}</div></Link>
+          <Link href="/superadmin?tab=tenants" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'tenants' ? '#f59e0b' : 'transparent', color: currentTab === 'tenants' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🏢</span> {t.menu.tenants}</div></Link>
+          <Link href="/superadmin?tab=domains" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'domains' ? '#f59e0b' : 'transparent', color: currentTab === 'domains' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '1rem' }}><span>🌐</span> {t.menu.domains}</div></Link>
+          <Link href="/superadmin?tab=themes" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'themes' ? '#f59e0b' : 'transparent', color: currentTab === 'themes' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🎨</span> {t.menu.themes}</div></Link>
+          <Link href="/superadmin?tab=plugins" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'plugins' ? '#f59e0b' : 'transparent', color: currentTab === 'plugins' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>🧩</span> {t.menu.plugins}</div></Link>
+          <Link href="/superadmin?tab=users" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'users' ? '#f59e0b' : 'transparent', color: currentTab === 'users' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>👥</span> {t.menu.users}</div></Link>
+          <Link href="/superadmin?tab=audit_logs" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'audit_logs' ? '#f59e0b' : 'transparent', color: currentTab === 'audit_logs' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}><span>⏱️</span> {t.menu.audit_logs}</div></Link>
+          <Link href="/superadmin?tab=settings" style={{ textDecoration: 'none' }}><div style={{ padding: '0.75rem 1rem', backgroundColor: currentTab === 'settings' ? '#f59e0b' : 'transparent', color: currentTab === 'settings' ? '#000000' : '#e2e8f0', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '1rem' }}><span>⚙️</span> {t.menu.settings}</div></Link>
         </nav>
       </aside>
 
@@ -185,15 +198,15 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <h1 style={{ fontSize: '1.75rem', fontWeight: '900', color: '#ffffff', margin: 0 }}><span style={{ color: '#f59e0b' }}>Panel de Control</span> Ejecutivo Super Admin</h1>
-                    <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Métricas en tiempo real consultadas directamente desde PostgreSQL</p>
+                    <h1 style={{ fontSize: '1.75rem', fontWeight: '900', color: '#ffffff', margin: 0 }}><span style={{ color: '#f59e0b' }}>{t.dashTitle.split(' ').slice(0,2).join(' ')}</span> {t.dashTitle.split(' ').slice(2).join(' ')}</h1>
+                    <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>{t.dashSub}</p>
                   </div>
                 </header>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
-                  <div style={cardStyle}><div style={labelStyle}><span>MRR (INGRESO)</span> <span style={{color: '#10b981'}}>↗</span></div><div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#10b981', margin: '0.5rem 0' }}>€15.420</div><div style={descStyle}>Ingreso mensualizado</div></div>
-                  <div style={cardStyle}><div style={labelStyle}><span>ARR (ANUAL)</span> <span style={{color: '#f59e0b'}}>$</span></div><div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#f59e0b', margin: '0.5rem 0' }}>€185.040</div><div style={descStyle}>Run-rate anualizado</div></div>
-                  <div style={cardStyle}><div style={labelStyle}><span>TENANTS</span> <span style={{color: '#60a5fa'}}>📱</span></div><div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#ffffff', margin: '0.5rem 0' }}>{tenantsCount}</div><div style={descStyle}>Instancias creadas</div></div>
-                  <div style={cardStyle}><div style={labelStyle}><span>LICENCIAS</span> <span style={{color: '#10b981'}}>✓</span></div><div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#10b981', margin: '0.5rem 0' }}>38</div><div style={descStyle}>Licencias operativas</div></div>
+                  <div style={cardStyle}><div style={labelStyle}><span>{t.mrr}</span> <span style={{color: '#10b981'}}>↗</span></div><div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#10b981', margin: '0.5rem 0' }}>€15.420</div><div style={descStyle}>Ingreso mensualizado</div></div>
+                  <div style={cardStyle}><div style={labelStyle}><span>{t.arr}</span> <span style={{color: '#f59e0b'}}>$</span></div><div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#f59e0b', margin: '0.5rem 0' }}>€185.040</div><div style={descStyle}>Run-rate anualizado</div></div>
+                  <div style={cardStyle}><div style={labelStyle}><span>{t.tCount}</span> <span style={{color: '#60a5fa'}}>📱</span></div><div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#ffffff', margin: '0.5rem 0' }}>{tenantsCount}</div><div style={descStyle}>Instancias creadas</div></div>
+                  <div style={cardStyle}><div style={labelStyle}><span>{t.lCount}</span> <span style={{color: '#10b981'}}>✓</span></div><div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#10b981', margin: '0.5rem 0' }}>38</div><div style={descStyle}>Licencias operativas</div></div>
                 </div>
               </>
             )}
@@ -265,11 +278,11 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                   <div>
-                    <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0, textTransform: 'capitalize' }}>Gestión de {currentTab.replace('_', ' ')}</h1>
+                    <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0, textTransform: 'capitalize' }}>{t.manage} {t.menu[currentTab as keyof typeof t.menu]}</h1>
                     <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Sincronizado con base de datos PostgreSQL multi-tenant.</p>
                   </div>
                   <Link href={`/superadmin?tab=${currentTab}&action=new`}>
-                    <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer' }}>+ Nuevo Registro</button>
+                    <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer' }}>{t.newBtn}</button>
                   </Link>
                 </header>
 
@@ -296,7 +309,7 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
                       )) : (
                         <tr>
                           <td colSpan={getHeaders(currentTab).length + 1} style={{ padding: '1.5rem', textAlign: 'center', color: '#6b7280', fontSize: '0.875rem' }}>
-                            {activeData ? "No hay registros disponibles en la base de datos." : "Módulo en construcción (Esperando conexión a BD)."}
+                            {t.noData}
                           </td>
                         </tr>
                       )}
