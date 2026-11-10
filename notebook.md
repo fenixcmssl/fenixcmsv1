@@ -201,3 +201,5 @@
 - Fase 8.3.1: Reparación de error de sintaxis en page.tsx (Unterminated regexp) que causaba 502 Bad Gateway y consolidación de la arquitectura condicional para formularios dinámicos.
 
 - Fase 8.4.0: Conexión de formulario de Perfil a Prisma. Habilitado el cambio dinámico de Correo y Nombre del Superadmin.
+
+- Fase 8.4.0: Conexión de formulario de Perfil a Prisma. Habilitado el cambio dinámico de Correo y Nombre del Superadmin.
