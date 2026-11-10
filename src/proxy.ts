@@ -19,11 +19,6 @@ export default function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // CASO 2: Si la ruta empieza por /superadmin, permitimos el acceso directo al panel maestro
-  if (url.pathname.startsWith("/superadmin")) {
-    return NextResponse.next();
-  }
-
-  // CASO 3: Tiendas de los clientes (Multi-tenant)
+  // CASO 2: Superadmin y Tiendas (Reescribe internamente pasando la ruta Y los parámetros de búsqueda)
   return NextResponse.rewrite(new URL(`/${hostname}${url.pathname}${url.search}`, req.url));
 }
