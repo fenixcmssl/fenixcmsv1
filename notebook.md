@@ -225,3 +225,5 @@
 - Fase 10.1.0: Actualización de Landing Page a Client Component para implementar Smooth Scroll mediante JavaScript, manteniendo la URL raíz limpia sin hashes.
 
 - Fase 10.1.1: Corrección de rutas absolutas (/superadmin?tab=...) en la barra lateral y botón de Mi Cuenta para evitar fallos de enrutamiento y errores de carga.
+
+- Fase 10.1.2: Actualización de src/proxy.ts para permitir el paso directo de rutas /superadmin con sus parámetros de pestañas (?tab=), solucionando el bloqueo de navegación en el panel.

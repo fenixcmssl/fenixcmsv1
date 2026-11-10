@@ -7,7 +7,7 @@ export const config = {
   ],
 };
 
-export default function middleware(req: NextRequest) {
+export default function proxy(req: NextRequest) {
   const url = req.nextUrl;
   const rawHostname = req.headers.get("host") || "";
   
@@ -19,6 +19,11 @@ export default function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // CASO 2: Panel Superadmin y tiendas de clientes
-  return NextResponse.rewrite(new URL(`/${hostname}${url.pathname}`, req.url));
+  // CASO 2: Si es cualquier ruta del Superadmin (incluyendo ?tab=...) permitimos acceso directo preservando query params
+  if (url.pathname.startsWith("/superadmin")) {
+    return NextResponse.next();
+  }
+
+  // CASO 3: Tiendas de los clientes (Multi-tenant)
+  return NextResponse.rewrite(new URL(`/${hostname}${url.pathname}${url.search}`, req.url));
 }
