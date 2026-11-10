@@ -241,7 +241,54 @@ export default async function SuperAdminMasterPage({
               </>
             )}
             
-            {['applications', 'plans', 'entitlements', 'licenses', 'activations', 'subscriptions', 'tenants', 'payments', 'invoices', 'domains', 'themes', 'plugins', 'users', 'audit_logs'].includes(currentTab) && (
+            
+        {currentTab === 'applications' && (
+          <>
+            <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <div>
+                <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Gestión de Aplicaciones</h1>
+                <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Catálogo de módulos del motor SaaS conectados a PostgreSQL.</p>
+              </div>
+              <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer' }}>
+                + Nuevo Registro
+              </button>
+            </header>
+            <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', overflow: 'hidden' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                <thead>
+                  <tr style={{ backgroundColor: '#1f2937', borderBottom: '1px solid #374151' }}>
+                    <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nombre / Tipo</th>
+                    <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Versión</th>
+                    <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Estado</th>
+                    <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {applications.map((app) => (
+                    <tr key={app.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                      <td style={{ padding: '1rem 1.5rem' }}>
+                        <div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>{app.name}</div>
+                        <div style={{ color: '#9ca3af', fontSize: '0.75rem' }}>{app.type}</div>
+                      </td>
+                      <td style={{ padding: '1rem 1.5rem', color: '#d1d5db', fontSize: '0.875rem' }}>{app.version}</td>
+                      <td style={{ padding: '1rem 1.5rem' }}>
+                        <span style={{ backgroundColor: app.status === 'ACTIVA' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(107, 114, 128, 0.1)', color: app.status === 'ACTIVA' ? '#10b981' : '#9ca3af', padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 'bold', border: app.status === 'ACTIVA' ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid rgba(107, 114, 128, 0.2)' }}>
+                          {app.status}
+                        </span>
+                      </td>
+                      <td style={{ padding: '1rem 1.5rem', textAlign: 'right' }}>
+                        <button style={{ backgroundColor: 'transparent', color: '#3b82f6', border: 'none', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 'bold' }}>Editar</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+
+
+            {['plans', 'entitlements', 'licenses', 'activations', 'subscriptions', 'tenants', 'payments', 'invoices', 'domains', 'themes', 'plugins', 'users', 'audit_logs'].includes(currentTab) && (
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>

@@ -191,3 +191,5 @@
 - Fase 7.3.2: Conexión definitiva del formulario de Login Superadmin a PostgreSQL utilizando encriptación bcryptjs y tablas independientes.
 
 - Fase 7.3.2: Conexión definitiva del formulario de Login Superadmin a PostgreSQL utilizando encriptación bcryptjs y tablas independientes.
+
+- Fase 8.1.0: Independización de la pestaña 'Applications' en el VPS para renderizar datos reales vía Prisma, desacoplándola de la tabla genérica.
