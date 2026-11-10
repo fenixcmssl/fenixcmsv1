@@ -251,3 +251,5 @@
 - Fase 11.2.2: Modificación de tenantActions.ts y PaypalCheckout.tsx para exponer mensajes de error detallados de PostgreSQL en la interfaz web.
 
 - Fase 11.2.3: Inyección del campo obligatorio moduleType ('ECOMMERCE') en tenantActions.ts para resolver el bloqueo de Prisma al instanciar nuevos Tenants.
+
+- Fase 11.3.0: Formularios de creación (NewItemForm.tsx) conectados exitosamente a PostgreSQL a través de Server Actions.
