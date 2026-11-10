@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Link from "next/link";
 import PaypalCheckout from "@/components/PaypalCheckout";
 import { getAdminClient } from "@/lib/prisma";
@@ -11,13 +13,11 @@ export default async function GlobalLandingPage() {
     orderBy: { monthlyPrice: 'asc' }
   });
 
-  // Si la base de datos está vacía, mostramos un aviso elegante
   const plansToRender = dbPlans.length > 0 ? dbPlans : [];
 
   return (
     <div style={{ backgroundColor: '#07090e', color: '#f3f4f6', minHeight: '100vh', fontFamily: 'sans-serif' }}>
       
-      {/* NAVEGACIÓN */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 4rem', borderBottom: '1px solid #1f2937', backgroundColor: '#0b0f19' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ backgroundColor: '#f59e0b', color: '#000', fontWeight: '900', padding: '0.5rem', borderRadius: '0.5rem', width: '35px', height: '35px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -39,7 +39,6 @@ export default async function GlobalLandingPage() {
         </div>
       </header>
 
-      {/* HERO SECTION */}
       <main style={{ padding: '4rem 2rem', textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
         <h2 style={{ fontSize: '3.5rem', fontWeight: '900', color: '#fff', marginBottom: '1.5rem', lineHeight: '1.1' }}>
           Lanza tu E-commerce Pro <br/><span style={{ color: '#f59e0b' }}>en cuestión de minutos</span>
@@ -48,7 +47,6 @@ export default async function GlobalLandingPage() {
           Plataforma multi-tenant de alto rendimiento. Selecciona tu plan, realiza el pago seguro y obtén tu tienda desplegada instantáneamente.
         </p>
 
-        {/* TABLA DE PRECIOS DINÁMICA DESDE POSTGRESQL */}
         {plansToRender.length === 0 ? (
           <div style={{ backgroundColor: '#111827', border: '1px solid #1f2937', borderRadius: '1rem', padding: '3rem', color: '#9ca3af' }}>
             Actualmente no hay planes de suscripción activos. Por favor, crea uno desde el panel SuperAdmin.
@@ -85,7 +83,6 @@ export default async function GlobalLandingPage() {
                   </ul>
                   
                   <div style={{ marginTop: 'auto' }}>
-                    {/* ENLACE DINÁMICO AL CHECKOUT */}
                     <PaypalCheckout planName={plan.name} price={plan.monthlyPrice.toString()} />
                   </div>
                 </div>
