@@ -245,3 +245,5 @@
 - Fase 11.1.3: IntegraciÃ³n del componente PaypalCheckout en la Landing Page pÃºblica (page.tsx) con planes de suscripciÃ³n renderizados.
 
 - Fase 11.2.0: Implementación de Server Action (tenantActions.ts) para aprovisionamiento automático de Tenants en PostgreSQL tras confirmación de pago vía PayPal.
+
+- Fase 11.2.1: Inicialización del controlador superadminActions.ts preparatorio para la inserción de datos (Aplicaciones, Planes) desde los formularios del Superadmin hacia PostgreSQL.
