@@ -38,14 +38,13 @@ export default function PaypalCheckout({ planName, price }: { planName: string, 
               const payerEmail = details?.payer?.email_address || 'cliente@ejemplo.com';
               const payerName = details?.payer?.name?.given_name || 'Nuevo Cliente';
               
-              // Conectar con PostgreSQL para crear el Tenant multi-modelo
               const result = await createTenantAfterPayment(planName, payerEmail, payerName);
               
               if (result.success) {
                 setGeneratedDomain(result.domain);
                 setPaid(true);
               } else {
-                setError("Pago recibido, pero hubo un error al crear la tienda. Soporte técnico contactado.");
+                setError("Fallo en BD: " + result.error);
               }
             }
           }}
