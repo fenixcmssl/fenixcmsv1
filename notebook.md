@@ -231,3 +231,5 @@
 - Fase 10.1.3: Corrección final del proxy para evitar la redirección a la Fase 0 y asegurar la carga completa del panel Superadmin con diseño y menús.
 
 - Fase 10.1.4: Eliminación de carpeta residual (src/app/superadmin) de la Fase 0. Ajuste del proxy para enrutar correctamente a [domain] pasando los parámetros de búsqueda (url.search).
+
+- Fase 10.1.7: Sincronizaci�n forzada (Hard Reset) completada. Entorno local Windows es ahora un espejo exacto del servidor VPS.
