@@ -267,3 +267,5 @@
 - Fase 11.3.9: Reconstrucción profunda de Prisma en VPS. Se inyectó schema.prisma directamente, se purgó la caché de node_modules y se regeneró el cliente para resolver el desajuste de 'undefined' al crear Applications.
 
 - Fase 11.4.2: Conexión de la vista principal del Superadmin (page.tsx) con la base de datos PostgreSQL para extraer y listar los registros reales de Applications y Plans.
+
+- Fase 11.5.1: Conexión de la Landing Page pública (page.tsx) con PostgreSQL para renderizado dinámico de tarjetas de precios (modelo Plan) e inyección de datos exactos en PaypalCheckout.

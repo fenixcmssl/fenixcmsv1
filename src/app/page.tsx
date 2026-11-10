@@ -1,7 +1,19 @@
 import Link from "next/link";
 import PaypalCheckout from "@/components/PaypalCheckout";
+import { getAdminClient } from "@/lib/prisma";
 
-export default function GlobalLandingPage() {
+export default async function GlobalLandingPage() {
+  const prisma = getAdminClient();
+  
+  // Extraer todos los planes activos ordenados por precio
+  const dbPlans = await prisma.plan.findMany({
+    where: { status: 'ACTIVO' },
+    orderBy: { monthlyPrice: 'asc' }
+  });
+
+  // Si la base de datos está vacía, mostramos un aviso elegante
+  const plansToRender = dbPlans.length > 0 ? dbPlans : [];
+
   return (
     <div style={{ backgroundColor: '#07090e', color: '#f3f4f6', minHeight: '100vh', fontFamily: 'sans-serif' }}>
       
@@ -36,49 +48,51 @@ export default function GlobalLandingPage() {
           Plataforma multi-tenant de alto rendimiento. Selecciona tu plan, realiza el pago seguro y obtén tu tienda desplegada instantáneamente.
         </p>
 
-        {/* TABLA DE PRECIOS CON PAYPAL */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', maxWidth: '900px', margin: '0 auto', textAlign: 'left' }}>
-          
-          {/* PLAN 1 */}
-          <div style={{ backgroundColor: '#111827', border: '1px solid #1f2937', borderRadius: '1rem', padding: '2.5rem', display: 'flex', flexDirection: 'column' }}>
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff', margin: '0 0 0.5rem 0' }}>Starter Merchant</h3>
-            <p style={{ color: '#9ca3af', fontSize: '0.875rem', margin: '0 0 1.5rem 0' }}>Ideal para emprendedores y nuevos negocios.</p>
-            <div style={{ fontSize: '3rem', fontWeight: '900', color: '#fff', marginBottom: '1.5rem' }}>
-              €29<span style={{ fontSize: '1rem', color: '#6b7280', fontWeight: 'normal' }}>/mes</span>
-            </div>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', color: '#d1d5db', fontSize: '0.875rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li>✓ Hasta 100 productos</li>
-              <li>✓ Subdominio gratuito (.fenixcms.es)</li>
-              <li>✓ Soporte por email</li>
-              <li>✓ Pasarelas de pago básicas</li>
-            </ul>
-            <div style={{ marginTop: 'auto' }}>
-              <PaypalCheckout planName="Starter Merchant" price="29.00" />
-            </div>
+        {/* TABLA DE PRECIOS DINÁMICA DESDE POSTGRESQL */}
+        {plansToRender.length === 0 ? (
+          <div style={{ backgroundColor: '#111827', border: '1px solid #1f2937', borderRadius: '1rem', padding: '3rem', color: '#9ca3af' }}>
+            Actualmente no hay planes de suscripción activos. Por favor, crea uno desde el panel SuperAdmin.
           </div>
-
-          {/* PLAN 2 (DESTACADO) */}
-          <div style={{ backgroundColor: '#111827', border: '2px solid #3b82f6', borderRadius: '1rem', padding: '2.5rem', display: 'flex', flexDirection: 'column', position: 'relative', transform: 'scale(1.05)' }}>
-            <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#3b82f6', color: '#fff', fontSize: '0.75rem', fontWeight: 'bold', padding: '0.25rem 1rem', borderRadius: '9999px' }}>
-              MÁS POPULAR
-            </div>
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff', margin: '0 0 0.5rem 0' }}>Professional Store</h3>
-            <p style={{ color: '#9ca3af', fontSize: '0.875rem', margin: '0 0 1.5rem 0' }}>Para negocios en crecimiento y alto tráfico.</p>
-            <div style={{ fontSize: '3rem', fontWeight: '900', color: '#fff', marginBottom: '1.5rem' }}>
-              €79<span style={{ fontSize: '1rem', color: '#6b7280', fontWeight: 'normal' }}>/mes</span>
-            </div>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', color: '#d1d5db', fontSize: '0.875rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li>✓ Productos ilimitados</li>
-              <li>✓ Conexión de Dominio Propio</li>
-              <li>✓ Soporte prioritario 24/7</li>
-              <li>✓ API y Webhooks avanzados</li>
-            </ul>
-            <div style={{ marginTop: 'auto' }}>
-              <PaypalCheckout planName="Professional Store" price="79.00" />
-            </div>
+        ) : (
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2rem', maxWidth: '1000px', margin: '0 auto', textAlign: 'left' }}>
+            
+            {plansToRender.map((plan, index) => {
+              const isPopular = plan.tag?.toLowerCase().includes('popular') || index === 1;
+              const cardBorder = isPopular ? '2px solid #3b82f6' : '1px solid #1f2937';
+              const transformScale = isPopular ? 'scale(1.05)' : 'scale(1)';
+              
+              return (
+                <div key={plan.id} style={{ flex: '1 1 300px', maxWidth: '400px', backgroundColor: '#111827', border: cardBorder, borderRadius: '1rem', padding: '2.5rem', display: 'flex', flexDirection: 'column', position: 'relative', transform: transformScale, zIndex: isPopular ? 10 : 1 }}>
+                  
+                  {isPopular && (
+                    <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#3b82f6', color: '#fff', fontSize: '0.75rem', fontWeight: 'bold', padding: '0.25rem 1rem', borderRadius: '9999px' }}>
+                      {plan.tag ? plan.tag.toUpperCase() : 'MÁS POPULAR'}
+                    </div>
+                  )}
+                  
+                  <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff', margin: '0 0 0.5rem 0' }}>{plan.name}</h3>
+                  <p style={{ color: '#9ca3af', fontSize: '0.875rem', margin: '0 0 1.5rem 0', minHeight: '40px' }}>{plan.desc || 'Plan ideal para tu negocio en crecimiento.'}</p>
+                  
+                  <div style={{ fontSize: '3rem', fontWeight: '900', color: '#fff', marginBottom: '1.5rem' }}>
+                    €{plan.monthlyPrice}<span style={{ fontSize: '1rem', color: '#6b7280', fontWeight: 'normal' }}>/mes</span>
+                  </div>
+                  
+                  <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', color: '#d1d5db', fontSize: '0.875rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', flexGrow: 1 }}>
+                    <li>✓ Aprovisionamiento automático</li>
+                    <li>✓ Subdominio incluido</li>
+                    <li>✓ Pasarela PayPal integrada</li>
+                    <li>✓ {plan.trialDays} días de prueba</li>
+                  </ul>
+                  
+                  <div style={{ marginTop: 'auto' }}>
+                    {/* ENLACE DINÁMICO AL CHECKOUT */}
+                    <PaypalCheckout planName={plan.name} price={plan.monthlyPrice.toString()} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
-
-        </div>
+        )}
       </main>
     </div>
   );
