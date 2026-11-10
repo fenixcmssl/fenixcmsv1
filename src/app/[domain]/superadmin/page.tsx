@@ -10,11 +10,7 @@ import NewLicenseForm from "./NewLicenseForm";
 import EditItemForm from "./EditItemForm";
 import { updateSuperAdminPassword } from './accountActions';
 
-export default async function SuperAdminMasterPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
+export default async function SuperAdminMasterPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const resolvedParams = await searchParams;
   const currentTab = typeof resolvedParams.tab === 'string' ? resolvedParams.tab : 'dashboard';
   const action = typeof resolvedParams.action === 'string' ? resolvedParams.action : null;
@@ -53,10 +49,49 @@ export default async function SuperAdminMasterPage({
   const allItems = [...applications, ...plans, ...entitlements, ...licenses, ...activations, ...subscriptions, ...tenants, ...domains];
   const editItem = editId ? allItems.find(i => i.id === editId) : null;
 
+  // MOTOR DINÁMICO DE DATOS
+  const dataMap = { applications, plans, entitlements, licenses, activations, subscriptions, tenants, domains };
+  const activeData = dataMap[currentTab];
+
+  const getHeaders = (tab) => {
+    switch(tab) {
+      case 'applications': return ['Nombre / Tipo', 'Versión', 'Estado'];
+      case 'plans': return ['Plan / Etiqueta', 'Precio Base', 'Estado'];
+      case 'entitlements': return ['Nombre / Clave', 'Tipo', 'Valor Default'];
+      case 'licenses': return ['Cliente / Tienda', 'Plan / Vencimiento', 'Estado'];
+      case 'activations': return ['Dominio', 'Entorno / IP', 'Estado'];
+      case 'subscriptions': return ['Tienda / Plan', 'Ciclo / Monto', 'Estado'];
+      case 'tenants': return ['Nombre Tienda', 'ID Tenant', 'Estado'];
+      case 'domains': return ['Dominio', 'Tipo', 'SSL / DNS'];
+      default: return ['ID / Referencia', 'Estado', 'Fecha de Creación'];
+    }
+  };
+
+  const renderRowColumns = (tab, item) => {
+    let col1, col2, col3, status = item.status || 'ACTIVO', sColor = '#10b981', sBg = 'rgba(16, 185, 129, 0.1)';
+    const StatusBadge = ({text}) => <span style={{backgroundColor:sBg, color:sColor, padding:'0.25rem 0.75rem', borderRadius:'9999px', fontSize:'0.75rem', fontWeight:'bold', border:'1px solid rgba(16, 185, 129, 0.2)'}}>{text}</span>;
+
+    if (tab === 'applications') { col1 = <><div style={{fontWeight:'bold',color:'#fff'}}>{item.name}</div><div style={{fontSize:'0.75rem',color:'#9ca3af'}}>{item.type}</div></>; col2 = item.version; col3 = <StatusBadge text={status} />; }
+    else if (tab === 'plans') { col1 = <><div style={{fontWeight:'bold',color:'#fff'}}>{item.name}</div><div style={{fontSize:'0.75rem',color:'#9ca3af'}}>{item.tag}</div></>; col2 = `€${item.monthlyPrice}/mes`; col3 = <StatusBadge text={status} />; }
+    else if (tab === 'entitlements') { col1 = <><div style={{fontWeight:'bold',color:'#fff'}}>{item.name}</div><div style={{fontSize:'0.75rem',color:'#9ca3af'}}>{item.key}</div></>; col2 = item.type; col3 = item.defaultValue; }
+    else if (tab === 'licenses') { col1 = <><div style={{fontWeight:'bold',color:'#fff'}}>{item.client}</div><div style={{fontSize:'0.75rem',color:'#9ca3af'}}>{item.store}</div></>; col2 = <><div style={{color:'#d1d5db'}}>{item.plan}</div><div style={{fontSize:'0.75rem',color:'#9ca3af'}}>Vence: {item.expiry}</div></>; col3 = <StatusBadge text={status} />; }
+    else if (tab === 'activations') { col1 = <div style={{fontWeight:'bold',color:'#fff'}}>{item.domain}</div>; col2 = <><div style={{color:'#d1d5db'}}>{item.env}</div><div style={{fontSize:'0.75rem',color:'#9ca3af'}}>{item.ip}</div></>; col3 = <StatusBadge text={status} />; }
+    else if (tab === 'subscriptions') { col1 = <><div style={{fontWeight:'bold',color:'#fff'}}>{item.tenantName}</div><div style={{fontSize:'0.75rem',color:'#9ca3af'}}>{item.plan}</div></>; col2 = <><div style={{color:'#d1d5db'}}>{item.amount}</div><div style={{fontSize:'0.75rem',color:'#9ca3af'}}>{item.cycle}</div></>; col3 = <StatusBadge text={status} />; }
+    else if (tab === 'tenants') { col1 = <div style={{fontWeight:'bold',color:'#fff'}}>{item.name}</div>; col2 = <div style={{fontSize:'0.75rem',color:'#9ca3af'}}>{item.id}</div>; col3 = <StatusBadge text="ACTIVO" />; }
+    else if (tab === 'domains') { col1 = <div style={{fontWeight:'bold',color:'#fff'}}>{item.hostname}</div>; col2 = item.type; col3 = <div style={{fontSize:'0.75rem',color:'#9ca3af'}}>SSL: {item.ssl} | DNS: {item.dns}</div>; }
+
+    return (
+      <>
+        <td style={{ padding: '1rem 1.5rem' }}>{col1}</td>
+        <td style={{ padding: '1rem 1.5rem', color: '#d1d5db', fontSize: '0.875rem' }}>{col2}</td>
+        <td style={{ padding: '1rem 1.5rem' }}>{col3}</td>
+      </>
+    );
+  };
+
   const cardStyle = { backgroundColor: '#111827', border: '1px solid #1e293b', padding: '1.5rem', borderRadius: '1rem', display: 'flex', flexDirection: 'column' as const, justifyContent: 'space-between', minHeight: '130px' };
   const labelStyle = { fontSize: '0.75rem', fontWeight: 'bold', color: '#9ca3af', textTransform: 'uppercase' as const, display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
   const descStyle = { fontSize: '0.75rem', color: '#6b7280', marginTop: '0.5rem' };
-  
   const inputStyle = { width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', backgroundColor: '#1f2937', border: '1px solid #374151', color: '#ffffff', outline: 'none', fontSize: '0.875rem' };
   const labelText = { display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#e2e8f0', marginBottom: '0.5rem' };
 
@@ -135,9 +170,7 @@ export default async function SuperAdminMasterPage({
       <main style={{ marginLeft: '250px', marginTop: '70px', flex: 1, padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         
         {action === 'edit' && editItem ? (
-          <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
-            <EditItemForm item={editItem} tabName={currentTab} />
-          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}><EditItemForm item={editItem} tabName={currentTab} /></div>
         ) : (
           <>
             {currentTab === 'dashboard' && (
@@ -164,16 +197,10 @@ export default async function SuperAdminMasterPage({
                     <div style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', padding: '0.75rem', borderRadius: '0.5rem', color: '#3b82f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     </div>
-                    <div>
-                      <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Mi Cuenta y Perfil Administrativo</h1>
-                      <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Gestión de datos fiscales, imagen corporativa y seguridad de acceso.</p>
-                    </div>
+                    <div><h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Mi Cuenta y Perfil Administrativo</h1><p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Gestión de datos fiscales, imagen corporativa y seguridad de acceso.</p></div>
                   </div>
-                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer', fontSize: '0.875rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
-                    Guardar Perfil
-                  </button>
+                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer', fontSize: '0.875rem' }}>Guardar Perfil</button>
                 </header>
-
                 <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '1.5rem' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem' }}>
@@ -183,33 +210,18 @@ export default async function SuperAdminMasterPage({
                         <div><label style={labelText}>Apellidos</label><input type="text" placeholder="Tus apellidos" defaultValue="Admin FenixCMS" style={inputStyle} /></div>
                         <div><label style={labelText}>Teléfono de Contacto</label><input type="tel" placeholder="+34 600 000 000" style={inputStyle} /></div>
                         <div><label style={labelText}>NIE / DNI</label><input type="text" placeholder="Y1234567Z" style={inputStyle} /></div>
-                        <div style={{ gridColumn: 'span 2' }}><label style={labelText}>CIF (Empresa / Autónomo)</label><input type="text" placeholder="B12345678" style={inputStyle} /></div>
-                        <div style={{ gridColumn: 'span 2' }}><label style={labelText}>Dirección de Facturación Completa</label><input type="text" placeholder="Calle Ejemplo 123, 28001 Madrid, España" style={inputStyle} /></div>
+                        <div style={{ gridColumn: 'span 2' }}><label style={labelText}>CIF</label><input type="text" placeholder="B12345678" style={inputStyle} /></div>
+                        <div style={{ gridColumn: 'span 2' }}><label style={labelText}>Dirección de Facturación Completa</label><input type="text" placeholder="Calle Ejemplo 123" style={inputStyle} /></div>
                       </div>
                     </div>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem' }}>
-                      <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}><span style={{ color: '#a855f7' }}>✨</span> Imagen Corporativa</h3>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#1f2937', padding: '1rem', borderRadius: '0.75rem', border: '1px dashed #4b5563' }}>
-                          <div><div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Logo Principal</div><div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>PNG, JPG (Max. 2MB)</div></div>
-                          <button style={{ backgroundColor: '#374151', color: '#ffffff', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}>Subir Logo</button>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#1f2937', padding: '1rem', borderRadius: '0.75rem', border: '1px dashed #4b5563' }}>
-                          <div><div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>Icono (Favicon)</div><div style={{ color: '#9ca3af', fontSize: '0.75rem', marginTop: '0.25rem' }}>Formato ICO o PNG 32x32</div></div>
-                          <button style={{ backgroundColor: '#374151', color: '#ffffff', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}>Subir Favicon</button>
-                        </div>
-                      </div>
-                    </div>
                     <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', flex: 1 }}>
                       <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}><span style={{ color: '#ef4444' }}>🔒</span> Seguridad de Acceso</h3>
-                      
                       {msg === 'success' && <div style={{ color: '#10b981', marginBottom: '1rem', fontSize: '0.875rem' }}>✓ Contraseña actualizada correctamente en PostgreSQL.</div>}
                       {msg === 'mismatch' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>⚠ Las contraseñas nuevas no coinciden.</div>}
                       {msg === 'invalid' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>⚠ La contraseña actual es incorrecta.</div>}
                       {msg === 'empty' && <div style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>⚠ Por favor, rellena todos los campos.</div>}
-
                       <form action={updateSuperAdminPassword} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <div><label style={labelText}>Contraseña Actual</label><input type="password" name="currentPassword" placeholder="••••••••" style={inputStyle} required /></div>
                         <div style={{ borderTop: '1px solid #1f2937', margin: '0.5rem 0' }}></div>
@@ -224,112 +236,51 @@ export default async function SuperAdminMasterPage({
             )}
 
             {currentTab === 'settings' && (
-              <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <div style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', padding: '0.75rem', borderRadius: '0.5rem', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/><path d="m15 5 3 3"/></svg>
-                    </div>
-                    <div>
-                      <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Configuración Maestra del Motor SaaS</h1>
-                      <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Parámetros globales del entorno, pasarelas y políticas de seguridad</p>
-                    </div>
-                  </div>
-                  <button style={{ backgroundColor: '#1f2937', color: '#f3f4f6', border: '1px solid #374151', padding: '0.75rem', borderRadius: '0.5rem', cursor: 'pointer' }}>↻</button>
-                </header>
-                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', color: '#9ca3af' }}>Visualizando Settings...</div>
-              </>
+              <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', color: '#9ca3af' }}>Visualizando Settings...</div>
             )}
             
-            
-        {currentTab === 'applications' && (
-          <>
-            <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <div>
-                <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0 }}>Gestión de Aplicaciones</h1>
-                <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Catálogo de módulos del motor SaaS conectados a PostgreSQL.</p>
-              </div>
-              <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer' }}>
-                + Nuevo Registro
-              </button>
-            </header>
-            <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', overflow: 'hidden' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-                <thead>
-                  <tr style={{ backgroundColor: '#1f2937', borderBottom: '1px solid #374151' }}>
-                    <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nombre / Tipo</th>
-                    <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Versión</th>
-                    <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Estado</th>
-                    <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {applications.map((app) => (
-                    <tr key={app.id} style={{ borderBottom: '1px solid #1f2937' }}>
-                      <td style={{ padding: '1rem 1.5rem' }}>
-                        <div style={{ color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>{app.name}</div>
-                        <div style={{ color: '#9ca3af', fontSize: '0.75rem' }}>{app.type}</div>
-                      </td>
-                      <td style={{ padding: '1rem 1.5rem', color: '#d1d5db', fontSize: '0.875rem' }}>{app.version}</td>
-                      <td style={{ padding: '1rem 1.5rem' }}>
-                        <span style={{ backgroundColor: app.status === 'ACTIVA' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(107, 114, 128, 0.1)', color: app.status === 'ACTIVA' ? '#10b981' : '#9ca3af', padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 'bold', border: app.status === 'ACTIVA' ? '1px solid rgba(16, 185, 129, 0.2)' : '1px solid rgba(107, 114, 128, 0.2)' }}>
-                          {app.status}
-                        </span>
-                      </td>
-                      <td style={{ padding: '1rem 1.5rem', textAlign: 'right' }}>
-                        <button style={{ backgroundColor: 'transparent', color: '#3b82f6', border: 'none', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 'bold' }}>Editar</button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
-
-
-            {['plans', 'entitlements', 'licenses', 'activations', 'subscriptions', 'tenants', 'payments', 'invoices', 'domains', 'themes', 'plugins', 'users', 'audit_logs'].includes(currentTab) && (
+            {/* RENDERIZADOR DINÁMICO DE PESTAÑAS */}
+            {['applications', 'plans', 'entitlements', 'licenses', 'activations', 'subscriptions', 'tenants', 'payments', 'invoices', 'domains', 'themes', 'plugins', 'users', 'audit_logs'].includes(currentTab) && (
               <>
-                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                   <div>
                     <h1 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#ffffff', margin: 0, textTransform: 'capitalize' }}>Gestión de {currentTab.replace('_', ' ')}</h1>
-                    <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Estructura lista para inyectar datos reales desde PostgreSQL.</p>
+                    <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '0.25rem' }}>Sincronizado con base de datos PostgreSQL multi-tenant.</p>
                   </div>
-                  <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer' }}>
-                    + Nuevo Registro
-                  </button>
+                  <Link href={`?tab=${currentTab}&action=new`}>
+                    <button style={{ backgroundColor: '#f59e0b', color: '#000000', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', fontWeight: '900', cursor: 'pointer' }}>+ Nuevo Registro</button>
+                  </Link>
                 </header>
 
                 <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', overflow: 'hidden' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead>
                       <tr style={{ backgroundColor: '#1f2937', borderBottom: '1px solid #374151' }}>
-                        <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ID / Referencia</th>
-                        <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Estado</th>
-                        <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Fecha de Creación</th>
+                        {getHeaders(currentTab).map((head, i) => (
+                          <th key={i} style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{head}</th>
+                        ))}
                         <th style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'right' }}>Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {[1, 2, 3].map((row) => (
-                        <tr key={row} style={{ borderBottom: '1px solid #1f2937' }}>
-                          <td style={{ padding: '1rem 1.5rem', color: '#ffffff', fontSize: '0.875rem', fontWeight: 'bold' }}>{currentTab.substring(0,3).toUpperCase()}-00{row}</td>
-                          <td style={{ padding: '1rem 1.5rem' }}>
-                            <span style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981', padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 'bold', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                              Esperando BD
-                            </span>
-                          </td>
-                          <td style={{ padding: '1rem 1.5rem', color: '#9ca3af', fontSize: '0.875rem' }}>-</td>
+                      {activeData && activeData.length > 0 ? activeData.map((item) => (
+                        <tr key={item.id} style={{ borderBottom: '1px solid #1f2937' }}>
+                          {renderRowColumns(currentTab, item)}
                           <td style={{ padding: '1rem 1.5rem', textAlign: 'right' }}>
-                            <button style={{ backgroundColor: 'transparent', color: '#3b82f6', border: 'none', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 'bold' }}>Editar</button>
+                            <Link href={`?tab=${currentTab}&action=edit&id=${item.id}`}>
+                              <button style={{ backgroundColor: 'transparent', color: '#3b82f6', border: 'none', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 'bold' }}>Editar</button>
+                            </Link>
                           </td>
                         </tr>
-                      ))}
+                      )) : (
+                        <tr>
+                          <td colSpan={getHeaders(currentTab).length + 1} style={{ padding: '1.5rem', textAlign: 'center', color: '#6b7280', fontSize: '0.875rem' }}>
+                            {activeData ? "No hay registros disponibles en la base de datos." : "Módulo en construcción (Esperando conexión a BD)."}
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
-                  <div style={{ padding: '1.5rem', textAlign: 'center', color: '#6b7280', fontSize: '0.875rem' }}>
-                    Los datos reales se mostrarán aquí una vez completada la conexión con Prisma.
-                  </div>
                 </div>
               </>
             )}
