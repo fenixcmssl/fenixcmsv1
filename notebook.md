@@ -209,3 +209,5 @@
 - Fase 9.1.1: Configuración de motor escalable multi-idioma (ES, EN, IT, FR, PT, DE) e inyección de selector visual dinámico en cabecera Superadmin.
 
 - Fase 9.1.3: Rescate del sistema Multi-idioma. Creación de directorios faltantes (messages, i18n, actions), instalación de next-intl y despliegue exitoso.
+
+- Fase 10.0.0: Despliegue de Landing Page pública (Frontend de Ventas) en fenixcms.es con diseño integrado al panel Superadmin.
