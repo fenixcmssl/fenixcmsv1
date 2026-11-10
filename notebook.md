@@ -265,3 +265,5 @@
 - Fase 11.3.8: Limpieza de cach� profunda (.next) y regeneraci�n de Prisma en el VPS para forzar el reconocimiento de los modelos Application y Plan.
 
 - Fase 11.3.9: Reconstrucción profunda de Prisma en VPS. Se inyectó schema.prisma directamente, se purgó la caché de node_modules y se regeneró el cliente para resolver el desajuste de 'undefined' al crear Applications.
+
+- Fase 11.4.2: Conexión de la vista principal del Superadmin (page.tsx) con la base de datos PostgreSQL para extraer y listar los registros reales de Applications y Plans.

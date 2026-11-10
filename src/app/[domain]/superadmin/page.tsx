@@ -42,12 +42,11 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
     try { const val = cookieStore.get(`mock_new_${type}`)?.value; return val ? JSON.parse(val) : []; } catch (e) { return []; }
   };
 
-  const baseApps = [{ id: "app_1", name: "Fenix E-commerce Pro", type: "ECOMMERCE", version: "v2.5.0", desc: "Plataforma completa de venta online.", status: "ACTIVA" }];
-  const applications = [...baseApps, ...getNewItems('applications')].filter(app => !cookieStore.has(`hide_mock_${app.id}`));
+  // DATOS REALES EXTRÍDOS DESDE POSTGRESQL
+  const applications = await prisma.application.findMany({ orderBy: { createdAt: 'desc' } });
+  const plans = await prisma.plan.findMany({ orderBy: { createdAt: 'desc' } });
 
-  const basePlans = [{ id: "plan_1", name: "Starter Merchant", tag: "PARA EMPRENDEDORES", appName: "Fenix E-commerce Pro", status: "ACTIVO", monthlyPrice: 29, yearlyPrice: 290, trialDays: 14, slug: "starter-merchant", desc: "Ideal para lanzar tu tienda.", features: { products: 100 }, isPopular: false }];
-  const plans = [...basePlans, ...getNewItems('plans')].filter(p => !cookieStore.has(`hide_mock_${p.id}`));
-
+  // MOCKS TEMPORALES RESTANTES
   const baseEntitlements = [{ id: "ent_1", key: "products.max", name: "Límite de Productos", type: "CUOTA", defaultValue: "100", desc: "Máximo de productos por catálogo." }];
   const entitlements = [...baseEntitlements, ...getNewItems('entitlements')].filter(e => !cookieStore.has(`hide_mock_${e.id}`));
 
