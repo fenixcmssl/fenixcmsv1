@@ -11,6 +11,7 @@ export async function createTenantAfterPayment(planName: string, payerEmail: str
     const tenant = await prisma.tenant.create({
       data: {
         name: 'Tienda de ' + payerName,
+        moduleType: 'ECOMMERCE',
         tenantDomains: {
           create: {
             domain: subdomain,

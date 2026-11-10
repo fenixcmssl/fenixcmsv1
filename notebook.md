@@ -249,3 +249,5 @@
 - Fase 11.2.1: Inicialización del controlador superadminActions.ts preparatorio para la inserción de datos (Aplicaciones, Planes) desde los formularios del Superadmin hacia PostgreSQL.
 
 - Fase 11.2.2: Modificación de tenantActions.ts y PaypalCheckout.tsx para exponer mensajes de error detallados de PostgreSQL en la interfaz web.
+
+- Fase 11.2.3: Inyección del campo obligatorio moduleType ('ECOMMERCE') en tenantActions.ts para resolver el bloqueo de Prisma al instanciar nuevos Tenants.
