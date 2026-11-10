@@ -1,134 +1,121 @@
-import { getTenantClient, getAdminClient } from "@/lib/prisma";
-import { createProduct, deleteProduct } from "./actions";
-import { logoutAction } from "./login/actions";
-import { notFound, redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { getAdminClient } from "@/lib/prisma";
+import { notFound } from "next/navigation";
 import Link from "next/link";
+import { cookies } from "next/headers";
 
-export default async function AdminPage({ params }: { params: Promise<{ domain: string }> }) {
+export default async function TenantAdminDashboard({ params }: { params: Promise<{ domain: string }> }) {
   const resolvedParams = await params;
   const domain = decodeURIComponent(resolvedParams.domain);
-  
-  const adminPrisma = getAdminClient();
-  const tenantDomain = await adminPrisma.tenantDomain.findUnique({
-    where: { domain },
+  const prisma = getAdminClient();
+
+  // Buscar a qué Tenant (Tienda) pertenece este dominio
+  const domainRecord = await prisma.tenantDomain.findUnique({
+    where: { domain: domain },
     include: { tenant: true }
   });
 
-  if (!tenantDomain) return notFound();
-
-  const tenant = tenantDomain.tenant;
-  
-  // -- GUARDIÁN DE SEGURIDAD --
-  const cookieStore = await cookies();
-  const isAuth = cookieStore.get(`auth_${tenant.id}`);
-  if (!isAuth || isAuth.value !== "true") {
-    redirect(`/admin/login`);
+  if (!domainRecord || !domainRecord.tenant) {
+    return notFound();
   }
-  // ---------------------------
 
-  const tenantPrisma = getTenantClient(tenant.id);
-  const products = await tenantPrisma.ecommerceProduct.findMany({
-    orderBy: { createdAt: 'desc' }
-  });
+  const tenant = domainRecord.tenant;
 
-  const createProductWithDomain = createProduct.bind(null, domain);
-  const handleLogout = logoutAction.bind(null, tenant.id);
-
-  return (
-    <main className="min-h-screen p-8 bg-gray-100 text-gray-900 font-sans">
-      <div className="max-w-7xl mx-auto space-y-8">
-        <header className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold">Panel de Administración - {tenant.name}</h1>
-            <p className="text-gray-500 mt-1">Gestión de Catálogo Multi-Tenant</p>
-          </div>
-          <div className="flex items-center gap-6">
-            <Link href={`/admin/settings`} className="text-gray-600 hover:text-gray-900 text-sm font-medium cursor-pointer flex items-center gap-1">
-              ⚙️ Configuración
-            </Link>
-            <a href={`http://${domain}:3000`} target="_blank" className="text-blue-600 hover:underline text-sm font-medium cursor-pointer">
-              Ver Tienda Pública ↗
-            </a>
-            <form action={handleLogout}>
-              <button type="submit" className="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition-colors cursor-pointer border border-red-100">
-                Cerrar Sesión
-              </button>
-            </form>
-          </div>
-        </header>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 h-fit lg:col-span-1">
-            <h2 className="text-xl font-semibold mb-4">Añadir Producto</h2>
-            <form action={createProductWithDomain} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Nombre del Producto</label>
-                <input type="text" name="name" required className="mt-1 block w-full rounded-md border-gray-300 border p-2 focus:border-blue-500 focus:ring-blue-500 outline-none cursor-text" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Precio ($)</label>
-                <input type="number" step="0.01" name="price" required className="mt-1 block w-full rounded-md border-gray-300 border p-2 focus:border-blue-500 focus:ring-blue-500 outline-none cursor-text" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">SKU (Código)</label>
-                <input type="text" name="sku" required className="mt-1 block w-full rounded-md border-gray-300 border p-2 focus:border-blue-500 focus:ring-blue-500 outline-none cursor-text" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Imagen del Producto</label>
-                <input type="file" name="image" accept="image/*" className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 outline-none cursor-pointer file:cursor-pointer" />
-              </div>
-              <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors font-medium cursor-pointer">
-                Guardar Producto
-              </button>
-            </form>
-          </section>
-
-          <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 lg:col-span-2">
-            <h2 className="text-xl font-semibold mb-4">Productos Registrados ({products.length})</h2>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {products.map((p) => {
-                    const deleteAction = deleteProduct.bind(null, domain, p.id);
-                    return (
-                      <tr key={p.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {p.imageUrl ? (
-                            <img src={p.imageUrl.replace('/uploads/', '/api/images/')} alt={p.name} className="h-10 w-10 object-cover rounded-md border bg-gray-50" />
-                          ) : (
-                            <div className="h-10 w-10 bg-gray-200 rounded-md flex items-center justify-center text-gray-400 text-xs">N/A</div>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{p.name}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-gray-500">{p.sku}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-bold">${p.price.toString()}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end items-center gap-4 h-full mt-2">
-                          <Link href={`/admin/edit/${p.id}`} className="text-blue-600 hover:text-blue-900 font-medium cursor-pointer">
-                            Editar
-                          </Link>
-                          <form action={deleteAction} className="inline">
-                            <button type="submit" className="text-red-600 hover:text-red-900 font-medium cursor-pointer">Eliminar</button>
-                          </form>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </section>
+  // Verificación básica de sesión (cookie)
+  const cookieStore = await cookies();
+  const sessionId = cookieStore.get("tenant_session")?.value;
+  
+  if (!sessionId || sessionId !== tenant.id) {
+    // Si no está logueado o la cookie no coincide, mostrar aviso
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#07090e', color: '#f3f4f6', fontFamily: 'sans-serif' }}>
+        <div style={{ textAlign: 'center', backgroundColor: '#111827', padding: '3rem', borderRadius: '1rem', border: '1px solid #1f2937' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#ef4444' }}>Acceso Denegado</h2>
+          <p style={{ color: '#9ca3af', marginBottom: '2rem' }}>Debes iniciar sesión para acceder al panel de esta tienda.</p>
+          <Link href="/login">
+            <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer' }}>
+              Ir al Login
+            </button>
+          </Link>
         </div>
       </div>
-    </main>
+    );
+  }
+
+  // Si está logueado, mostrar el Dashboard real
+  return (
+    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#07090e', color: '#f3f4f6', fontFamily: 'sans-serif' }}>
+      
+      {/* SIDEBAR DEL CLIENTE */}
+      <aside style={{ width: '250px', backgroundColor: '#111827', borderRight: '1px solid #1f2937', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid #1f2937', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ width: '32px', height: '32px', backgroundColor: '#3b82f6', borderRadius: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#fff' }}>
+            {tenant.name.charAt(0).toUpperCase()}
+          </div>
+          <div style={{ fontWeight: 'bold', fontSize: '1rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {tenant.name}
+          </div>
+        </div>
+        
+        <nav style={{ padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div style={{ padding: '0.75rem 1rem', backgroundColor: '#3b82f6', color: '#fff', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
+            Inicio (Dashboard)
+          </div>
+          <div style={{ padding: '0.75rem 1rem', color: '#9ca3af', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', cursor: 'pointer' }}>
+            Catálogo de Productos
+          </div>
+          <div style={{ padding: '0.75rem 1rem', color: '#9ca3af', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', cursor: 'pointer' }}>
+            Ventas y Pedidos
+          </div>
+          <div style={{ padding: '0.75rem 1rem', color: '#9ca3af', borderRadius: '0.5rem', fontWeight: 'bold', fontSize: '0.875rem', cursor: 'pointer' }}>
+            Ajustes de Tienda
+          </div>
+        </nav>
+        
+        <div style={{ marginTop: 'auto', padding: '1.5rem 1rem', borderTop: '1px solid #1f2937' }}>
+          <div style={{ color: '#9ca3af', fontSize: '0.75rem', marginBottom: '0.5rem' }}>Suscripción</div>
+          <div style={{ color: '#10b981', fontWeight: 'bold', fontSize: '0.875rem' }}>Plan Activo</div>
+        </div>
+      </aside>
+
+      {/* CONTENIDO PRINCIPAL */}
+      <main style={{ flex: 1, padding: '3rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <h1 style={{ fontSize: '2rem', fontWeight: '900', color: '#fff', margin: '0 0 0.5rem 0' }}>¡Bienvenido a tu panel, {tenant.name}!</h1>
+            <p style={{ color: '#9ca3af', margin: 0 }}>Gestiona tu catálogo, ventas y configuración desde aquí.</p>
+          </div>
+          <Link href={`http://${domain}`} target="_blank">
+            <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#111827', color: '#3b82f6', border: '1px solid #1f2937', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer' }}>
+              Ver mi Tienda Online
+            </button>
+          </Link>
+        </header>
+
+        {/* MÉTRICAS RÁPIDAS */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+          <div style={{ backgroundColor: '#111827', padding: '1.5rem', borderRadius: '1rem', border: '1px solid #1f2937' }}>
+            <div style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Ventas del Mes</div>
+            <div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#fff' }}>€0.00</div>
+          </div>
+          <div style={{ backgroundColor: '#111827', padding: '1.5rem', borderRadius: '1rem', border: '1px solid #1f2937' }}>
+            <div style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Pedidos Pendientes</div>
+            <div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#fff' }}>0</div>
+          </div>
+          <div style={{ backgroundColor: '#111827', padding: '1.5rem', borderRadius: '1rem', border: '1px solid #1f2937' }}>
+            <div style={{ fontSize: '0.875rem', color: '#9ca3af', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Productos Activos</div>
+            <div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#fff' }}>0</div>
+          </div>
+        </div>
+
+        <div style={{ backgroundColor: '#111827', padding: '3rem', borderRadius: '1rem', border: '1px dashed #374151', textAlign: 'center', marginTop: '1rem' }}>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#fff', marginBottom: '1rem' }}>Tu tienda está vacía</h3>
+          <p style={{ color: '#9ca3af', marginBottom: '1.5rem' }}>Empieza añadiendo tu primer producto al catálogo para que tus clientes puedan comprar.</p>
+          <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '0.5rem', fontWeight: 'bold', cursor: 'pointer' }}>
+            + Añadir Producto
+          </button>
+        </div>
+      </main>
+
+    </div>
   );
 }
