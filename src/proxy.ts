@@ -14,12 +14,12 @@ export default function proxy(req: NextRequest) {
   const hostname = rawHostname.includes("localhost") ? "fenixcms.es" : rawHostname;
   const mainDomain = "fenixcms.es";
 
-  // CASO 1: Portada principal exacta (Landing Page)
+  // CASO 1: Portada principal exacta (Landing Page pública)
   if (hostname === mainDomain && url.pathname === "/") {
     return NextResponse.next();
   }
 
-  // CASO 2: Si es cualquier ruta del Superadmin (incluyendo ?tab=...) permitimos acceso directo preservando query params
+  // CASO 2: Si la ruta empieza por /superadmin, permitimos el acceso directo al panel maestro
   if (url.pathname.startsWith("/superadmin")) {
     return NextResponse.next();
   }
