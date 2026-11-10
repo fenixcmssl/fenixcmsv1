@@ -243,3 +243,5 @@
 - Fase 11.1.2: Inyecci贸n de NEXT_PUBLIC_PAYPAL_CLIENT_ID en .env y creaci贸n del componente PaypalCheckout.tsx.
 
 - Fase 11.1.3: Integraci贸n del componente PaypalCheckout en la Landing Page p煤blica (page.tsx) con planes de suscripci贸n renderizados.
+
+- Fase 11.2.0: Implementaci髇 de Server Action (tenantActions.ts) para aprovisionamiento autom醫ico de Tenants en PostgreSQL tras confirmaci髇 de pago v韆 PayPal.
