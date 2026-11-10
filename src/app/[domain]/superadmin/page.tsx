@@ -50,7 +50,6 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
   const allItems = [...applications, ...plans, ...entitlements, ...licenses, ...activations, ...subscriptions, ...tenants, ...domains];
   const editItem = editId ? allItems.find(i => i.id === editId) : null;
 
-  // MOTOR DINÁMICO DE DATOS
   const dataMap = { applications, plans, entitlements, licenses, activations, subscriptions, tenants, domains };
   const activeData = dataMap[currentTab];
 
@@ -172,6 +171,10 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
         
         {action === 'edit' && editItem ? (
           <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}><EditItemForm item={editItem} tabName={currentTab} /></div>
+        ) : action === 'new' ? (
+          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '2rem 0' }}>
+            <NewItemForm tabName={currentTab} />
+          </div>
         ) : (
           <>
             {currentTab === 'dashboard' && (
@@ -240,7 +243,6 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
               <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', padding: '2rem', color: '#9ca3af' }}>Visualizando Settings...</div>
             )}
             
-            {/* RENDERIZADOR DINÁMICO DE PESTAÑAS */}
             {['applications', 'plans', 'entitlements', 'licenses', 'activations', 'subscriptions', 'tenants', 'payments', 'invoices', 'domains', 'themes', 'plugins', 'users', 'audit_logs'].includes(currentTab) && (
               <>
                 <header style={{ backgroundColor: '#111827', padding: '1.5rem 2rem', borderRadius: '1rem', border: '1px solid #1f2937', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
@@ -253,13 +255,7 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
                   </Link>
                 </header>
 
-                
-            {action === 'new' ? (
-              <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                <NewItemForm tabName={currentTab} />
-              </div>
-            ) : (
-              <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', overflow: 'hidden' }}>
+                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', overflow: 'hidden' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead>
                       <tr style={{ backgroundColor: '#1f2937', borderBottom: '1px solid #374151' }}>
