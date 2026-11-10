@@ -257,3 +257,5 @@
 - Fase 11.3.1: Resolución de error de PowerShell utilizando LiteralPath y Out-File para la correcta inyección de NewItemForm.tsx.
 
 - Fase 11.3.2: Restauración de checkDatabaseHealth en superadminActions.ts para resolver caída 502 de Next.js.
+
+- Fase 11.3.4: Corrección del error de compilación (Unterminated regexp) protegiendo los backticks de Next.js mediante un string literal en PowerShell.

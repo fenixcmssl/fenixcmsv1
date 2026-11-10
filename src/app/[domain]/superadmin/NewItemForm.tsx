@@ -19,7 +19,7 @@ export default function NewItemForm({ tabName }: { tabName: string }) {
     const result = await createSuperAdminItem(tabName, data);
     
     if (result.success) {
-      router.push(/superadmin?tab=${tabName});
+      router.push(`/superadmin?tab=${tabName}`);
       router.refresh();
     } else {
       setError(result.error || "Error al guardar en base de datos");
@@ -66,7 +66,7 @@ export default function NewItemForm({ tabName }: { tabName: string }) {
         <textarea name="desc" style={{...inputStyle, minHeight: '100px'}} placeholder="Detalles internos..."></textarea>
         
         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          <button type="button" onClick={() => router.push(/superadmin?tab=${tabName})} style={{ padding: '0.75rem 1.5rem', borderRadius: '0.5rem', backgroundColor: 'transparent', color: '#fff', border: '1px solid #374151', cursor: 'pointer' }}>
+          <button type="button" onClick={() => router.push(`/superadmin?tab=${tabName}`)} style={{ padding: '0.75rem 1.5rem', borderRadius: '0.5rem', backgroundColor: 'transparent', color: '#fff', border: '1px solid #374151', cursor: 'pointer' }}>
             Cancelar
           </button>
           <button type="submit" disabled={loading} style={{ padding: '0.75rem 1.5rem', borderRadius: '0.5rem', backgroundColor: '#f59e0b', color: '#000', border: 'none', fontWeight: 'bold', cursor: loading ? 'not-allowed' : 'pointer' }}>
