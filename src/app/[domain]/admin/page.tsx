@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { cookies } from "next/headers";
 
-export default async function TenantAdminDashboard({ params }: { params: Promise<{ domain: string }> }) {
+export default async function TenantAdminDashboard({ params }: any) {
+  // Soporte universal para Next.js 14 (objeto sincrónico) y 15 (promesa)
   const resolvedParams = await params;
-  const domain = decodeURIComponent(resolvedParams.domain);
+  const domain = decodeURIComponent(resolvedParams?.domain || params?.domain);
   const prisma = getAdminClient();
 
   // Buscar a qué Tenant (Tienda) pertenece este dominio
@@ -25,7 +26,6 @@ export default async function TenantAdminDashboard({ params }: { params: Promise
   const sessionId = cookieStore.get("tenant_session")?.value;
   
   if (!sessionId || sessionId !== tenant.id) {
-    // Si no está logueado o la cookie no coincide, mostrar aviso
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#07090e', color: '#f3f4f6', fontFamily: 'sans-serif' }}>
         <div style={{ textAlign: 'center', backgroundColor: '#111827', padding: '3rem', borderRadius: '1rem', border: '1px solid #1f2937' }}>
@@ -115,7 +115,6 @@ export default async function TenantAdminDashboard({ params }: { params: Promise
           </button>
         </div>
       </main>
-
     </div>
   );
 }
