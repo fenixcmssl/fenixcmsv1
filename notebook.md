@@ -211,3 +211,5 @@
 - Fase 9.1.3: Rescate del sistema Multi-idioma. Creación de directorios faltantes (messages, i18n, actions), instalación de next-intl y despliegue exitoso.
 
 - Fase 10.0.0: Despliegue de Landing Page pública (Frontend de Ventas) en fenixcms.es con diseño integrado al panel Superadmin.
+
+- Fase 10.0.1: Actualización del Middleware para excluir el dominio principal (fenixcms.es) del enrutamiento multi-tenant, permitiendo visualizar la Landing Page pública.
