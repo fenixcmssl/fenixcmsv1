@@ -187,3 +187,5 @@
 
 - Fase 7.2.0: Creaci髇 de Server Action (accountActions.ts) v韆 comando PowerShell para la gesti髇 segura de contrase馻s de Superadmin conectada a PostgreSQL.
 - Fase 7.3.0: Creaci贸n directa en el VPS de la Server Action y actualizaci贸n del formulario Superadmin conectando a PostgreSQL.
+
+- Fase 7.3.2: Conexi贸n definitiva del formulario de Login Superadmin a PostgreSQL utilizando encriptaci贸n bcryptjs y tablas independientes.
