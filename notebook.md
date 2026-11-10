@@ -237,3 +237,5 @@
 - Fase 11.0.4: Resolución definitiva de divergencias en Git (Hard Reset) en el VPS y subida limpia del sistema de traducciones dinámicas.
 
 - Fase 11.1.0: Instalación de SDK @paypal/react-paypal-js para iniciar la integración de pasarelas de pago escalables.
+
+- Fase 11.1.1: Resolución automática de vulnerabilidades en dependencias mediante npm audit fix.
