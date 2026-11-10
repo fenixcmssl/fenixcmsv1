@@ -235,3 +235,5 @@
 - Fase 10.1.7: Sincronizaci�n forzada (Hard Reset) completada. Entorno local Windows es ahora un espejo exacto del servidor VPS.
 
 - Fase 11.0.4: Resolución definitiva de divergencias en Git (Hard Reset) en el VPS y subida limpia del sistema de traducciones dinámicas.
+
+- Fase 11.1.0: Instalación de SDK @paypal/react-paypal-js para iniciar la integración de pasarelas de pago escalables.
