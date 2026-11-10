@@ -213,3 +213,5 @@
 - Fase 10.0.0: Despliegue de Landing Page pública (Frontend de Ventas) en fenixcms.es con diseño integrado al panel Superadmin.
 
 - Fase 10.0.1: Actualización del Middleware para excluir el dominio principal (fenixcms.es) del enrutamiento multi-tenant, permitiendo visualizar la Landing Page pública.
+
+- Fase 10.0.2: Resolución de error 502 Bad Gateway. Reescritura del middleware para separar el enrutamiento de la Landing Page raíz (page.tsx) y las rutas dinámicas multi-tenant ([domain]). Limpieza de caché de Next.js.
