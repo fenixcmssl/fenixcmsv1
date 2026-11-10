@@ -189,3 +189,5 @@
 - Fase 7.3.0: Creación directa en el VPS de la Server Action y actualización del formulario Superadmin conectando a PostgreSQL.
 
 - Fase 7.3.2: Conexión definitiva del formulario de Login Superadmin a PostgreSQL utilizando encriptación bcryptjs y tablas independientes.
+
+- Fase 7.3.2: Conexión definitiva del formulario de Login Superadmin a PostgreSQL utilizando encriptación bcryptjs y tablas independientes.
