@@ -241,3 +241,5 @@
 - Fase 11.1.1: Resolución automática de vulnerabilidades en dependencias mediante npm audit fix.
 
 - Fase 11.1.2: Inyección de NEXT_PUBLIC_PAYPAL_CLIENT_ID en .env y creación del componente PaypalCheckout.tsx.
+
+- Fase 11.1.3: Integración del componente PaypalCheckout en la Landing Page pública (page.tsx) con planes de suscripción renderizados.
