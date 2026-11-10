@@ -271,3 +271,5 @@
 - Fase 11.5.1: Conexión de la Landing Page pública (page.tsx) con PostgreSQL para renderizado dinámico de tarjetas de precios (modelo Plan) e inyección de datos exactos en PaypalCheckout.
 
 - Fase 11.5.2: Desactivación de caché estática en page.tsx mediante export const dynamic = 'force-dynamic' para mostrar los Planes de BD en tiempo real.
+
+- Fase 11.6.0: Modificación del modelo Tenant para almacenar email. Implementación de generación de contraseñas automáticas post-pago y visualización de credenciales en el Frontend.
