@@ -253,3 +253,5 @@
 - Fase 11.2.3: Inyección del campo obligatorio moduleType ('ECOMMERCE') en tenantActions.ts para resolver el bloqueo de Prisma al instanciar nuevos Tenants.
 
 - Fase 11.3.0: Formularios de creación (NewItemForm.tsx) conectados exitosamente a PostgreSQL a través de Server Actions.
+
+- Fase 11.3.1: Resolución de error de PowerShell utilizando LiteralPath y Out-File para la correcta inyección de NewItemForm.tsx.
