@@ -279,3 +279,5 @@
 - Fase 11.7.0: Creación del Dashboard del Tenant (/[domain]/admin/page.tsx) con verificación de cookies de sesión, lectura de datos desde PostgreSQL y arquitectura visual base.
 
 - Fase 11.7.1: Parche de compatibilidad de tipos TypeScript en page.tsx del admin para evitar falla silenciosa de compilación.
+
+- Fase 11.7.2: Implementación de src/middleware.ts para reescribir internamente las URLs de los subdominios hacia la estructura de carpetas /[domain]/... permitiendo el acceso al panel /admin de cada Tenant.
