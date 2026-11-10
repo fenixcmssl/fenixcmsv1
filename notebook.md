@@ -195,3 +195,5 @@
 - Fase 8.1.0: Independización de la pestaña 'Applications' en el VPS para renderizar datos reales vía Prisma, desacoplándola de la tabla genérica.
 
 - Fase 8.2.0: Implementación de Motor de Renderizado Dinámico para mapear automáticamente todas las tablas del panel lateral conectándolas a Prisma.
+
+- Fase 8.3.0: Implementación del Motor de Formularios Dinámicos (NewItemForm.tsx) activando el botón 'Nuevo Registro' en todas las pestañas del panel lateral.

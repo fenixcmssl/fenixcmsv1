@@ -8,6 +8,7 @@ import NewPlanForm from "./NewPlanForm";
 import NewEntitlementForm from "./NewEntitlementForm";
 import NewLicenseForm from "./NewLicenseForm";
 import EditItemForm from "./EditItemForm";
+import NewItemForm from "./NewItemForm";
 import { updateSuperAdminPassword } from './accountActions';
 
 export default async function SuperAdminMasterPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
@@ -252,7 +253,13 @@ export default async function SuperAdminMasterPage({ searchParams }: { searchPar
                   </Link>
                 </header>
 
-                <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', overflow: 'hidden' }}>
+                
+            {action === 'new' ? (
+              <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                <NewItemForm tabName={currentTab} />
+              </div>
+            ) : (
+              <div style={{ backgroundColor: '#111827', borderRadius: '1rem', border: '1px solid #1f2937', overflow: 'hidden' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead>
                       <tr style={{ backgroundColor: '#1f2937', borderBottom: '1px solid #374151' }}>
