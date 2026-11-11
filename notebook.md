@@ -333,3 +333,5 @@
 - Fase 11.7.48: Interfaz de creación de productos adaptada al modelo WooCommerce. Se dividió el formulario en secciones (General, Inventario, Envío) y se actualizó el Server Action con validación de tipos y conversiones seguras para Prisma.
 
 - Fase 11.7.51: Ajuste de UI en creación de productos. Se incrustó el menú lateral izquierdo (Sidebar) en el formulario para mantener la coherencia del Tenant Dashboard.
+
+- Fase 11.7.54: Actualización de esquema Prisma con modelos para CMS (BlogPost, Page) y el sistema de módulos (TenantExtension). Preparación para App Store interna y Blog estilo WordPress.
