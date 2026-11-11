@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// SE CAMBIA EL NOMBRE DE LA FUNCIÓN DE 'middleware' a 'proxy'
-export function proxy(req: NextRequest) {
+export default function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const hostname = req.headers.get('host') || '';
 
