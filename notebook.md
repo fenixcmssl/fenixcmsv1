@@ -303,3 +303,5 @@
 - Fase 11.7.19: Creación de la vista de login específica para subdominios (src/app/[domain]/login/page.tsx). Se implementó un Server Action nativo para emitir la cookie tenant_session estrictamente en el dominio del cliente, previniendo errores de cookies cruzadas y eludiendo el error 404.
 
 - Fase 11.7.20: Implementación de UI para el Tenant Dashboard. Se reemplazó el marcador de texto plano por una interfaz moderna con Tailwind CSS que incluye barra lateral de navegación y tarjetas de métricas conectadas a los datos reales del tenant en PostgreSQL.
+
+- Fase 11.7.21: Escaneo profundo de arquitectura. Se detectó colisión de rutas (la carpeta dinámica [domain] está capturando el tráfico de /superadmin). Se extraen logs de PM2 y estructura de Next.js para aislar los dominios.
