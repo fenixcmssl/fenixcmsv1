@@ -24,26 +24,9 @@ export default async function TenantProductsPage({ params }: any) {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="w-full flex flex-col">
       {/* Barra Lateral (Sidebar) */}
-      <aside className="w-64 bg-slate-900 text-white flex flex-col">
-        <div className="p-6 border-b border-slate-800">
-          <h2 className="text-xl font-bold truncate">{tenant.name}</h2>
-          <p className="text-xs text-slate-400 mt-1">{domain}</p>
-        </div>
-        <nav className="flex-1 p-4 space-y-2">
-          <a href="/admin" className="block p-3 hover:bg-slate-800 rounded-lg text-slate-300">Dashboard</a>
-          <a href="/admin/products" className="block p-3 bg-blue-600 rounded-lg font-medium">Catálogo</a>
-          <a href="#" className="block p-3 hover:bg-slate-800 rounded-lg text-slate-300">Pedidos</a>
-          <a href="#" className="block p-3 hover:bg-slate-800 rounded-lg text-slate-300">Clientes</a>
-          <a href="#" className="block p-3 hover:bg-slate-800 rounded-lg text-slate-300">Ajustes</a>
-        </nav>
-        <div className="p-4 border-t border-slate-800">
-          <a href="/login" className="block p-3 hover:bg-slate-800 rounded-lg text-red-400 text-center transition-colors">
-            Cerrar Sesión
-          </a>
-        </div>
-      </aside>
+      
 
       {/* Contenido Principal */}
       <main className="flex-1 p-8 overflow-y-auto">
