@@ -283,3 +283,5 @@
 - Fase 11.7.58: Sincronización manual en local del layout maestro y sidebar centralizado.
 
 - Fase 11.7.61: Sincronización manual en local de la vista del Blog.
+
+- Fase 11.7.64: Sincronización manual en local del editor de entradas de blog.
