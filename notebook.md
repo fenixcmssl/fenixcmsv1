@@ -309,3 +309,13 @@
 - Fase 11.7.22: Corrección de Error 500 cambiando la relación de Prisma de 'domains' a 'tenantDomains'. Resolución de Route Clash moviendo la ruta /superadmin fuera del scope de [domain].
 
 - Fase 11.7.24: Corrección de rutas relativas de importación en componentes de SuperAdmin tras su reubicación. Se ajustaron los imports de '../../actions' a '../actions' solucionando el error Module not found durante la compilación.
+
+- Fase 11.7.27: Restauración del motor Tailwind CSS. Se detectó ausencia de tailwind.config.ts tras el Clean Install. Se regeneró la configuración asegurando el escaneo del directorio src/app/[domain] para devolver el diseño gráfico al Tenant Dashboard.
+
+- Fase 11.7.27: Restauración del motor Tailwind CSS. Se detectó ausencia de tailwind.config.ts tras el Clean Install. Se regeneró la configuración asegurando el escaneo del directorio src/app/[domain] para devolver el diseño gráfico al Tenant Dashboard.
+
+- Fase 11.7.27: Restauración del motor Tailwind CSS. Se detectó ausencia de tailwind.config.ts tras el Clean Install. Se regeneró la configuración asegurando el escaneo del directorio src/app/[domain] para devolver el diseño gráfico al Tenant Dashboard.
+
+- Fase 11.7.27: Restauración del motor Tailwind CSS. Se detectó ausencia de tailwind.config.ts tras el Clean Install. Se regeneró la configuración asegurando el escaneo del directorio src/app/[domain] para devolver el diseño gráfico al Tenant Dashboard.
+
+- Fase 11.7.30: Resolución de error 502 Bad Gateway. El proceso de PM2 estaba caído por ausencia de la carpeta .next. Se ejecutó npm run build y se reinició el demonio para restaurar la conexión con Nginx en el puerto 3000.
