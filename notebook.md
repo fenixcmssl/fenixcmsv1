@@ -293,3 +293,5 @@
 - Fase 11.7.14: Migración del enrutador dinámico. Se reemplaza src/middleware.ts por src/proxy.ts para cumplir con los nuevos estándares de Next.js 16.4.5 y solucionar el Turbopack Panic durante el build.
 
 - Fase 11.7.15: Corrección de sintaxis en proxy.ts. Se actualiza el nombre de la función exportada de 'middleware' a 'proxy' cumpliendo con la directiva estricta de Next.js 16.4.5+.
+
+- Fase 11.7.16: Limpieza nuclear de node_modules/.cache y .next. Se fuerza a Turbopack a regenerar el árbol de archivos desde cero para eliminar el mapeo fantasma de middleware.ts que causaba el TurbopackInternalError.
