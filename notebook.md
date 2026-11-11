@@ -275,3 +275,5 @@
 - Fase 11.7.46: Sincronización manual en local del nuevo esquema Prisma tipo WooCommerce.
 
 - Fase 11.7.49: Sincronización manual en local del formulario avanzado de productos.
+
+- Fase 11.7.52: Sincronización manual en local de la incrustación del menú lateral en el formulario de productos.
