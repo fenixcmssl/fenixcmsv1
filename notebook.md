@@ -279,3 +279,5 @@
 - Fase 11.7.52: Sincronización manual en local de la incrustación del menú lateral en el formulario de productos.
 
 - Fase 11.7.55: Sincronización de respaldo local del esquema de base de datos para Blog y Páginas.
+
+- Fase 11.7.58: Sincronización manual en local del layout maestro y sidebar centralizado.
