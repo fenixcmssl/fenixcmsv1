@@ -343,3 +343,5 @@
 - Fase 11.7.63: Creación de formulario de Nueva Entrada de Blog (src/app/[domain]/admin/posts/new/page.tsx). Incluye generación automática de slug y Server Action para insertar en modelo BlogPost.
 
 - Fase 11.7.66: Creación del Módulo de Páginas Estáticas y Legales. Se inyectaron las vistas de listado y formulario de creación, integradas con el modelo Page de Prisma y categorización GENERAL/LEGAL.
+
+- Fase 11.7.69: Implementación del Marketplace de Tenant. Creación de vistas para 'Plugins' y 'Apariencia' (src/app/[domain]/admin/plugins y appearance). Lógica de lectura cruzada entre modelos Application y TenantExtension.
