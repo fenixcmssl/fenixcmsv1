@@ -273,3 +273,5 @@
 - Fase 11.7.43: Sincronización manual en local de la corrección de etiquetas JSX en el catálogo.
 
 - Fase 11.7.46: Sincronización manual en local del nuevo esquema Prisma tipo WooCommerce.
+
+- Fase 11.7.49: Sincronización manual en local del formulario avanzado de productos.
