@@ -285,3 +285,5 @@
 - Fase 11.7.7: Ajuste de formato DNS. El proveedor exige FQDN completo, por lo que el registro manual se realiza como john4095.fenixcms.es en lugar de usar el formato corto.
 
 - Fase 11.7.11: Resolución de conflicto de duplicidad de middleware (raíz vs src). Se elimina el archivo sobrante para permitir la compilación exitosa y resolver la caída 502 Bad Gateway.
+
+- Fase 11.7.12: Búsqueda y eliminación estricta de archivos middleware y proxy anidados (src/src/). Generación limpia de src/middleware.ts para resolver conflicto de compilación 502 Bad Gateway.
