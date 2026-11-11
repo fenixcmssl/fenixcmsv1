@@ -327,3 +327,5 @@
 - Fase 11.7.38: Implementación de formulario de creación de productos (src/app/[domain]/admin/products/new/page.tsx). Se creó un Server Action para ingestar datos en Prisma aislados por tenant_session. Se actualizaron los botones del catálogo para usar Link de Next.js.
 
 - Fase 11.7.42: Corrección de error de sintaxis JSX (etiqueta desparejada en botón Editar) en el catálogo de productos. Reconstrucción exitosa de producción y reactivación del servidor PM2.
+
+- Fase 11.7.45: Actualización del esquema Prisma (EcommerceProduct) replicando la arquitectura de WooCommerce. Se añadieron campos de inventario (peso, dimensiones, backorders), precios rebajados, gestión de impuestos, relaciones cruzadas y se crearon los modelos ProductCategory y ProductVariation.
