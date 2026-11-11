@@ -90,7 +90,7 @@ export default async function TenantProductsPage({ params }: any) {
                       </span>
                     </td>
                     <td className="p-4 text-right">
-                      <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">Editar</Link>
+                      <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">Editar</button>
                     </td>
                   </tr>
                 ))}
