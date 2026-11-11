@@ -339,3 +339,5 @@
 - Fase 11.7.57: Refactorización estructural. Se creó layout.tsx y Sidebar.tsx dinámico para la zona admin, centralizando el menú de navegación (incluyendo rutas para Blog, Páginas y Plugins estilo WordPress). Se limpiaron las vistas antiguas.
 
 - Fase 11.7.60: Creación de la vista principal del Gestor de Entradas de Blog (src/app/[domain]/admin/posts/page.tsx) con soporte para listado desde PostgreSQL y tabla estilizada con Tailwind CSS.
+
+- Fase 11.7.63: Creación de formulario de Nueva Entrada de Blog (src/app/[domain]/admin/posts/new/page.tsx). Incluye generación automática de slug y Server Action para insertar en modelo BlogPost.
