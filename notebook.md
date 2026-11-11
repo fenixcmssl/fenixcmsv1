@@ -349,3 +349,5 @@
 - Fase 11.7.72: Implementación de Fenix Import. Desarrollo de interfaz cliente para mapeo dinámico de CSV y Server Action para importación masiva (createMany) en PostgreSQL. Agregado al menú lateral.
 
 - Fase 11.7.75: Implementación de lógica SaaS en Marketplace. Fenix Import Pro se registró como Application. El Sidebar ahora es dinámico y oculta opciones premium no adquiridas. Se añadió Server Action de instalación y activación instantánea en la vista de Plugins.
+
+- Fase 11.7.78: Modificación del esquema Prisma. Se añadió el campo 'price' al modelo Application para soportar venta de plugins en el marketplace.
