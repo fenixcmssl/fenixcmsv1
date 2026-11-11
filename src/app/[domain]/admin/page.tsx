@@ -33,7 +33,7 @@ export default async function TenantAdminDashboard({ params }: any) {
         </div>
         <nav className="flex-1 p-4 space-y-2">
           <a href="#" className="block p-3 bg-blue-600 rounded-lg font-medium">Dashboard</a>
-          <a href="#" className="block p-3 hover:bg-slate-800 rounded-lg text-slate-300">Catálogo</a>
+          <a href="/admin/products" className="block p-3 hover:bg-slate-800 rounded-lg text-slate-300">Catálogo</a>
           <a href="#" className="block p-3 hover:bg-slate-800 rounded-lg text-slate-300">Pedidos</a>
           <a href="#" className="block p-3 hover:bg-slate-800 rounded-lg text-slate-300">Clientes</a>
           <a href="#" className="block p-3 hover:bg-slate-800 rounded-lg text-slate-300">Ajustes</a>

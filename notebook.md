@@ -321,3 +321,5 @@
 - Fase 11.7.30: Resolución de error 502 Bad Gateway. El proceso de PM2 estaba caído por ausencia de la carpeta .next. Se ejecutó npm run build y se reinició el demonio para restaurar la conexión con Nginx en el puerto 3000.
 
 - Fase 11.7.32: Adaptación del motor gráfico a Tailwind v4. Se instaló @tailwindcss/postcss y se actualizó postcss.config.js para resolver el fallo de compilación. Reconstrucción de producción exitosa y reinicio de PM2, resolviendo el error 502.
+
+- Fase 11.7.35: Creación del módulo de Catálogo (src/app/[domain]/admin/products/page.tsx) leyendo desde el modelo EcommerceProduct en Prisma y enlazando la navegación lateral. Interfaz construida con Tailwind CSS.
