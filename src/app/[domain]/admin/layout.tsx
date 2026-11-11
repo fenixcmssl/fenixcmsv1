@@ -21,14 +21,23 @@ export default async function AdminLayout({
   const prisma = getAdminClient();
   const tenant = await prisma.tenant.findUnique({
     where: { id: sessionId },
+    include: {
+      extensions: {
+        include: { application: true }
+      }
+    }
   });
 
   if (!tenant) redirect("/login");
 
+  // Obtener array de nombres de los plugins activos de esta tienda
+  const activePlugins = tenant.extensions
+    .filter(ext => ext.isActive && ext.application)
+    .map(ext => ext.application.name);
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar tenantName={tenant.name} domain={domain} />
-      {/* El contenido de todas las páginas (Dashboard, Catálogo, etc.) se inyectará aquí */}
+      <Sidebar tenantName={tenant.name} domain={domain} activePlugins={activePlugins} />
       {children}
     </div>
   );

@@ -12,18 +12,38 @@ export default async function TenantPluginsPage({ params }: any) {
 
   const prisma = getAdminClient();
   
-  // 1. Obtener todos los plugins creados por el SuperAdmin
   const availablePlugins = await prisma.application.findMany({
     where: { type: "PLUGIN", status: "ACTIVA" }
   });
 
-  // 2. Obtener plugins adquiridos/instalados por este Tenant
   const installedExtensions = await prisma.tenantExtension.findMany({
     where: { tenantId: sessionId, type: "PLUGIN" }
   });
 
-  // Mapa para búsqueda rápida de instalaciones
   const installedMap = new Map(installedExtensions.map(ext => [ext.applicationId, ext]));
+
+  // SERVER ACTION: Instalar Plugin
+  async function installPlugin(formData: FormData) {
+    "use server";
+    const cookieStore = await cookies();
+    const sessionId = cookieStore.get("tenant_session")?.value;
+    if (!sessionId) return;
+    
+    const pluginId = formData.get("pluginId") as string;
+    
+    const prisma = getAdminClient();
+    await prisma.tenantExtension.create({
+      data: {
+        tenantId: sessionId,
+        applicationId: pluginId,
+        type: "PLUGIN",
+        isActive: true,
+      }
+    });
+    
+    // Forzar recarga para actualizar el menú
+    redirect("/admin/plugins");
+  }
 
   return (
     <main className="flex-1 p-8 overflow-y-auto w-full">
@@ -50,7 +70,7 @@ export default async function TenantPluginsPage({ params }: any) {
                       <h3 className="text-lg font-bold text-gray-900">{plugin.name}</h3>
                       <span className="bg-slate-100 text-slate-800 text-xs px-2 py-1 rounded-full font-semibold">v{plugin.version}</span>
                     </div>
-                    <p className="text-gray-600 text-sm mb-4">{plugin.desc || "Sin descripción proporcionada."}</p>
+                    <p className="text-gray-600 text-sm mb-4">{plugin.desc}</p>
                   </div>
                   <div className="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
                     {isInstalled ? (
@@ -59,9 +79,12 @@ export default async function TenantPluginsPage({ params }: any) {
                         <span className="text-sm font-semibold text-green-700">Instalado y Activo</span>
                       </div>
                     ) : (
-                      <button className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors w-full shadow-sm">
-                        Ver Detalles / Adquirir
-                      </button>
+                      <form action={installPlugin} className="w-full">
+                        <input type="hidden" name="pluginId" value={plugin.id} />
+                        <button type="submit" className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors w-full shadow-sm">
+                          Adquirir / Instalar
+                        </button>
+                      </form>
                     )}
                   </div>
                 </div>

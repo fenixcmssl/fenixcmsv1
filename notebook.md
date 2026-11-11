@@ -347,3 +347,5 @@
 - Fase 11.7.69: Implementación del Marketplace de Tenant. Creación de vistas para 'Plugins' y 'Apariencia' (src/app/[domain]/admin/plugins y appearance). Lógica de lectura cruzada entre modelos Application y TenantExtension.
 
 - Fase 11.7.72: Implementación de Fenix Import. Desarrollo de interfaz cliente para mapeo dinámico de CSV y Server Action para importación masiva (createMany) en PostgreSQL. Agregado al menú lateral.
+
+- Fase 11.7.75: Implementación de lógica SaaS en Marketplace. Fenix Import Pro se registró como Application. El Sidebar ahora es dinámico y oculta opciones premium no adquiridas. Se añadió Server Action de instalación y activación instantánea en la vista de Plugins.
