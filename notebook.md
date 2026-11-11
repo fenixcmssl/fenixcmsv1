@@ -341,3 +341,5 @@
 - Fase 11.7.60: Creación de la vista principal del Gestor de Entradas de Blog (src/app/[domain]/admin/posts/page.tsx) con soporte para listado desde PostgreSQL y tabla estilizada con Tailwind CSS.
 
 - Fase 11.7.63: Creación de formulario de Nueva Entrada de Blog (src/app/[domain]/admin/posts/new/page.tsx). Incluye generación automática de slug y Server Action para insertar en modelo BlogPost.
+
+- Fase 11.7.66: Creación del Módulo de Páginas Estáticas y Legales. Se inyectaron las vistas de listado y formulario de creación, integradas con el modelo Page de Prisma y categorización GENERAL/LEGAL.
