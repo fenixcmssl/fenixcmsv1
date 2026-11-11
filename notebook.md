@@ -331,3 +331,5 @@
 - Fase 11.7.45: Actualización del esquema Prisma (EcommerceProduct) replicando la arquitectura de WooCommerce. Se añadieron campos de inventario (peso, dimensiones, backorders), precios rebajados, gestión de impuestos, relaciones cruzadas y se crearon los modelos ProductCategory y ProductVariation.
 
 - Fase 11.7.48: Interfaz de creación de productos adaptada al modelo WooCommerce. Se dividió el formulario en secciones (General, Inventario, Envío) y se actualizó el Server Action con validación de tipos y conversiones seguras para Prisma.
+
+- Fase 11.7.51: Ajuste de UI en creación de productos. Se incrustó el menú lateral izquierdo (Sidebar) en el formulario para mantener la coherencia del Tenant Dashboard.
