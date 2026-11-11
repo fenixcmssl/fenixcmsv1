@@ -281,3 +281,5 @@
 - Fase 11.7.55: Sincronización de respaldo local del esquema de base de datos para Blog y Páginas.
 
 - Fase 11.7.58: Sincronización manual en local del layout maestro y sidebar centralizado.
+
+- Fase 11.7.61: Sincronización manual en local de la vista del Blog.
