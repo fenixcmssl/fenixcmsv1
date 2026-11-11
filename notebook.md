@@ -287,3 +287,5 @@
 - Fase 11.7.11: Resolución de conflicto de duplicidad de middleware (raíz vs src). Se elimina el archivo sobrante para permitir la compilación exitosa y resolver la caída 502 Bad Gateway.
 
 - Fase 11.7.12: Búsqueda y eliminación estricta de archivos middleware y proxy anidados (src/src/). Generación limpia de src/middleware.ts para resolver conflicto de compilación 502 Bad Gateway.
+
+- Fase 11.7.13: Resolución de error crítico (Turbopack Panic) durante la compilación. Se procedió a purgar node_modules/.cache, se deshabilitó la telemetría y se aplicó límite de memoria RAM con NODE_OPTIONS para estabilizar el VPS.
