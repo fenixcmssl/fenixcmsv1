@@ -305,3 +305,7 @@
 - Fase 11.7.20: Implementación de UI para el Tenant Dashboard. Se reemplazó el marcador de texto plano por una interfaz moderna con Tailwind CSS que incluye barra lateral de navegación y tarjetas de métricas conectadas a los datos reales del tenant en PostgreSQL.
 
 - Fase 11.7.21: Escaneo profundo de arquitectura. Se detectó colisión de rutas (la carpeta dinámica [domain] está capturando el tráfico de /superadmin). Se extraen logs de PM2 y estructura de Next.js para aislar los dominios.
+
+- Fase 11.7.22: Corrección de Error 500 cambiando la relación de Prisma de 'domains' a 'tenantDomains'. Resolución de Route Clash moviendo la ruta /superadmin fuera del scope de [domain].
+
+- Fase 11.7.24: Corrección de rutas relativas de importación en componentes de SuperAdmin tras su reubicación. Se ajustaron los imports de '../../actions' a '../actions' solucionando el error Module not found durante la compilación.

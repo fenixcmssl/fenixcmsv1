@@ -1,5 +1,5 @@
 "use client";
-import { setSystemLocale } from '../../actions/locale';
+import { setSystemLocale } from '../actions/locale';
 import { useTransition } from 'react';
 
 export default function LanguageSwitcher({ currentLocale }: { currentLocale: string }) {

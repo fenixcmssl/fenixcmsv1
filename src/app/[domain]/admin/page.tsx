@@ -16,7 +16,7 @@ export default async function TenantAdminDashboard({ params }: any) {
   const prisma = getAdminClient();
   const tenant = await prisma.tenant.findUnique({
     where: { id: sessionId },
-    include: { domains: true }
+    include: { tenantDomains: true }
   });
 
   if (!tenant) {
