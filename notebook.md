@@ -291,3 +291,5 @@
 - Fase 11.7.70: Sincronización manual en local de las vistas de Plugins y Temas.
 
 - Fase 11.7.73: Sincronización manual en local del módulo Fenix Import.
+
+- Fase 11.7.76: Sincronización manual en local de la lógica de Marketplace y menú dinámico.
