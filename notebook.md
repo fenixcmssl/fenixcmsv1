@@ -299,3 +299,5 @@
 - Fase 11.7.17: Hard reset del enrutador. Se purgan todos los archivos middleware/proxy y archivos vacíos (0 bytes) que causaban pánico en Turbopack. Se reubica middleware.ts a la raíz del proyecto usando 'export default' para garantizar estabilidad en la compilación.
 
 - Fase 11.7.18: Análisis profundo de Turbopack Panic. Se identificó corrupción en binarios de Rust. Solución aplicada: Reinstalación limpia de node_modules (Clean Install) y reubicación estricta de middleware.ts dentro de src/ para estabilizar el compilador Edge de Next.js 16.4.5.
+
+- Fase 11.7.19: Creación de la vista de login específica para subdominios (src/app/[domain]/login/page.tsx). Se implementó un Server Action nativo para emitir la cookie tenant_session estrictamente en el dominio del cliente, previniendo errores de cookies cruzadas y eludiendo el error 404.
