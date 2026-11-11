@@ -337,3 +337,5 @@
 - Fase 11.7.54: Actualización de esquema Prisma con modelos para CMS (BlogPost, Page) y el sistema de módulos (TenantExtension). Preparación para App Store interna y Blog estilo WordPress.
 
 - Fase 11.7.57: Refactorización estructural. Se creó layout.tsx y Sidebar.tsx dinámico para la zona admin, centralizando el menú de navegación (incluyendo rutas para Blog, Páginas y Plugins estilo WordPress). Se limpiaron las vistas antiguas.
+
+- Fase 11.7.60: Creación de la vista principal del Gestor de Entradas de Blog (src/app/[domain]/admin/posts/page.tsx) con soporte para listado desde PostgreSQL y tabla estilizada con Tailwind CSS.
