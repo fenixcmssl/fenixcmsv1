@@ -289,3 +289,5 @@
 - Fase 11.7.12: Búsqueda y eliminación estricta de archivos middleware y proxy anidados (src/src/). Generación limpia de src/middleware.ts para resolver conflicto de compilación 502 Bad Gateway.
 
 - Fase 11.7.13: Resolución de error crítico (Turbopack Panic) durante la compilación. Se procedió a purgar node_modules/.cache, se deshabilitó la telemetría y se aplicó límite de memoria RAM con NODE_OPTIONS para estabilizar el VPS.
+
+- Fase 11.7.14: Migración del enrutador dinámico. Se reemplaza src/middleware.ts por src/proxy.ts para cumplir con los nuevos estándares de Next.js 16.4.5 y solucionar el Turbopack Panic durante el build.
