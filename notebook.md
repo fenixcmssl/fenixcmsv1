@@ -289,3 +289,5 @@
 - Fase 11.7.67: Sincronización manual en local del gestor de páginas legales y generales.
 
 - Fase 11.7.70: Sincronización manual en local de las vistas de Plugins y Temas.
+
+- Fase 11.7.73: Sincronización manual en local del módulo Fenix Import.
