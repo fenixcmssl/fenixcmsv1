@@ -10,6 +10,7 @@ export default function Sidebar({ tenantName, domain }: { tenantName: string, do
   const menuItems = [
     { name: "Dashboard", path: "/admin", exact: true },
     { name: "Catálogo", path: "/admin/products", exact: false },
+    { name: "Fenix Import", path: "/admin/fenix-import", exact: false },
     { name: "Pedidos", path: "/admin/orders", exact: false },
     { name: "Clientes", path: "/admin/customers", exact: false },
     { name: "Entradas (Blog)", path: "/admin/posts", exact: false },

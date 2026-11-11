@@ -345,3 +345,5 @@
 - Fase 11.7.66: Creación del Módulo de Páginas Estáticas y Legales. Se inyectaron las vistas de listado y formulario de creación, integradas con el modelo Page de Prisma y categorización GENERAL/LEGAL.
 
 - Fase 11.7.69: Implementación del Marketplace de Tenant. Creación de vistas para 'Plugins' y 'Apariencia' (src/app/[domain]/admin/plugins y appearance). Lógica de lectura cruzada entre modelos Application y TenantExtension.
+
+- Fase 11.7.72: Implementación de Fenix Import. Desarrollo de interfaz cliente para mapeo dinámico de CSV y Server Action para importación masiva (createMany) en PostgreSQL. Agregado al menú lateral.
