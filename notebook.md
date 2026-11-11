@@ -281,3 +281,5 @@
 - Fase 11.7.1: Parche de compatibilidad de tipos TypeScript en page.tsx del admin para evitar falla silenciosa de compilación.
 
 - Fase 11.7.2: Implementación de src/middleware.ts para reescribir internamente las URLs de los subdominios hacia la estructura de carpetas /[domain]/... permitiendo el acceso al panel /admin de cada Tenant.
+
+- Fase 11.7.7: Ajuste de formato DNS. El proveedor exige FQDN completo, por lo que el registro manual se realiza como john4095.fenixcms.es en lugar de usar el formato corto.
