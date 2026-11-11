@@ -329,3 +329,5 @@
 - Fase 11.7.42: Corrección de error de sintaxis JSX (etiqueta desparejada en botón Editar) en el catálogo de productos. Reconstrucción exitosa de producción y reactivación del servidor PM2.
 
 - Fase 11.7.45: Actualización del esquema Prisma (EcommerceProduct) replicando la arquitectura de WooCommerce. Se añadieron campos de inventario (peso, dimensiones, backorders), precios rebajados, gestión de impuestos, relaciones cruzadas y se crearon los modelos ProductCategory y ProductVariation.
+
+- Fase 11.7.48: Interfaz de creación de productos adaptada al modelo WooCommerce. Se dividió el formulario en secciones (General, Inventario, Envío) y se actualizó el Server Action con validación de tipos y conversiones seguras para Prisma.
