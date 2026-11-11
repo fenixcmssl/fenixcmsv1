@@ -265,3 +265,5 @@
 - Fase 11.3.8: Limpieza de caché profunda (.next) y regeneración de Prisma en el VPS para forzar el reconocimiento de los modelos Application y Plan.
 
 - Fase 11.7.33: Sincronización manual en local del archivo postcss.config.js y package.json adaptados a Tailwind v4.
+
+- Fase 11.7.36: Sincronización local de la creación de la vista del Catálogo de Productos y actualización de enlaces de navegación lateral.
