@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAdminClient } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -51,9 +52,9 @@ export default async function TenantProductsPage({ params }: any) {
             <h1 className="text-3xl font-bold text-gray-900">Catálogo de Productos</h1>
             <p className="text-gray-500 mt-2">Gestiona tu inventario y precios de {domain}.</p>
           </div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm">
+          <Link href="/admin/products/new" className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm inline-block">
             + Nuevo Producto
-          </button>
+          </Link>
         </header>
 
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -89,7 +90,7 @@ export default async function TenantProductsPage({ params }: any) {
                       </span>
                     </td>
                     <td className="p-4 text-right">
-                      <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">Editar</button>
+                      <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">Editar</Link>
                     </td>
                   </tr>
                 ))}
