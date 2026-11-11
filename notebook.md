@@ -287,3 +287,5 @@
 - Fase 11.7.64: Sincronización manual en local del editor de entradas de blog.
 
 - Fase 11.7.67: Sincronización manual en local del gestor de páginas legales y generales.
+
+- Fase 11.7.70: Sincronización manual en local de las vistas de Plugins y Temas.
