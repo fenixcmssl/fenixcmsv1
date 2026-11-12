@@ -405,3 +405,5 @@
 - Fase 11.7.121: Sincronización manual en local del renderizado visual de Tenants.
 
 - Fase 11.7.125: Sincronización manual en local del renderizado de Usuarios en SuperAdmin.
+
+- Fase 11.7.128: Sincronización manual en local del fix de rendimiento de la tabla de Usuarios.
