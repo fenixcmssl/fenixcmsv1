@@ -351,3 +351,5 @@
 - Fase 11.7.75: Implementación de lógica SaaS en Marketplace. Fenix Import Pro se registró como Application. El Sidebar ahora es dinámico y oculta opciones premium no adquiridas. Se añadió Server Action de instalación y activación instantánea en la vista de Plugins.
 
 - Fase 11.7.78: Modificación del esquema Prisma. Se añadió el campo 'price' al modelo Application para soportar venta de plugins en el marketplace.
+
+- Fase 11.7.80: Actualización del formulario NewAppForm para soportar la selección de tipo PLUGIN y fijación de precio de venta en el panel de SuperAdmin.
