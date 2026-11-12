@@ -409,3 +409,5 @@
 - Fase 11.7.128: Sincronización manual en local del fix de rendimiento de la tabla de Usuarios.
 
 - Fase 11.7.135: Sincronización manual en local del fix de sintaxis JSX que provocaba el 502 Bad Gateway.
+
+- Fase 11.7.142: Sincronización manual en local del fix de redirección del login.
