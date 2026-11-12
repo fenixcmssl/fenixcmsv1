@@ -401,3 +401,5 @@
 - Fase 11.7.115: Sincronización manual en local del fix de redirección en el checkout.
 
 - Fase 11.7.117: Sincronización manual en local del SDK de PayPal.
+
+- Fase 11.7.121: Sincronización manual en local del renderizado visual de Tenants.
