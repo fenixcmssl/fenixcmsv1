@@ -264,6 +264,7 @@
 
 - Fase 11.3.8: Limpieza de cach� profunda (.next) y regeneraci�n de Prisma en el VPS para forzar el reconocimiento de los modelos Application y Plan.
 
+<<<<<<< HEAD
 - Fase 11.7.33: Sincronizaci�n manual en local del archivo postcss.config.js y package.json adaptados a Tailwind v4.
 
 - Fase 11.7.36: Sincronizaci�n local de la creaci�n de la vista del Cat�logo de Productos y actualizaci�n de enlaces de navegaci�n lateral.
@@ -297,3 +298,94 @@
 - Fase 11.7.81: Sincronizaci�n manual en local del formulario de aplicaciones con precio.
 
 - Fase 11.7.83: Sincronizaci�n manual en local de la separaci�n del m�dulo de Plugins en el SuperAdmin.
+=======
+- Fase 11.3.9: Reconstrucción profunda de Prisma en VPS. Se inyectó schema.prisma directamente, se purgó la caché de node_modules y se regeneró el cliente para resolver el desajuste de 'undefined' al crear Applications.
+
+- Fase 11.4.2: Conexión de la vista principal del Superadmin (page.tsx) con la base de datos PostgreSQL para extraer y listar los registros reales de Applications y Plans.
+
+- Fase 11.5.1: Conexión de la Landing Page pública (page.tsx) con PostgreSQL para renderizado dinámico de tarjetas de precios (modelo Plan) e inyección de datos exactos en PaypalCheckout.
+
+- Fase 11.5.2: Desactivación de caché estática en page.tsx mediante export const dynamic = 'force-dynamic' para mostrar los Planes de BD en tiempo real.
+
+- Fase 11.6.0: Modificación del modelo Tenant para almacenar email. Implementación de generación de contraseñas automáticas post-pago y visualización de credenciales en el Frontend.
+
+- Fase 11.6.1: Implementación del portal central de Login para clientes (/login) con validación de credenciales en PostgreSQL y redirección dinámica hacia el panel de administración del subdominio respectivo (/[domain]/admin).
+
+- Fase 11.7.0: Creación del Dashboard del Tenant (/[domain]/admin/page.tsx) con verificación de cookies de sesión, lectura de datos desde PostgreSQL y arquitectura visual base.
+
+- Fase 11.7.1: Parche de compatibilidad de tipos TypeScript en page.tsx del admin para evitar falla silenciosa de compilación.
+
+- Fase 11.7.2: Implementación de src/middleware.ts para reescribir internamente las URLs de los subdominios hacia la estructura de carpetas /[domain]/... permitiendo el acceso al panel /admin de cada Tenant.
+
+- Fase 11.7.7: Ajuste de formato DNS. El proveedor exige FQDN completo, por lo que el registro manual se realiza como john4095.fenixcms.es en lugar de usar el formato corto.
+
+- Fase 11.7.11: Resolución de conflicto de duplicidad de middleware (raíz vs src). Se elimina el archivo sobrante para permitir la compilación exitosa y resolver la caída 502 Bad Gateway.
+
+- Fase 11.7.12: Búsqueda y eliminación estricta de archivos middleware y proxy anidados (src/src/). Generación limpia de src/middleware.ts para resolver conflicto de compilación 502 Bad Gateway.
+
+- Fase 11.7.13: Resolución de error crítico (Turbopack Panic) durante la compilación. Se procedió a purgar node_modules/.cache, se deshabilitó la telemetría y se aplicó límite de memoria RAM con NODE_OPTIONS para estabilizar el VPS.
+
+- Fase 11.7.14: Migración del enrutador dinámico. Se reemplaza src/middleware.ts por src/proxy.ts para cumplir con los nuevos estándares de Next.js 16.4.5 y solucionar el Turbopack Panic durante el build.
+
+- Fase 11.7.15: Corrección de sintaxis en proxy.ts. Se actualiza el nombre de la función exportada de 'middleware' a 'proxy' cumpliendo con la directiva estricta de Next.js 16.4.5+.
+
+- Fase 11.7.16: Limpieza nuclear de node_modules/.cache y .next. Se fuerza a Turbopack a regenerar el árbol de archivos desde cero para eliminar el mapeo fantasma de middleware.ts que causaba el TurbopackInternalError.
+
+- Fase 11.7.17: Hard reset del enrutador. Se purgan todos los archivos middleware/proxy y archivos vacíos (0 bytes) que causaban pánico en Turbopack. Se reubica middleware.ts a la raíz del proyecto usando 'export default' para garantizar estabilidad en la compilación.
+
+- Fase 11.7.18: Análisis profundo de Turbopack Panic. Se identificó corrupción en binarios de Rust. Solución aplicada: Reinstalación limpia de node_modules (Clean Install) y reubicación estricta de middleware.ts dentro de src/ para estabilizar el compilador Edge de Next.js 16.4.5.
+
+- Fase 11.7.19: Creación de la vista de login específica para subdominios (src/app/[domain]/login/page.tsx). Se implementó un Server Action nativo para emitir la cookie tenant_session estrictamente en el dominio del cliente, previniendo errores de cookies cruzadas y eludiendo el error 404.
+
+- Fase 11.7.20: Implementación de UI para el Tenant Dashboard. Se reemplazó el marcador de texto plano por una interfaz moderna con Tailwind CSS que incluye barra lateral de navegación y tarjetas de métricas conectadas a los datos reales del tenant en PostgreSQL.
+
+- Fase 11.7.21: Escaneo profundo de arquitectura. Se detectó colisión de rutas (la carpeta dinámica [domain] está capturando el tráfico de /superadmin). Se extraen logs de PM2 y estructura de Next.js para aislar los dominios.
+
+- Fase 11.7.22: Corrección de Error 500 cambiando la relación de Prisma de 'domains' a 'tenantDomains'. Resolución de Route Clash moviendo la ruta /superadmin fuera del scope de [domain].
+
+- Fase 11.7.24: Corrección de rutas relativas de importación en componentes de SuperAdmin tras su reubicación. Se ajustaron los imports de '../../actions' a '../actions' solucionando el error Module not found durante la compilación.
+
+- Fase 11.7.27: Restauración del motor Tailwind CSS. Se detectó ausencia de tailwind.config.ts tras el Clean Install. Se regeneró la configuración asegurando el escaneo del directorio src/app/[domain] para devolver el diseño gráfico al Tenant Dashboard.
+
+- Fase 11.7.27: Restauración del motor Tailwind CSS. Se detectó ausencia de tailwind.config.ts tras el Clean Install. Se regeneró la configuración asegurando el escaneo del directorio src/app/[domain] para devolver el diseño gráfico al Tenant Dashboard.
+
+- Fase 11.7.27: Restauración del motor Tailwind CSS. Se detectó ausencia de tailwind.config.ts tras el Clean Install. Se regeneró la configuración asegurando el escaneo del directorio src/app/[domain] para devolver el diseño gráfico al Tenant Dashboard.
+
+- Fase 11.7.27: Restauración del motor Tailwind CSS. Se detectó ausencia de tailwind.config.ts tras el Clean Install. Se regeneró la configuración asegurando el escaneo del directorio src/app/[domain] para devolver el diseño gráfico al Tenant Dashboard.
+
+- Fase 11.7.30: Resolución de error 502 Bad Gateway. El proceso de PM2 estaba caído por ausencia de la carpeta .next. Se ejecutó npm run build y se reinició el demonio para restaurar la conexión con Nginx en el puerto 3000.
+
+- Fase 11.7.32: Adaptación del motor gráfico a Tailwind v4. Se instaló @tailwindcss/postcss y se actualizó postcss.config.js para resolver el fallo de compilación. Reconstrucción de producción exitosa y reinicio de PM2, resolviendo el error 502.
+
+- Fase 11.7.35: Creación del módulo de Catálogo (src/app/[domain]/admin/products/page.tsx) leyendo desde el modelo EcommerceProduct en Prisma y enlazando la navegación lateral. Interfaz construida con Tailwind CSS.
+
+- Fase 11.7.38: Implementación de formulario de creación de productos (src/app/[domain]/admin/products/new/page.tsx). Se creó un Server Action para ingestar datos en Prisma aislados por tenant_session. Se actualizaron los botones del catálogo para usar Link de Next.js.
+
+- Fase 11.7.42: Corrección de error de sintaxis JSX (etiqueta desparejada en botón Editar) en el catálogo de productos. Reconstrucción exitosa de producción y reactivación del servidor PM2.
+
+- Fase 11.7.45: Actualización del esquema Prisma (EcommerceProduct) replicando la arquitectura de WooCommerce. Se añadieron campos de inventario (peso, dimensiones, backorders), precios rebajados, gestión de impuestos, relaciones cruzadas y se crearon los modelos ProductCategory y ProductVariation.
+
+- Fase 11.7.48: Interfaz de creación de productos adaptada al modelo WooCommerce. Se dividió el formulario en secciones (General, Inventario, Envío) y se actualizó el Server Action con validación de tipos y conversiones seguras para Prisma.
+
+- Fase 11.7.51: Ajuste de UI en creación de productos. Se incrustó el menú lateral izquierdo (Sidebar) en el formulario para mantener la coherencia del Tenant Dashboard.
+
+- Fase 11.7.54: Actualización de esquema Prisma con modelos para CMS (BlogPost, Page) y el sistema de módulos (TenantExtension). Preparación para App Store interna y Blog estilo WordPress.
+
+- Fase 11.7.57: Refactorización estructural. Se creó layout.tsx y Sidebar.tsx dinámico para la zona admin, centralizando el menú de navegación (incluyendo rutas para Blog, Páginas y Plugins estilo WordPress). Se limpiaron las vistas antiguas.
+
+- Fase 11.7.60: Creación de la vista principal del Gestor de Entradas de Blog (src/app/[domain]/admin/posts/page.tsx) con soporte para listado desde PostgreSQL y tabla estilizada con Tailwind CSS.
+
+- Fase 11.7.63: Creación de formulario de Nueva Entrada de Blog (src/app/[domain]/admin/posts/new/page.tsx). Incluye generación automática de slug y Server Action para insertar en modelo BlogPost.
+
+- Fase 11.7.66: Creación del Módulo de Páginas Estáticas y Legales. Se inyectaron las vistas de listado y formulario de creación, integradas con el modelo Page de Prisma y categorización GENERAL/LEGAL.
+
+- Fase 11.7.69: Implementación del Marketplace de Tenant. Creación de vistas para 'Plugins' y 'Apariencia' (src/app/[domain]/admin/plugins y appearance). Lógica de lectura cruzada entre modelos Application y TenantExtension.
+
+- Fase 11.7.72: Implementación de Fenix Import. Desarrollo de interfaz cliente para mapeo dinámico de CSV y Server Action para importación masiva (createMany) en PostgreSQL. Agregado al menú lateral.
+
+- Fase 11.7.75: Implementación de lógica SaaS en Marketplace. Fenix Import Pro se registró como Application. El Sidebar ahora es dinámico y oculta opciones premium no adquiridas. Se añadió Server Action de instalación y activación instantánea en la vista de Plugins.
+
+- Fase 11.7.78: Modificación del esquema Prisma. Se añadió el campo 'price' al modelo Application para soportar venta de plugins en el marketplace.
+
+- Fase 11.7.80: Actualización del formulario NewAppForm para soportar la selección de tipo PLUGIN y fijación de precio de venta en el panel de SuperAdmin.
+>>>>>>> 50a1a2f813d3872f1e469bf44df470b1eb0e25ca

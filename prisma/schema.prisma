@@ -1,4 +1,4 @@
-﻿generator client {
+generator client {
   provider = "prisma-client-js"
 }
 
@@ -50,23 +50,30 @@ model AuditLog {
 }
 
 model Tenant {
-  id                String             @id @default(cuid())
-  name              String
-  password          String?
-  moduleType        String
-  currency          String             @default("EUR")
-  language          String             @default("es")
-  color             String             @default("#000000")
-  themeColor        String             @default("#000000")
-  logoUrl           String?
-  status            String             @default("ACTIVE")
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-  tenantDomains     TenantDomain[]
-  subscriptions     Subscription[]
-  ecommerceProducts EcommerceProduct[]
-  properties        Property[]
-  auctionItems      AuctionItem[]
+  id                  String             @id @default(cuid())
+  name                String
+  email               String?            
+  password            String?
+  moduleType          String
+  currency            String             @default("EUR")
+  language            String             @default("es")
+  color               String             @default("#000000")
+  themeColor          String             @default("#000000")
+  logoUrl             String?
+  status              String             @default("ACTIVE")
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  tenantDomains       TenantDomain[]
+  subscriptions       Subscription[]
+  ecommerceProducts   EcommerceProduct[]
+  ecommerceCategories ProductCategory[]
+  properties          Property[]
+  auctionItems        AuctionItem[]
+  
+  // Novedad: Modelos CMS y Sistema de Plugins
+  blogPosts           BlogPost[]
+  pages               Page[]
+  extensions          TenantExtension[]
 }
 
 model TenantDomain {
@@ -80,14 +87,28 @@ model TenantDomain {
 }
 
 model Application {
-  id        String   @id @default(cuid())
-  name      String
-  type      String   @default("ECOMMERCE")
-  version   String   @default("1.0.0")
-  status    String   @default("ACTIVA")
-  desc      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String   @id @default(cuid())
+  name             String
+  type             String   @default("ECOMMERCE") // ECOMMERCE, BLOG, PLUGIN, THEME
+  version          String   @default("1.0.0")
+  status           String   @default("ACTIVA")
+  desc             String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  tenantExtensions TenantExtension[]
+}
+
+// Registro de qué Tienda (Tenant) instaló qué Aplicación/Plugin/Tema
+model TenantExtension {
+  id            String      @id @default(cuid())
+  tenantId      String
+  tenant        Tenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  type          String      @default("PLUGIN") // PLUGIN, THEME, MODULE
+  isActive      Boolean     @default(true)
+  settings      Json?
+  installedAt   DateTime    @default(now())
 }
 
 model Plan {
@@ -117,20 +138,77 @@ model Subscription {
   updatedAt   DateTime @updatedAt
 }
 
-model EcommerceProduct {
+model ProductCategory {
   id          String   @id @default(cuid())
   tenantId    String
   tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   name        String
-  slug        String?
-  sku         String?
-  imageUrl    String?
+  slug        String
   description String?
-  price       Float
-  stock       Int      @default(0)
-  isActive    Boolean  @default(true)
+  imageUrl    String?
+  parentId    String?
+  products    EcommerceProduct[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model EcommerceProduct {
+  id              String   @id @default(cuid())
+  tenantId        String
+  tenant          Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name            String
+  slug            String?
+  description     String?
+  shortDesc       String?
+  imageUrl        String?
+  galleryUrls     String[] 
+  price           Float
+  salePrice       Float?
+  taxStatus       String   @default("TAXABLE")
+  taxClass        String?
+  sku             String?
+  manageStock     Boolean  @default(false)
+  stock           Int      @default(0)
+  lowStockAmount  Int      @default(2)
+  backorders      String   @default("NO")
+  stockStatus     String   @default("IN_STOCK")
+  weight          Float?
+  length          Float?
+  width           Float?
+  height          Float?
+  shippingClass   String?
+  upSellIds       String[]
+  crossSellIds    String[]
+  attributes      Json?    
+  isActive        Boolean  @default(true)
+  status          String   @default("PUBLISHED")
+  categoryId      String?
+  category        ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  variations      ProductVariation[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ProductVariation {
+  id              String   @id @default(cuid())
+  productId       String
+  product         EcommerceProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sku             String?
+  price           Float
+  salePrice       Float?
+  manageStock     Boolean  @default(false)
+  stock           Int      @default(0)
+  lowStockAmount  Int      @default(2)
+  stockStatus     String   @default("IN_STOCK")
+  weight          Float?
+  length          Float?
+  width           Float?
+  height          Float?
+  attributes      Json     
+  imageUrl        String?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Property {
@@ -156,4 +234,35 @@ model AuctionItem {
   endTime     DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// Novedad: Modelo de Blog (Tipo WordPress wp_posts)
+model BlogPost {
+  id          String    @id @default(cuid())
+  tenantId    String
+  tenant      Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  title       String
+  slug        String
+  content     String
+  excerpt     String?
+  imageUrl    String?
+  status      String    @default("DRAFT") // DRAFT, PUBLISHED
+  postType    String    @default("POST")
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Novedad: Modelo de Páginas Legales / Estáticas
+model Page {
+  id          String    @id @default(cuid())
+  tenantId    String
+  tenant      Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  title       String
+  slug        String
+  content     String
+  type        String    @default("GENERAL") // GENERAL, LEGAL
+  status      String    @default("PUBLISHED")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
