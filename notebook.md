@@ -393,3 +393,5 @@
 - Fase 11.7.91: Sincronización manual en local de NewItemForm.tsx con el diccionario de módulos completo.
 
 - Fase 11.7.94: Sincronización manual en local del formulario multilingüe con reactividad en tiempo real.
+
+- Fase 11.7.96: Sincronización manual en local de la optimización de rendimiento (eliminación de polling).
