@@ -411,3 +411,5 @@
 - Fase 11.7.135: Sincronización manual en local del fix de sintaxis JSX que provocaba el 502 Bad Gateway.
 
 - Fase 11.7.142: Sincronización manual en local del fix de redirección del login.
+
+- Fase 11.7.145: Sincronización manual en local de la nueva interfaz del Dashboard del cliente.
