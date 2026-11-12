@@ -415,3 +415,5 @@
 - Fase 11.7.145: Sincronización manual en local de la nueva interfaz del Dashboard del cliente.
 
 - Fase 11.7.165: Sincronización manual en local del esquema de base de datos E-commerce y la pantalla de Pedidos.
+
+- Fase 11.7.171: Sincronización manual en local de la arquitectura de Layout Maestro.
