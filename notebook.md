@@ -293,3 +293,5 @@
 - Fase 11.7.73: Sincronización manual en local del módulo Fenix Import.
 
 - Fase 11.7.76: Sincronización manual en local de la lógica de Marketplace y menú dinámico.
+
+- Fase 11.7.81: Sincronización manual en local del formulario de aplicaciones con precio.
