@@ -389,3 +389,5 @@
 
 - Fase 11.7.80: ActualizaciÃ³n del formulario NewAppForm para soportar la selecciÃ³n de tipo PLUGIN y fijaciÃ³n de precio de venta en el panel de SuperAdmin.
 >>>>>>> 50a1a2f813d3872f1e469bf44df470b1eb0e25ca
+
+- Fase 11.7.91: Sincronización manual en local de NewItemForm.tsx con el diccionario de módulos completo.
