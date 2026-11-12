@@ -295,3 +295,5 @@
 - Fase 11.7.76: Sincronización manual en local de la lógica de Marketplace y menú dinámico.
 
 - Fase 11.7.81: Sincronización manual en local del formulario de aplicaciones con precio.
+
+- Fase 11.7.83: Sincronización manual en local de la separación del módulo de Plugins en el SuperAdmin.
