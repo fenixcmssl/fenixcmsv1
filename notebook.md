@@ -399,3 +399,5 @@
 - Fase 11.7.99: Sincronización manual en local del botón eliminar y sus acciones de servidor.
 
 - Fase 11.7.115: Sincronización manual en local del fix de redirección en el checkout.
+
+- Fase 11.7.117: Sincronización manual en local del SDK de PayPal.
