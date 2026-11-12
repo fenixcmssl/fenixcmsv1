@@ -397,3 +397,5 @@
 - Fase 11.7.96: Sincronización manual en local de la optimización de rendimiento (eliminación de polling).
 
 - Fase 11.7.99: Sincronización manual en local del botón eliminar y sus acciones de servidor.
+
+- Fase 11.7.115: Sincronización manual en local del fix de redirección en el checkout.
