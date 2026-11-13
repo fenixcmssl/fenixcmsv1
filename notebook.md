@@ -419,3 +419,5 @@
 - Fase 11.7.171: Sincronización manual en local de la arquitectura de Layout Maestro.
 
 - Fase 11.7.174: Sincronización manual en local de la pantalla de gestión de Categorías.
+
+- Fase 11.7.202: Sincronización manual en local del Client Component de Categorías.
