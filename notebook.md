@@ -417,3 +417,5 @@
 - Fase 11.7.165: Sincronización manual en local del esquema de base de datos E-commerce y la pantalla de Pedidos.
 
 - Fase 11.7.171: Sincronización manual en local de la arquitectura de Layout Maestro.
+
+- Fase 11.7.174: Sincronización manual en local de la pantalla de gestión de Categorías.
