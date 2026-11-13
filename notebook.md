@@ -421,3 +421,5 @@
 - Fase 11.7.174: Sincronización manual en local de la pantalla de gestión de Categorías.
 
 - Fase 11.7.202: Sincronización manual en local del Client Component de Categorías.
+
+- Fase 11.7.211: Sincronización del motor dinámico de servido de imágenes (/api/uploads) para visualización inmediata en producción.
