@@ -433,3 +433,5 @@
 - Fase 11.7.255: Sincronización local de la corrección del formulario de Ajustes.
 
 - Fase 11.7.258: Sincronización local del endpoint API /api/superadmin/brand, configuración de 50MB y cabecera con logo centrado.
+
+- Fase 11.7.261: Sincronización local de la ampliación de proporciones del logo en la cabecera.
