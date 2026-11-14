@@ -445,3 +445,5 @@
 - Fase 11.7.273: Sincronización local del escaparate estilo Amazon en colores negro y rojo reemplazando el banner central.
 
 - Fase 11.7.276: Sincronización local del escaparate estilo Amazon conectado exclusivamente a Planes, Plugins y Temas del SuperAdmin.
+
+- Fase 11.7.279: Sincronización local de la portada pública mostrando únicamente los Planes y manteniendo las Aplicaciones/Módulos base solo en el SuperAdmin.
