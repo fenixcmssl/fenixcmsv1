@@ -461,3 +461,5 @@
 - Fase 11.7.306: Sincronización local de 'Fenix tema classic' gratuito y preinstalado por defecto en todos los Planes E-Commerce con diseño clásico de Amazon.
 
 - Fase 11.7.309: Sincronización local de la conmutación instantánea entre plantillas de temas en Apariencia y renderizado dinámico sin caché en [domain]/page.tsx.
+
+- Fase 11.7.312: Sincronización local de la jerarquía de Categorías Principales y Subcategorías anidadas en todo el motor E-Commerce.
