@@ -459,3 +459,5 @@
 - Fase 11.7.297: Sincronización local de Fenix Tema Básico con fondo negro total, línea roja separadora en cabecera, botones rojos y carrito en naranja.
 
 - Fase 11.7.306: Sincronización local de 'Fenix tema classic' gratuito y preinstalado por defecto en todos los Planes E-Commerce con diseño clásico de Amazon.
+
+- Fase 11.7.309: Sincronización local de la conmutación instantánea entre plantillas de temas en Apariencia y renderizado dinámico sin caché en [domain]/page.tsx.
