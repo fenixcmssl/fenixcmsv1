@@ -449,3 +449,5 @@
 - Fase 11.7.279: Sincronización local de la portada pública mostrando únicamente los Planes y manteniendo las Aplicaciones/Módulos base solo en el SuperAdmin.
 
 - Fase 11.7.283: Sincronización local del tema 'Fenix Tema Básico' estilo Amazon en el menú Temas del SuperAdmin y activación de su venta en la tienda pública.
+
+- Fase 11.7.286: Sincronización local del flujo de compra para clientes existentes con selección y asociación de dominios y subdominios a Temas, Plugins y Planes.
