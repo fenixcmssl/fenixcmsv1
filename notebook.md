@@ -463,3 +463,5 @@
 - Fase 11.7.309: Sincronización local de la conmutación instantánea entre plantillas de temas en Apariencia y renderizado dinámico sin caché en [domain]/page.tsx.
 
 - Fase 11.7.312: Sincronización local de la jerarquía de Categorías Principales y Subcategorías anidadas en todo el motor E-Commerce.
+
+- Fase 11.7.316: Sincronización local del Editor de Productos estilo WooCommerce (múltiples imágenes, SEO, inventario, envío) y tasas de IVA (21%, 10%, 4%) en todo el motor E-Commerce.
