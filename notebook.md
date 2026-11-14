@@ -437,3 +437,5 @@
 - Fase 11.7.261: Sincronización local de la ampliación de proporciones del logo en la cabecera.
 
 - Fase 11.7.264: Sincronización local de la cabecera con el botón LOGIN NEGOCIO hacia /login y eliminación de lupa y carrito.
+
+- Fase 11.7.267: Sincronización local de la compresión automática WebP con Sharp, caché en RAM con ETag y carga prioritaria del logo.
