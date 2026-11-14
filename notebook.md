@@ -443,3 +443,5 @@
 - Fase 11.7.270: Sincronización local del motor global de compresión automática de imágenes (> 800KB) con Sharp en todos los módulos de subida.
 
 - Fase 11.7.273: Sincronización local del escaparate estilo Amazon en colores negro y rojo reemplazando el banner central.
+
+- Fase 11.7.276: Sincronización local del escaparate estilo Amazon conectado exclusivamente a Planes, Plugins y Temas del SuperAdmin.
