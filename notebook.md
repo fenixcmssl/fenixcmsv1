@@ -427,3 +427,5 @@
 - Fase 11.7.223: Registro local de la configuración de red, proxy inverso (Nginx) y despliegue SSL para latotaltienda.es en producción.
 
 - Fase 11.7.249: Sincronización local de permisos SFTP.
+
+- Fase 11.7.252: Sincronización local del panel de Ajustes de marca (Logo/Favicon).
