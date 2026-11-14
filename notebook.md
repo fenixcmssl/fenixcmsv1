@@ -453,3 +453,5 @@
 - Fase 11.7.286: Sincronización local del flujo de compra para clientes existentes con selección y asociación de dominios y subdominios a Temas, Plugins y Planes.
 
 - Fase 11.7.289: Sincronización local del filtrado exclusivo de Plugins y la nueva galería visual de Temas estilo WordPress en Apariencia.
+
+- Fase 11.7.294: Sincronización local de la aplicación en tiempo real de Fenix Tema Básico estilo Amazon en los dominios y subdominios de tiendas de clientes.
