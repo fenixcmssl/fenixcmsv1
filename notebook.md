@@ -429,3 +429,5 @@
 - Fase 11.7.249: Sincronización local de permisos SFTP.
 
 - Fase 11.7.252: Sincronización local del panel de Ajustes de marca (Logo/Favicon).
+
+- Fase 11.7.255: Sincronización local de la corrección del formulario de Ajustes.
