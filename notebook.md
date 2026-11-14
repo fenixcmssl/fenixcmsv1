@@ -435,3 +435,5 @@
 - Fase 11.7.258: Sincronización local del endpoint API /api/superadmin/brand, configuración de 50MB y cabecera con logo centrado.
 
 - Fase 11.7.261: Sincronización local de la ampliación de proporciones del logo en la cabecera.
+
+- Fase 11.7.264: Sincronización local de la cabecera con el botón LOGIN NEGOCIO hacia /login y eliminación de lupa y carrito.
