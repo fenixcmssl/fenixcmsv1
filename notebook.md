@@ -455,3 +455,5 @@
 - Fase 11.7.289: Sincronización local del filtrado exclusivo de Plugins y la nueva galería visual de Temas estilo WordPress en Apariencia.
 
 - Fase 11.7.294: Sincronización local de la aplicación en tiempo real de Fenix Tema Básico estilo Amazon en los dominios y subdominios de tiendas de clientes.
+
+- Fase 11.7.297: Sincronización local de Fenix Tema Básico con fondo negro total, línea roja separadora en cabecera, botones rojos y carrito en naranja.
