@@ -431,3 +431,5 @@
 - Fase 11.7.252: Sincronización local del panel de Ajustes de marca (Logo/Favicon).
 
 - Fase 11.7.255: Sincronización local de la corrección del formulario de Ajustes.
+
+- Fase 11.7.258: Sincronización local del endpoint API /api/superadmin/brand, configuración de 50MB y cabecera con logo centrado.
