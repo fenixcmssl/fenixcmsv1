@@ -439,3 +439,5 @@
 - Fase 11.7.264: Sincronización local de la cabecera con el botón LOGIN NEGOCIO hacia /login y eliminación de lupa y carrito.
 
 - Fase 11.7.267: Sincronización local de la compresión automática WebP con Sharp, caché en RAM con ETag y carga prioritaria del logo.
+
+- Fase 11.7.270: Sincronización local del motor global de compresión automática de imágenes (> 800KB) con Sharp en todos los módulos de subida.
