@@ -425,3 +425,5 @@
 - Fase 11.7.211: Sincronización del motor dinámico de servido de imágenes (/api/uploads) para visualización inmediata en producción.
 
 - Fase 11.7.223: Registro local de la configuración de red, proxy inverso (Nginx) y despliegue SSL para latotaltienda.es en producción.
+
+- Fase 11.7.249: Sincronización local de permisos SFTP.
