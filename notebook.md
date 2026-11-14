@@ -451,3 +451,5 @@
 - Fase 11.7.283: Sincronización local del tema 'Fenix Tema Básico' estilo Amazon en el menú Temas del SuperAdmin y activación de su venta en la tienda pública.
 
 - Fase 11.7.286: Sincronización local del flujo de compra para clientes existentes con selección y asociación de dominios y subdominios a Temas, Plugins y Planes.
+
+- Fase 11.7.289: Sincronización local del filtrado exclusivo de Plugins y la nueva galería visual de Temas estilo WordPress en Apariencia.
