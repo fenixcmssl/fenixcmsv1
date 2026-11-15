@@ -471,3 +471,5 @@
 - Fase 11.7.331: Sincronización local de atributos en menús desplegables uno al lado del otro debajo de los precios y en la ficha de producto.
 
 - Fase 11.7.337: Sincronización local del plugin oficial de serie Fenix PayPal Payments para clientes de las tiendas E-Commerce.
+
+- Fase 11.7.356: Sincronización local de la estandarización de marca FenixCMS eliminando referencias externas a WooCommerce, WordPress y Amazon.
