@@ -473,3 +473,5 @@
 - Fase 11.7.337: Sincronización local del plugin oficial de serie Fenix PayPal Payments para clientes de las tiendas E-Commerce.
 
 - Fase 11.7.356: Sincronización local de la estandarización de marca FenixCMS eliminando referencias externas a WooCommerce, WordPress y Amazon.
+
+- Fase 11.7.364: Sincronización local de los 6 puntos de puesta en marcha comercial de los Planes E-Commerce.
