@@ -477,3 +477,5 @@
 - Fase 11.7.364: Sincronización local de los 6 puntos de puesta en marcha comercial de los Planes E-Commerce.
 
 - Fase 11.7.370: Sincronización local del cambio de nombre del menú desplegable a 'Importadores' en src/app/admin/layout.tsx.
+
+- Fase 11.7.387: Sincronización local del selector de precios disponibles en el catálogo y opción de poner (+%) o quitar (-%) porcentaje en Importador Dreamlove.
