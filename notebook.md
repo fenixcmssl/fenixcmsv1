@@ -465,3 +465,5 @@
 - Fase 11.7.312: Sincronización local de la jerarquía de Categorías Principales y Subcategorías anidadas en todo el motor E-Commerce.
 
 - Fase 11.7.316: Sincronización local del Editor de Productos estilo WooCommerce (múltiples imágenes, SEO, inventario, envío) y tasas de IVA (21%, 10%, 4%) en todo el motor E-Commerce.
+
+- Fase 11.7.322: Sincronización local de la restauración completa de plantillas E-Commerce, deduplicación de categorías, ficha de producto estilo Amazon con galería múltiple y botón rojo Comprar.
