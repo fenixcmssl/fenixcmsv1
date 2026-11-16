@@ -491,3 +491,5 @@
 - Fase 11.7.441: Sincronización local de la optimización de velocidad y memoria en /api/dreamlove/fetch-feed para evitar paradas al 75%.
 
 - Fase 11.7.451: Sincronización local de la optimización integral de PostgreSQL (10 índices B-Tree), reducción del 92% del payload de tienda y paginación rápida en el panel /admin/products.
+
+- Fase 11.7.460: Sincronización local del diccionario completo de 72 categorías y subcategorías de Dreamlove en los 6 idiomas para escaparate e importador.
