@@ -479,3 +479,5 @@
 - Fase 11.7.370: Sincronización local del cambio de nombre del menú desplegable a 'Importadores' en src/app/admin/layout.tsx.
 
 - Fase 11.7.387: Sincronización local del selector de precios disponibles en el catálogo y opción de poner (+%) o quitar (-%) porcentaje en Importador Dreamlove.
+
+- Fase 11.7.396: Sincronización local del extractor bilingüe de tallas (S/L, S-T, One Size), números de calzado y colores en inglés/español en Importador Dreamlove.
