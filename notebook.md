@@ -483,3 +483,5 @@
 - Fase 11.7.396: Sincronización local del extractor bilingüe de tallas (S/L, S-T, One Size), números de calzado y colores en inglés/español en Importador Dreamlove.
 
 - Fase 11.7.412: Sincronización local de la carga completa de los 5.000 productos y corrección de categorías vacías en escaparate.
+
+- Fase 11.7.418: Sincronización local de las etiquetas de stock en el ángulo superior izquierdo de la foto del producto (SIN STOCK en rojo / STOCK DISPONIBLE + cantidad en verde).
