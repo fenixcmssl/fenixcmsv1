@@ -485,3 +485,5 @@
 - Fase 11.7.412: Sincronización local de la carga completa de los 5.000 productos y corrección de categorías vacías en escaparate.
 
 - Fase 11.7.418: Sincronización local de las etiquetas de stock en el ángulo superior izquierdo de la foto del producto (SIN STOCK en rojo / STOCK DISPONIBLE + cantidad en verde).
+
+- Fase 11.7.435: Sincronización local de la traducción automática de todas las categorías y subcategorías a los 6 idiomas (ES, EN, IT, FR, DE, PT).
