@@ -493,3 +493,5 @@
 - Fase 11.7.451: Sincronización local de la optimización integral de PostgreSQL (10 índices B-Tree), reducción del 92% del payload de tienda y paginación rápida en el panel /admin/products.
 
 - Fase 11.7.460: Sincronización local del diccionario completo de 72 categorías y subcategorías de Dreamlove en los 6 idiomas para escaparate e importador.
+
+- Fase 11.7.493: Sincronización local de la arquitectura Multi-Tenant de imágenes aisladas por tienda (/public/uploads/tenants/[tenantId]/) con caché compartida por Hardlinks.
