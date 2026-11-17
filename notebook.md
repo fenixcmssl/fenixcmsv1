@@ -497,3 +497,5 @@
 - Fase 11.7.493: Sincronización local de la arquitectura Multi-Tenant de imágenes aisladas por tienda (/public/uploads/tenants/[tenantId]/) con caché compartida por Hardlinks.
 
 - Fase 11.7.531: Sincronización en GitHub del Footer Siempre Visible en Pantalla (Sticky Bottom Bar + cajón desplegable de 4 columnas).
+
+- Fase 11.7.534: Sincronización en GitHub del saneamiento de entidades HTML y reconstrucción de resúmenes shortDesc sin palabras cortadas en los 10.545 productos.
