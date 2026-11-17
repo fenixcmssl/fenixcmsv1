@@ -495,3 +495,5 @@
 - Fase 11.7.460: Sincronización local del diccionario completo de 72 categorías y subcategorías de Dreamlove en los 6 idiomas para escaparate e importador.
 
 - Fase 11.7.493: Sincronización local de la arquitectura Multi-Tenant de imágenes aisladas por tienda (/public/uploads/tenants/[tenantId]/) con caché compartida por Hardlinks.
+
+- Fase 11.7.531: Sincronización en GitHub del Footer Siempre Visible en Pantalla (Sticky Bottom Bar + cajón desplegable de 4 columnas).
