@@ -499,3 +499,5 @@
 - Fase 11.7.531: Sincronización en GitHub del Footer Siempre Visible en Pantalla (Sticky Bottom Bar + cajón desplegable de 4 columnas).
 
 - Fase 11.7.534: Sincronización en GitHub del saneamiento de entidades HTML y reconstrucción de resúmenes shortDesc sin palabras cortadas en los 10.545 productos.
+
+- Fase 11.7.538: Sincronización en GitHub del blindaje Pre-Beta (Checkout automático de clientes, descuento de stock, validador de cupones BETA10 y auditoría superada).
