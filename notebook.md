@@ -515,3 +515,9 @@
 - Fase 11.7.585: Sincronización en GitHub del sistema de verificación de disponibilidad de dominios/subdominios en tiempo real y aprovisionamiento automático de SSL en Nginx.
 
 - Fase 11.7.589: Sincronización en GitHub de la validación de dominios en checkout/actions.ts y activación SSL automática para subdominios del sistema.
+
+## Fase 11.7.604 - 18 de Noviembre 2026
+- **Arquitectura**: Workspace (Multi-Portal / Multi-Aplicación) completado.
+- **Blindaje Total**: Implementada separación por moduleType (ECOMMERCE, REAL_ESTATE, AUCTION) en /admin/layout.tsx y /admin/page.tsx.
+- **Ajustes**: Ocultado el bloque de Impuestos/IVA E-commerce de los ajustes de las inmobiliarias y subastas.
+- **DNS Comodín**: Confirmada automatización y resolución local a 93.93.116.9.
