@@ -511,3 +511,5 @@
 - Fase 11.7.556: Sincronización en GitHub del auto-aprovisionamiento de subdominios y SSL en /api/checkout/confirm y Sala de Subastas + Blog en demo3.fenixcms.es.
 
 - Fase 11.7.576: Sincronización en GitHub de la corrección de eliminación y gestión de subdominios/dominios (prisma.tenantDomain) y borrado en cascada en el Superadministrador.
+
+- Fase 11.7.585: Sincronización en GitHub del sistema de verificación de disponibilidad de dominios/subdominios en tiempo real y aprovisionamiento automático de SSL en Nginx.
