@@ -513,3 +513,5 @@
 - Fase 11.7.576: Sincronización en GitHub de la corrección de eliminación y gestión de subdominios/dominios (prisma.tenantDomain) y borrado en cascada en el Superadministrador.
 
 - Fase 11.7.585: Sincronización en GitHub del sistema de verificación de disponibilidad de dominios/subdominios en tiempo real y aprovisionamiento automático de SSL en Nginx.
+
+- Fase 11.7.589: Sincronización en GitHub de la validación de dominios en checkout/actions.ts y activación SSL automática para subdominios del sistema.
