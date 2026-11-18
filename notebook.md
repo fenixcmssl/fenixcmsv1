@@ -525,3 +525,9 @@
 ## Fase 11.7.605 - 18 de Noviembre 2026
 - **Arquitectura**: Aislamiento total de menús y ajustes (Workspace) completado.
 - **Decisión Técnica**: Iniciando migración de almacenamiento masivo a Cloudflare R2 para escalabilidad Enterprise.
+
+## Fase 11.7.613 - 18 de Noviembre 2026
+- **Infraestructura Cloud**: Migración completa a Cloudflare R2 finalizada.
+- **Optimizador Central**: imageOptimizer.ts intercepta escrituras manuales y las desvía a S3/R2.
+- **Espejo Automático**: localProductImageMirror.ts adaptado para subir imágenes remotas directamente a R2 sin tocar disco.
+- **CDN**: /api/uploads configurado como redirección 301 inteligente hacia cdn.fenixcms.es.
