@@ -531,3 +531,8 @@
 - **Optimizador Central**: imageOptimizer.ts intercepta escrituras manuales y las desvía a S3/R2.
 - **Espejo Automático**: localProductImageMirror.ts adaptado para subir imágenes remotas directamente a R2 sin tocar disco.
 - **CDN**: /api/uploads configurado como redirección 301 inteligente hacia cdn.fenixcms.es.
+
+## Fase 11.7.619 - 18 de Noviembre 2026
+- **Arquitectura Inmobiliaria**: Creación de tablas 'Visit' y 'Agent' en Prisma vinculadas por tenantId.
+- **Aislamiento Visual**: Menú lateral redirigido a /admin/inmuebles (tabla exclusiva y terminología sectorial sin SKU ni IVA).
+- **Interfaces Iniciales**: Despliegue de vistas para Visitas y Agentes para erradicar errores 404 de enrutamiento.
