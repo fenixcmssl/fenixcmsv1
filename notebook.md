@@ -521,3 +521,7 @@
 - **Blindaje Total**: Implementada separación por moduleType (ECOMMERCE, REAL_ESTATE, AUCTION) en /admin/layout.tsx y /admin/page.tsx.
 - **Ajustes**: Ocultado el bloque de Impuestos/IVA E-commerce de los ajustes de las inmobiliarias y subastas.
 - **DNS Comodín**: Confirmada automatización y resolución local a 93.93.116.9.
+
+## Fase 11.7.605 - 18 de Noviembre 2026
+- **Arquitectura**: Aislamiento total de menús y ajustes (Workspace) completado.
+- **Decisión Técnica**: Iniciando migración de almacenamiento masivo a Cloudflare R2 para escalabilidad Enterprise.
