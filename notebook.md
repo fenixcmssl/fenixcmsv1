@@ -576,3 +576,6 @@
 
 ## Fase 11.7.668 - 19 de Noviembre 2026
 - **Administracion Unificada de Clientes (Multi-App Sidebar)**: Creacion de /src/app/admin/actions.ts (switchTenantAction con validacion de propiedad por email en servidor) y actualizacion de /src/app/admin/layout.tsx para mostrar el bloque Mis Aplicaciones en la barra lateral izquierda cuando un cliente tiene varias apps contratadas (E-commerce, Clasificados, Inmobiliaria, Subastas).
+
+## Fase 11.7.672 - 19 de Noviembre 2026
+- **Plan Subastas Pro + Blog SEO (Bloque 1)**: Creacion de arbol de 14 categorias y subcategorias (src/lib/auctionCategories.ts), diccionario multidioma independiente de 8 idiomas (src/lib/auctionI18n.ts), monitor de pujas en vivo (/admin/bids), panel de adjudicaciones (/admin/awards) y estadisticas reales de AUCTION en /admin/page.tsx.
