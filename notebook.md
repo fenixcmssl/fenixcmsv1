@@ -543,3 +543,6 @@
 
 ## Fase 11.7.633 - 19 de Noviembre 2026
 - **Motor Multidioma Exclusivo Inmobiliaria (24 Lenguas UE + Inglés)**: Creación desde cero de RealEstateLanguageProvider.tsx con las 24 lenguas oficiales de la Unión Europea, desacoplando REAL_ESTATE del antiguo StoreLanguageProvider de E-commerce en [domain]/page.tsx y conectando TiendaInmobiliariaClient.tsx.
+
+## Fase 11.7.637 - 19 de Noviembre 2026
+- **Inmobiliaria (Bloque 1 - Galería Múltiple)**: Subida múltiple de fotografías a Cloudflare R2 en /admin/inmuebles/new (actions.ts y page.tsx) guardando en galleryUrls con opción de conservar o eliminar fotos al editar, y carrusel interactivo con flechas, contador y miniaturas en TiendaInmobiliariaClient.tsx.
