@@ -564,3 +564,6 @@
 
 ## Fase 11.7.656 - 19 de Noviembre 2026
 - **Anuncios Clasificados + Blog (Bloque 1 - Base, Categorias y Enrutamiento)**: Creacion de src/lib/classifiedsCategories.ts (14 categorias y subcategorias), soporte automatico para CLASSIFIEDS en /checkout/actions.ts, menu estanco en /admin/layout.tsx, estadisticas dedicadas en /admin/page.tsx, vista base TiendaClasificadosView.tsx y enrutamiento en /[domain]/page.tsx.
+
+## Fase 11.7.659 - 19 de Noviembre 2026
+- **Anuncios Clasificados + Blog (Bloque 2 - Gestion de Anuncios en /admin/anuncios)**: Creacion de /admin/anuncios/actions.ts (alta con subida multiple a Cloudflare R2 via uploadBufferToR2, pausado/activado y borrado aislados por tenantId), listado de gestion en /admin/anuncios/page.tsx y formulario dedicado con selector dinamico de categorias y subcategorias en /admin/anuncios/new.
