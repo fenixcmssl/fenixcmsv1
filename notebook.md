@@ -600,3 +600,6 @@
 
 ## Fase 11.7.693 - 19 de Noviembre 2026
 - **Boton Rojo REGISTRACION CLIENTE en Cabecera**: Anadido enlace/boton rojo REGISTRACION CLIENTE a la derecha del logotipo en SexShop/Header.tsx conectado al formulario de registracion (/checkout?mode=register).
+
+## Fase 11.7.704 - 19 de Noviembre 2026
+- **Icono Carrito en Cabecera Principal**: Anadido boton de carrito de compra en blanco a la derecha de LOGIN NEGOCIO en SexShop/Header.tsx enlazado a /checkout.
