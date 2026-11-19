@@ -570,3 +570,6 @@
 
 ## Fase 11.7.661 - 19 de Noviembre 2026
 - **Anuncios Clasificados + Blog (Bloque 3 - Portal Publico y Blog Integrado)**: Creacion de TiendaClasificadosClient.tsx (buscador, parrilla de 14 categorias, filtros avanzados por subcategoria/estado/precio/anunciante, ficha modal con carrusel de fotos y contacto directo por WhatsApp/telefono/email, y pestana de Blog con lector modal) y actualizacion de TiendaClasificadosView.tsx con carga aislada por tenantId.
+
+## Fase 11.7.664 - 19 de Noviembre 2026
+- **Anuncios Clasificados + Blog (Bloque 4 - Identidad, Mensajes y API de Consultas)**: Creacion de /admin/anuncios/identidad (StoreSetting cl_portal_*), bandeja de gestion /admin/anuncios/mensajes (Visit aislado por tenantId), endpoint publico POST /api/store/classified-message e integracion del formulario de consulta y pie de pagina en TiendaClasificadosClient.tsx.
