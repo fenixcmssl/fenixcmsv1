@@ -546,3 +546,6 @@
 
 ## Fase 11.7.637 - 19 de Noviembre 2026
 - **Inmobiliaria (Bloque 1 - Galería Múltiple)**: Subida múltiple de fotografías a Cloudflare R2 en /admin/inmuebles/new (actions.ts y page.tsx) guardando en galleryUrls con opción de conservar o eliminar fotos al editar, y carrusel interactivo con flechas, contador y miniaturas en TiendaInmobiliariaClient.tsx.
+
+## Fase 11.7.640 - 19 de Noviembre 2026
+- **Inmobiliaria (Bloque 2 - Filtros Avanzados UE)**: Ampliacion del diccionario multidioma en RealEstateLanguageProvider.tsx (24 idiomas oficiales UE) y panel desplegable de filtros avanzados en TiendaInmobiliariaClient.tsx (pais, provincia, precio min/max, habitaciones minimas y extras).
