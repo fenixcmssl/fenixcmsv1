@@ -573,3 +573,6 @@
 
 ## Fase 11.7.664 - 19 de Noviembre 2026
 - **Anuncios Clasificados + Blog (Bloque 4 - Identidad, Mensajes y API de Consultas)**: Creacion de /admin/anuncios/identidad (StoreSetting cl_portal_*), bandeja de gestion /admin/anuncios/mensajes (Visit aislado por tenantId), endpoint publico POST /api/store/classified-message e integracion del formulario de consulta y pie de pagina en TiendaClasificadosClient.tsx.
+
+## Fase 11.7.668 - 19 de Noviembre 2026
+- **Administracion Unificada de Clientes (Multi-App Sidebar)**: Creacion de /src/app/admin/actions.ts (switchTenantAction con validacion de propiedad por email en servidor) y actualizacion de /src/app/admin/layout.tsx para mostrar el bloque Mis Aplicaciones en la barra lateral izquierda cuando un cliente tiene varias apps contratadas (E-commerce, Clasificados, Inmobiliaria, Subastas).
