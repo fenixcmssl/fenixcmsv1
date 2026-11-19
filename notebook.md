@@ -549,3 +549,6 @@
 
 ## Fase 11.7.640 - 19 de Noviembre 2026
 - **Inmobiliaria (Bloque 2 - Filtros Avanzados UE)**: Ampliacion del diccionario multidioma en RealEstateLanguageProvider.tsx (24 idiomas oficiales UE) y panel desplegable de filtros avanzados en TiendaInmobiliariaClient.tsx (pais, provincia, precio min/max, habitaciones minimas y extras).
+
+## Fase 11.7.645 - 19 de Noviembre 2026
+- **Inmobiliaria (Bloque 3 - Solicitud de Visita y Bandeja /admin/visits)**: Creacion de la API publica /api/store/real-estate-visit aislada por tenantId, ampliacion del diccionario en los 24 idiomas UE, formulario de solicitud de visita integrado en la ficha modal de TiendaInmobiliariaClient.tsx y bandeja de gestion de leads/visitas en /admin/visits (actions.ts y page.tsx).
