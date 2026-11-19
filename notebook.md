@@ -621,3 +621,6 @@
 
 ## Fase 11.7.725 - 19 de Noviembre 2026
 - **Dominio y Subdominio por Cada Producto del Carrito**: Actualizado /checkout/page.tsx para generar dinamicamente un campo de dominio y un campo de subdominio con el nombre exacto de cada plan, plugin o tema en el carrito, cada uno con su boton de comprobacion debajo.
+
+## Fase 11.7.729 - 19 de Noviembre 2026
+- **Dominio y Subdominio por Producto en Ya soy Cliente**: Actualizado el modo Ya soy Cliente en /checkout/page.tsx para asignar un dominio o subdominio por cada producto del carrito con boton Comprobar Disponibilidad debajo del campo manual.
