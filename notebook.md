@@ -555,3 +555,6 @@
 
 ## Fase 11.7.645 - 19 de Noviembre 2026
 - **Inmobiliaria (Bloque 3 - Solicitud de Visita y Bandeja /admin/visits)**: Creacion de la API publica /api/store/real-estate-visit aislada por tenantId, ampliacion del diccionario en los 24 idiomas UE, formulario de solicitud de visita integrado en la ficha modal de TiendaInmobiliariaClient.tsx y bandeja de gestion de leads/visitas en /admin/visits (actions.ts y page.tsx).
+
+## Fase 11.7.649 - 19 de Noviembre 2026
+- **Inmobiliaria (Bloque 4 - Identidad de Agencia y Pie de Pagina Propio)**: Creacion de la pantalla dedicada /admin/agencia (actions.ts y page.tsx) almacenando datos bajo claves re_agency_* en StoreSetting, enlace exclusivo en realEstateSubItems (/admin/layout.tsx), ampliacion del diccionario UE en los 24 idiomas y renderizado de pie de pagina propio y boton flotante de WhatsApp en TiendaInmobiliariaClient.tsx.
