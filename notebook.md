@@ -615,3 +615,6 @@
 
 ## Fase 11.7.719 - 19 de Noviembre 2026
 - **Fix Cierre JSX en /checkout/page.tsx**: Eliminado bloque div sobrante tras el reemplazo del carrito multi-item, recompilado Next.js y restaurado proceso fenixcms en PM2.
+
+## Fase 11.7.722 - 19 de Noviembre 2026
+- **Un Solo Dominio en Checkout**: Simplificada la seccion 1 de /checkout/page.tsx a un unico campo de dominio (domain1) y movido el boton Comprobar Disponibilidad debajo del campo.
