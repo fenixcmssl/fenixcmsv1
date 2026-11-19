@@ -636,3 +636,6 @@
 
 ## Fase 11.7.746 - 20 de Noviembre 2026
 - **Tema Exclusivo fenix subasta default**: Creado desde cero el tema estilo eBay moderno en /src/components/themes/FenixSubastaDefault/FenixSubastaDefaultTheme.tsx, conectado como tema por defecto en TiendaSubastasView.tsx y registrado en Application con status PLAN_DEFAULT y price 0 (visible solo en SuperAdmin, no en catalogo publico).
+
+## Fase 11.7.749 - 20 de Noviembre 2026
+- **Subastas Tipo eBay (Registro y Venta por Clientes)**: Creados /api/store/auction-auth y /api/store/auction-publish (aislados por tenantId), anadido estado REACONDICIONADO en auctionCategories.ts y actualizado FenixSubastaDefaultTheme.tsx con registro/login de clientes, boton Vender articulo (Nuevo, Usado, Reacondicionado, etc.), filtro por estado y pestana Mis Ventas.
