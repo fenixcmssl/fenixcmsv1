@@ -567,3 +567,6 @@
 
 ## Fase 11.7.659 - 19 de Noviembre 2026
 - **Anuncios Clasificados + Blog (Bloque 2 - Gestion de Anuncios en /admin/anuncios)**: Creacion de /admin/anuncios/actions.ts (alta con subida multiple a Cloudflare R2 via uploadBufferToR2, pausado/activado y borrado aislados por tenantId), listado de gestion en /admin/anuncios/page.tsx y formulario dedicado con selector dinamico de categorias y subcategorias en /admin/anuncios/new.
+
+## Fase 11.7.661 - 19 de Noviembre 2026
+- **Anuncios Clasificados + Blog (Bloque 3 - Portal Publico y Blog Integrado)**: Creacion de TiendaClasificadosClient.tsx (buscador, parrilla de 14 categorias, filtros avanzados por subcategoria/estado/precio/anunciante, ficha modal con carrusel de fotos y contacto directo por WhatsApp/telefono/email, y pestana de Blog con lector modal) y actualizacion de TiendaClasificadosView.tsx con carga aislada por tenantId.
