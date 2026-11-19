@@ -594,3 +594,6 @@
 
 ## Fase 11.7.688 - 19 de Noviembre 2026
 - **Red Social en SuperAdmin y Cabecera Principal**: Creacion de src/lib/superadminSocial.ts, socialActions.ts y SocialMediaForm.tsx; agregado menu Red Social debajo de Ajustes en /superadmin y renderizado de iconos con enlace a la izquierda del logotipo en SexShop/Header.tsx.
+
+## Fase 11.7.690 - 19 de Noviembre 2026
+- **Fix Turbopack fs en Redes Sociales SuperAdmin**: Separacion en superadminSocialShared.ts (cliente/servidor) y superadminSocialServer.ts (solo servidor con server-only) para compilar sin errores.
