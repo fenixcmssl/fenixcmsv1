@@ -627,3 +627,6 @@
 
 ## Fase 11.7.732 - 19 de Noviembre 2026
 - **Aprovisionamiento Multi-Producto en Backend Checkout**: Actualizados /src/app/checkout/actions.ts y /src/app/api/checkout/confirm/route.ts para procesar cartAssignments, registrar todos los dominios, subdominios, suscripciones y extensiones de cada producto del carrito bajo el mismo tenantId y aprovisionar SSL/Nginx automaticamente.
+
+## Fase 11.7.736 - 20 de Noviembre 2026
+- **Limpieza de Tenants de Prueba**: Eliminados los 2 tenants de prueba (cmwo1lgap0000jxm8c3an8b1o y cmwltnjiz0000jx8rm7b0rbz9) dejando la base de datos limpia (0 tenants, 0 subdominios) para iniciar pruebas desde cero.
