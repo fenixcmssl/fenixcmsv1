@@ -603,3 +603,6 @@
 
 ## Fase 11.7.704 - 19 de Noviembre 2026
 - **Icono Carrito en Cabecera Principal**: Anadido boton de carrito de compra en blanco a la derecha de LOGIN NEGOCIO en SexShop/Header.tsx enlazado a /checkout.
+
+## Fase 11.7.709 - 19 de Noviembre 2026
+- **Boton Naranja Anadir al carrito en Tarjetas**: Anadido boton naranja Anadir al carrito encima de Contratar Plan Ahora en FenixStorefront.tsx con guardado en localStorage (fenix_public_cart) y confirmacion visual.
