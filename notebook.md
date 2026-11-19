@@ -536,3 +536,7 @@
 - **Arquitectura Inmobiliaria**: Creación de tablas 'Visit' y 'Agent' en Prisma vinculadas por tenantId.
 - **Aislamiento Visual**: Menú lateral redirigido a /admin/inmuebles (tabla exclusiva y terminología sectorial sin SKU ni IVA).
 - **Interfaces Iniciales**: Despliegue de vistas para Visitas y Agentes para erradicar errores 404 de enrutamiento.
+
+## Fase 11.7.630 - 19 de Noviembre 2026
+- **Selector Geográfico UE**: Componente React dinámico en /admin/inmuebles/new con los 27 países de la Unión Europea y mapeo de provincias/regiones.
+- **Escaparate Público Inmobiliario**: Conexión de TiendaInmobiliariaView.tsx y TiendaInmobiliariaClient.tsx al Motor Único (ecommerceProduct filtrado por tenantId) con filtros por operación (Venta/Alquiler/Traspaso), buscador por ubicación, tarjetas con m2/habitaciones/baños/certificado energético y modal de ficha completa.
