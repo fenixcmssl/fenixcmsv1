@@ -624,3 +624,6 @@
 
 ## Fase 11.7.729 - 19 de Noviembre 2026
 - **Dominio y Subdominio por Producto en Ya soy Cliente**: Actualizado el modo Ya soy Cliente en /checkout/page.tsx para asignar un dominio o subdominio por cada producto del carrito con boton Comprobar Disponibilidad debajo del campo manual.
+
+## Fase 11.7.732 - 19 de Noviembre 2026
+- **Aprovisionamiento Multi-Producto en Backend Checkout**: Actualizados /src/app/checkout/actions.ts y /src/app/api/checkout/confirm/route.ts para procesar cartAssignments, registrar todos los dominios, subdominios, suscripciones y extensiones de cada producto del carrito bajo el mismo tenantId y aprovisionar SSL/Nginx automaticamente.
