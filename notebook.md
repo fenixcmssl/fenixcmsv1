@@ -597,3 +597,6 @@
 
 ## Fase 11.7.690 - 19 de Noviembre 2026
 - **Fix Turbopack fs en Redes Sociales SuperAdmin**: Separacion en superadminSocialShared.ts (cliente/servidor) y superadminSocialServer.ts (solo servidor con server-only) para compilar sin errores.
+
+## Fase 11.7.693 - 19 de Noviembre 2026
+- **Boton Rojo REGISTRACION CLIENTE en Cabecera**: Anadido enlace/boton rojo REGISTRACION CLIENTE a la derecha del logotipo en SexShop/Header.tsx conectado al formulario de registracion (/checkout?mode=register).
