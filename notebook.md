@@ -540,3 +540,6 @@
 ## Fase 11.7.630 - 19 de Noviembre 2026
 - **Selector Geográfico UE**: Componente React dinámico en /admin/inmuebles/new con los 27 países de la Unión Europea y mapeo de provincias/regiones.
 - **Escaparate Público Inmobiliario**: Conexión de TiendaInmobiliariaView.tsx y TiendaInmobiliariaClient.tsx al Motor Único (ecommerceProduct filtrado por tenantId) con filtros por operación (Venta/Alquiler/Traspaso), buscador por ubicación, tarjetas con m2/habitaciones/baños/certificado energético y modal de ficha completa.
+
+## Fase 11.7.633 - 19 de Noviembre 2026
+- **Motor Multidioma Exclusivo Inmobiliaria (24 Lenguas UE + Inglés)**: Creación desde cero de RealEstateLanguageProvider.tsx con las 24 lenguas oficiales de la Unión Europea, desacoplando REAL_ESTATE del antiguo StoreLanguageProvider de E-commerce en [domain]/page.tsx y conectando TiendaInmobiliariaClient.tsx.
