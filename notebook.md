@@ -612,3 +612,6 @@
 
 ## Fase 11.7.715 - 19 de Noviembre 2026
 - **Productos Separados y Eliminacion 1 a 1 en Carrito**: Actualizado /checkout/page.tsx para renderizar cada producto del carrito en su propia fila con precio individual, boton Eliminar 1 a 1 y total actualizado.
+
+## Fase 11.7.719 - 19 de Noviembre 2026
+- **Fix Cierre JSX en /checkout/page.tsx**: Eliminado bloque div sobrante tras el reemplazo del carrito multi-item, recompilado Next.js y restaurado proceso fenixcms en PM2.
