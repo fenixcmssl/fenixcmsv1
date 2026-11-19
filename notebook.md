@@ -609,3 +609,6 @@
 
 ## Fase 11.7.712 - 19 de Noviembre 2026
 - **Conexion Completa del Carrito Publico**: Creado HeaderCartButton.tsx con contador naranja en vivo en cabecera y conectado /checkout/page.tsx con fenix_public_cart para listar productos anadidos, quitar items y calcular total real.
+
+## Fase 11.7.715 - 19 de Noviembre 2026
+- **Productos Separados y Eliminacion 1 a 1 en Carrito**: Actualizado /checkout/page.tsx para renderizar cada producto del carrito en su propia fila con precio individual, boton Eliminar 1 a 1 y total actualizado.
