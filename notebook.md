@@ -630,3 +630,6 @@
 
 ## Fase 11.7.736 - 20 de Noviembre 2026
 - **Limpieza de Tenants de Prueba**: Eliminados los 2 tenants de prueba (cmwo1lgap0000jxm8c3an8b1o y cmwltnjiz0000jx8rm7b0rbz9) dejando la base de datos limpia (0 tenants, 0 subdominios) para iniciar pruebas desde cero.
+
+## Fase 11.7.740 - 20 de Noviembre 2026
+- **Instancias Tenant Independientes por Plan del Carrito**: Corregida la deteccion de moduleType por producto individual en /src/app/checkout/actions.ts y creado un Tenant aislado con su propio moduleType, subdominio y suscripcion por cada plan del carrito. Actualizado /api/checkout/confirm/route.ts para activar y emitir SSL en todas las instancias del cliente.
