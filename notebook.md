@@ -585,3 +585,6 @@
 
 ## Fase 11.7.674 - 19 de Noviembre 2026
 - **Plan Subastas Pro + Blog SEO (Bloque 2 - Portal Publico Independiente)**: Reescritura completa de TiendaSubastasClient.tsx y TiendaSubastasView.tsx desacoplados de StoreLanguageProvider, con selector de 8 idiomas, motor de busqueda avanzado (14 categorias, subcategorias, formato Subasta/Compralo Ya, precios y ordenacion), cuenta atras en vivo, pujas/compra directa en tiempo real y Blog SEO integrado.
+
+## Fase 11.7.677 - 19 de Noviembre 2026
+- **Plan Subastas Pro + Blog SEO (Bloque 3 - Cierre)**: Integracion de selector dinamico de 14 categorias, subcategorias y estado del lote en /admin/auctions, subida de imagenes y galeria a Cloudflare R2, creacion de /admin/auctions/identidad (StoreSetting au_portal_*) y enlace en el menu estanco de AUCTION.
