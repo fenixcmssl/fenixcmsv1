@@ -618,3 +618,6 @@
 
 ## Fase 11.7.722 - 19 de Noviembre 2026
 - **Un Solo Dominio en Checkout**: Simplificada la seccion 1 de /checkout/page.tsx a un unico campo de dominio (domain1) y movido el boton Comprobar Disponibilidad debajo del campo.
+
+## Fase 11.7.725 - 19 de Noviembre 2026
+- **Dominio y Subdominio por Cada Producto del Carrito**: Actualizado /checkout/page.tsx para generar dinamicamente un campo de dominio y un campo de subdominio con el nombre exacto de cada plan, plugin o tema en el carrito, cada uno con su boton de comprobacion debajo.
