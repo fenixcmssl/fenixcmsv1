@@ -588,3 +588,6 @@
 
 ## Fase 11.7.677 - 19 de Noviembre 2026
 - **Plan Subastas Pro + Blog SEO (Bloque 3 - Cierre)**: Integracion de selector dinamico de 14 categorias, subcategorias y estado del lote en /admin/auctions, subida de imagenes y galeria a Cloudflare R2, creacion de /admin/auctions/identidad (StoreSetting au_portal_*) y enlace en el menu estanco de AUCTION.
+
+## Fase 11.7.684 - 19 de Noviembre 2026
+- **Auditoria Modulo por Modulo (Cierre y Ajustes Finales)**: Verificacion completa de AUCTION, CLASSIFIEDS, REAL_ESTATE, ECOMMERCE y Nucleo Multi-Tenant; correccion del enlace Productos a /admin/products en ecommerceSubItems, enlace directo al subdominio publico activo en cabecera de /admin/layout.tsx y cabecera multi-modulo neutra en /login.
