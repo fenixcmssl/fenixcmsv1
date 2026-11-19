@@ -606,3 +606,6 @@
 
 ## Fase 11.7.709 - 19 de Noviembre 2026
 - **Boton Naranja Anadir al carrito en Tarjetas**: Anadido boton naranja Anadir al carrito encima de Contratar Plan Ahora en FenixStorefront.tsx con guardado en localStorage (fenix_public_cart) y confirmacion visual.
+
+## Fase 11.7.712 - 19 de Noviembre 2026
+- **Conexion Completa del Carrito Publico**: Creado HeaderCartButton.tsx con contador naranja en vivo en cabecera y conectado /checkout/page.tsx con fenix_public_cart para listar productos anadidos, quitar items y calcular total real.
