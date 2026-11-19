@@ -633,3 +633,6 @@
 
 ## Fase 11.7.740 - 20 de Noviembre 2026
 - **Instancias Tenant Independientes por Plan del Carrito**: Corregida la deteccion de moduleType por producto individual en /src/app/checkout/actions.ts y creado un Tenant aislado con su propio moduleType, subdominio y suscripcion por cada plan del carrito. Actualizado /api/checkout/confirm/route.ts para activar y emitir SSL en todas las instancias del cliente.
+
+## Fase 11.7.746 - 20 de Noviembre 2026
+- **Tema Exclusivo fenix subasta default**: Creado desde cero el tema estilo eBay moderno en /src/components/themes/FenixSubastaDefault/FenixSubastaDefaultTheme.tsx, conectado como tema por defecto en TiendaSubastasView.tsx y registrado en Application con status PLAN_DEFAULT y price 0 (visible solo en SuperAdmin, no en catalogo publico).
