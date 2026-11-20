@@ -648,3 +648,6 @@
 
 ## Fase 11.7.764 - 20 de Noviembre 2026
 - **Fix Build Anuncios Clasificados**: Restaurados los exports ITEM_CONDITIONS y SELLER_TYPES en /src/lib/classifiedsCategories.ts requeridos por ClassifiedAdFormClient.tsx. Recompilado Next.js y recuperado servicio PM2 fenixcms (online).
+
+## Fase 11.7.783 - 20 de Noviembre 2026
+- **Aislamiento de tienda.fenixcms.es (ECOMMERCE)**: Creado Tenant independiente con moduleType ECOMMERCE y reasignado tienda.fenixcms.es en TenantDomain (antes compartia tenantId CLASSIFIEDS con anuncios.fenixcms.es). Reiniciado PM2 para limpiar cache de resolver.ts.
