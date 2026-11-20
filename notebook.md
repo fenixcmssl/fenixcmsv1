@@ -654,3 +654,6 @@
 
 ## Fase 11.7.792 - 20 de Noviembre 2026
 - **Importador Exclusivo de Inmuebles (/admin/inmuebles/importar)**: Creado importador masivo exclusivo para moduleType REAL_ESTATE (no plugin, integrado directamente en el menu Inmobiliaria debajo de Identidad de Agencia) con plantilla CSV descargable de todos los campos de la ficha de inmuebles, vista previa y API /api/admin/inmuebles/import con soporte de actualizacion por referencia SKU.
+
+## Fase 11.7.809 - 20 de Noviembre 2026
+- **Blindaje Global Cloudflare R2 + Deduplicacion**: Corregido R2_ENDPOINT en /var/www/fenixcms/.env. Anadido existsInR2 (HeadObjectCommand) en /src/lib/s3.ts y deduplicacion compartida en /src/lib/localProductImageMirror.ts (shared/suppliers/) para que varios clientes importando Dreamlove compartan una sola copia en R2. Migrados /api/store/classified-upload y /api/store/auction-upload a Cloudflare R2.
