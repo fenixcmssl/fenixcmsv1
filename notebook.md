@@ -669,3 +669,6 @@
 
 ## Fase 11.7.830 - 20 de Noviembre 2026
 - **SuperAdmin Licencias Reales**: Sustituidos los mocks temporales de Licencias, Activaciones y Suscripciones en /src/app/superadmin/page.tsx por datos reales extraidos en tiempo real de PostgreSQL (tenants, plans y tenantDomains).
+
+## Fase 11.7.833 - 20 de Noviembre 2026
+- **SuperAdmin Pagos y Facturas Reales**: Conectadas las pestanas Pagos (payments) y Facturas (invoices) en /src/app/superadmin/page.tsx directamente a los registros reales de PostgreSQL (tenants y plans) con referencias PAY-XXXX y numeracion FAC-YYYY-XXXX.
