@@ -663,3 +663,6 @@
 
 ## Fase 11.7.823 - 20 de Noviembre 2026
 - **Bloque 2 E-Commerce (Puntos 1 y 2)**: Creada ficha de producto dedicada estilo Amazon (/src/components/tienda/EcommerceProductDetailView.tsx) y rutas SEO limpias globales /[domain]/[category]/page.tsx y /[domain]/[category]/[product]/page.tsx para todas las tiendas E-Commerce. Corregido import de StoreLanguageProvider, compilado en verde y reiniciado PM2.
+
+## Fase 11.7.826 - 20 de Noviembre 2026
+- **Bloque 3 E-Commerce (Puntos 3 y 4 + Enlaces SEO)**: Anadido boton global Registro / Entrar en tu cuenta junto al selector de idiomas en StoreLanguageProvider.tsx con modal de acceso/registro conectado a /api/store/customer. Integrada opcion de Entrar o Crear cuenta en el checkout del carrito y enlazadas las tarjetas de producto a URL limpia /categoria/producto.
