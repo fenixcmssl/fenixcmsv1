@@ -675,3 +675,6 @@
 
 ## Fase 11.7.836 - 20 de Noviembre 2026
 - **SuperAdmin Gestion de Dominios Agrupada**: Agrupados los dominios y subdominios por cliente (nombre y email) en /src/app/superadmin/page.tsx con desplegable interactivo (<details>) mostrando todos los dominios/subdominios de cada cliente con enlace directo y etiqueta de tipo.
+
+## Fase 11.7.839 - 20 de Noviembre 2026
+- **SuperAdmin Agrupacion Global por Cliente**: Agrupadas por cliente (nombre y email) con desplegable interactivo (<details>) las 7 secciones de SuperAdmin: Licencias, Activaciones, Suscripciones, Pagos, Facturas, Tenants (manteniendo Dreamlove Gratis y Soporte RGPD por servicio) y Usuarios.
