@@ -639,3 +639,6 @@
 
 ## Fase 11.7.749 - 20 de Noviembre 2026
 - **Subastas Tipo eBay (Registro y Venta por Clientes)**: Creados /api/store/auction-auth y /api/store/auction-publish (aislados por tenantId), anadido estado REACONDICIONADO en auctionCategories.ts y actualizado FenixSubastaDefaultTheme.tsx con registro/login de clientes, boton Vender articulo (Nuevo, Usado, Reacondicionado, etc.), filtro por estado y pestana Mis Ventas.
+
+## Fase 11.7.752 - 20 de Noviembre 2026
+- **Subastas: Subida Multiple de Fotos y Subcategorias tipo eBay**: Creado /api/store/auction-upload (hasta 8 fotos aisladas por tenantId), actualizado /api/store/auction-publish para guardar galleryUrls y subcategory, y mejorado FenixSubastaDefaultTheme.tsx con selector de archivos multiple desde ordenador, vista previa/galeria interactiva y filtro dinamico de subcategorias.
