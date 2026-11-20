@@ -660,3 +660,6 @@
 
 ## Fase 11.7.818 - 20 de Noviembre 2026
 - **Bloque 1 E-Commerce (Puntos 5 y 6)**: Creado /src/lib/categoryTranslations.ts con traduccion multi-idioma (ES, EN, IT, FR, DE, PT) y slugifyClean SEO para todas las tiendas E-Commerce. Actualizado /src/app/api/dreamlove/import-batch/route.ts para importar categorias padre y subcategorias hijas traducidas al idioma principal con slugs limpios.
+
+## Fase 11.7.823 - 20 de Noviembre 2026
+- **Bloque 2 E-Commerce (Puntos 1 y 2)**: Creada ficha de producto dedicada estilo Amazon (/src/components/tienda/EcommerceProductDetailView.tsx) y rutas SEO limpias globales /[domain]/[category]/page.tsx y /[domain]/[category]/[product]/page.tsx para todas las tiendas E-Commerce. Corregido import de StoreLanguageProvider, compilado en verde y reiniciado PM2.
