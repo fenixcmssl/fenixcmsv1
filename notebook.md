@@ -645,3 +645,6 @@
 
 ## Fase 11.7.755 - 20 de Noviembre 2026
 - **Vaciado Automatico del Carrito tras Compra**: Actualizado /src/app/checkout/pay/page.tsx para eliminar fenix_public_cart de localStorage y notificar el cambio al confirmarse el pago antes de redirigir a /admin.
+
+## Fase 11.7.764 - 20 de Noviembre 2026
+- **Fix Build Anuncios Clasificados**: Restaurados los exports ITEM_CONDITIONS y SELLER_TYPES en /src/lib/classifiedsCategories.ts requeridos por ClassifiedAdFormClient.tsx. Recompilado Next.js y recuperado servicio PM2 fenixcms (online).
