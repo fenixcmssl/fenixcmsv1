@@ -672,3 +672,6 @@
 
 ## Fase 11.7.833 - 20 de Noviembre 2026
 - **SuperAdmin Pagos y Facturas Reales**: Conectadas las pestanas Pagos (payments) y Facturas (invoices) en /src/app/superadmin/page.tsx directamente a los registros reales de PostgreSQL (tenants y plans) con referencias PAY-XXXX y numeracion FAC-YYYY-XXXX.
+
+## Fase 11.7.836 - 20 de Noviembre 2026
+- **SuperAdmin Gestion de Dominios Agrupada**: Agrupados los dominios y subdominios por cliente (nombre y email) en /src/app/superadmin/page.tsx con desplegable interactivo (<details>) mostrando todos los dominios/subdominios de cada cliente con enlace directo y etiqueta de tipo.
