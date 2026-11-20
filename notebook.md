@@ -651,3 +651,6 @@
 
 ## Fase 11.7.783 - 20 de Noviembre 2026
 - **Aislamiento de tienda.fenixcms.es (ECOMMERCE)**: Creado Tenant independiente con moduleType ECOMMERCE y reasignado tienda.fenixcms.es en TenantDomain (antes compartia tenantId CLASSIFIEDS con anuncios.fenixcms.es). Reiniciado PM2 para limpiar cache de resolver.ts.
+
+## Fase 11.7.792 - 20 de Noviembre 2026
+- **Importador Exclusivo de Inmuebles (/admin/inmuebles/importar)**: Creado importador masivo exclusivo para moduleType REAL_ESTATE (no plugin, integrado directamente en el menu Inmobiliaria debajo de Identidad de Agencia) con plantilla CSV descargable de todos los campos de la ficha de inmuebles, vista previa y API /api/admin/inmuebles/import con soporte de actualizacion por referencia SKU.
