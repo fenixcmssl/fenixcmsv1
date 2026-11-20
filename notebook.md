@@ -642,3 +642,6 @@
 
 ## Fase 11.7.752 - 20 de Noviembre 2026
 - **Subastas: Subida Multiple de Fotos y Subcategorias tipo eBay**: Creado /api/store/auction-upload (hasta 8 fotos aisladas por tenantId), actualizado /api/store/auction-publish para guardar galleryUrls y subcategory, y mejorado FenixSubastaDefaultTheme.tsx con selector de archivos multiple desde ordenador, vista previa/galeria interactiva y filtro dinamico de subcategorias.
+
+## Fase 11.7.755 - 20 de Noviembre 2026
+- **Vaciado Automatico del Carrito tras Compra**: Actualizado /src/app/checkout/pay/page.tsx para eliminar fenix_public_cart de localStorage y notificar el cambio al confirmarse el pago antes de redirigir a /admin.
