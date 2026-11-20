@@ -678,3 +678,6 @@
 
 ## Fase 11.7.839 - 20 de Noviembre 2026
 - **SuperAdmin Agrupacion Global por Cliente**: Agrupadas por cliente (nombre y email) con desplegable interactivo (<details>) las 7 secciones de SuperAdmin: Licencias, Activaciones, Suscripciones, Pagos, Facturas, Tenants (manteniendo Dreamlove Gratis y Soporte RGPD por servicio) y Usuarios.
+
+## Fase 11.7.843 - 20 de Noviembre 2026
+- **Pagina Global Mi Cuenta (/mi-cuenta) para todos los E-Commerce**: Creada ruta /src/app/[domain]/mi-cuenta/page.tsx y componente EcommerceAccountPage.tsx con panel de 9 tarjetas estilo Amazon y diseno E-Commerce FenixCMS (Mis pedidos reales desde PostgreSQL, Seguridad, Direcciones, Cuenta de empresa IVA, Pagos, Cupones, Mensajeria, Listas y Contactanos). Enlazado boton superior global a /mi-cuenta y anadido action=update en /api/store/customer.
