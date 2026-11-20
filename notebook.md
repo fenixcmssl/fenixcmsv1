@@ -657,3 +657,6 @@
 
 ## Fase 11.7.809 - 20 de Noviembre 2026
 - **Blindaje Global Cloudflare R2 + Deduplicacion**: Corregido R2_ENDPOINT en /var/www/fenixcms/.env. Anadido existsInR2 (HeadObjectCommand) en /src/lib/s3.ts y deduplicacion compartida en /src/lib/localProductImageMirror.ts (shared/suppliers/) para que varios clientes importando Dreamlove compartan una sola copia en R2. Migrados /api/store/classified-upload y /api/store/auction-upload a Cloudflare R2.
+
+## Fase 11.7.818 - 20 de Noviembre 2026
+- **Bloque 1 E-Commerce (Puntos 5 y 6)**: Creado /src/lib/categoryTranslations.ts con traduccion multi-idioma (ES, EN, IT, FR, DE, PT) y slugifyClean SEO para todas las tiendas E-Commerce. Actualizado /src/app/api/dreamlove/import-batch/route.ts para importar categorias padre y subcategorias hijas traducidas al idioma principal con slugs limpios.
