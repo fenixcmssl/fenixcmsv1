@@ -687,3 +687,6 @@
 
 ## Fase 11.7.859 - 21 de Noviembre 2026
 - **Checkout y Cuenta con Contrasena y Direccion Completa**: Anadido campo Contrasena justo despues de Correo electronico y campos Codigo postal, Provincia y Pais en el formulario de checkout (FenixEcommerceDefaultTheme.tsx) y en /mi-cuenta (EcommerceAccountPage.tsx), con hash SHA-256 y guardado completo en /api/store/customer y /api/store/checkout.
+
+## Fase 11.7.864 - 21 de Noviembre 2026
+- **Correccion de Carrito en Ficha de Producto y ?openCart=1**: Unificada la clave de carrito en fenix_ecom_cart_{tenantId} entre ficha de producto, cabecera global y tienda principal, corregida la suma exacta de cantidad al anadir y habilitada la apertura automatica del carrito con /?openCart=1.
