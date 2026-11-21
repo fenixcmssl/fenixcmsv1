@@ -711,3 +711,6 @@
 
 ## Fase 11.7.990 - 21 de Noviembre 2026
 - **Plugin Marca de Agua Automatica (UI Admin + Conexion Tienda)**: Anadida tarjeta de configuracion en /admin/plugins/page.tsx (activar/desactivar, posicion, opacidad, tamano y deteccion automatica del logo activo). Conectados TiendaEcommerceView.tsx y EcommerceProductDetailView.tsx para servir las imagenes de productos via /api/watermark/[tenantId]/ cuando el plugin esta activo.
+
+## Fase 11.7.1001 - 21 de Noviembre 2026
+- **Fix Marca de Agua en Portada (TiendaEcommerceView.tsx)**: Anadida consulta directa a storeSetting (watermark_enabled = YES) por tenantId en TiendaEcommerceView.tsx para garantizar que todas las imagenes de productos en la portada y categorias pasen por /api/watermark/[tenantId]/ aunque getTenantByDomain no incluya storeSettings.
