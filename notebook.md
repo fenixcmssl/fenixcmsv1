@@ -699,3 +699,6 @@
 
 ## Fase 11.7.924 - 21 de Noviembre 2026
 - **Optimizacion de Velocidad en Ficha de Producto**: Sustituido findMany completo del catalogo en /src/app/[domain]/[category]/[product]/page.tsx por busqueda directa findFirst por slug/id vinculada a tenantId, fallback ligero solo de id/name y consulta dedicada take: 6 para productos relacionados.
+
+## Fase 11.7.951 - 21 de Noviembre 2026
+- **Boton Rojo Cerrar Cuenta en Cabecera E-Commerce**: Anadido boton rojo 'Cerrar cuenta' justo despues del boton verde 'Cuenta de ...' en /src/components/tienda/StoreLanguageProvider.tsx (visible solo con sesion iniciada), cerrando sesion en /api/store/customer, limpiando localStorage y redirigiendo a la portada.
