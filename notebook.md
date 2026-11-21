@@ -702,3 +702,6 @@
 
 ## Fase 11.7.951 - 21 de Noviembre 2026
 - **Boton Rojo Cerrar Cuenta en Cabecera E-Commerce**: Anadido boton rojo 'Cerrar cuenta' justo despues del boton verde 'Cuenta de ...' en /src/components/tienda/StoreLanguageProvider.tsx (visible solo con sesion iniciada), cerrando sesion en /api/store/customer, limpiando localStorage y redirigiendo a la portada.
+
+## Fase 11.7.969 - 21 de Noviembre 2026
+- **Alojamiento de Imagenes 100% VPS (Sin Cloudflare R2)**: Creado enlace simbolico /var/www/fenixcms_storage/uploads/shared/suppliers hacia _shared_supplier_cache para entrega directa desde Nginx. Reescrito localProductImageMirror.ts y /api/uploads/[...path]/route.ts para guardar y servir imagenes en disco local del VPS. Migradas las 990 URLs de productos del tenant cmwo6qyxl000fjxyla4hh57sh de cdn.fenixcms.es a /uploads/.
