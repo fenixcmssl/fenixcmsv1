@@ -681,3 +681,6 @@
 
 ## Fase 11.7.843 - 20 de Noviembre 2026
 - **Pagina Global Mi Cuenta (/mi-cuenta) para todos los E-Commerce**: Creada ruta /src/app/[domain]/mi-cuenta/page.tsx y componente EcommerceAccountPage.tsx con panel de 9 tarjetas estilo Amazon y diseno E-Commerce FenixCMS (Mis pedidos reales desde PostgreSQL, Seguridad, Direcciones, Cuenta de empresa IVA, Pagos, Cupones, Mensajeria, Listas y Contactanos). Enlazado boton superior global a /mi-cuenta y anadido action=update en /api/store/customer.
+
+## Fase 11.7.854 - 21 de Noviembre 2026
+- **Cabecera Fija Completa Global (GlobalEcommerceHeader)**: Creado componente /src/components/tienda/GlobalEcommerceHeader.tsx con la cabecera completa estilo Amazon (nombre limpio, logo, buscador con categorias, carrito en vivo y barra secundaria de categorias) y conectado en ficha de producto (EcommerceProductDetailView.tsx) y /mi-cuenta (EcommerceAccountPage.tsx).
