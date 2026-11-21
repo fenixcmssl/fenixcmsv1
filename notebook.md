@@ -693,3 +693,6 @@
 
 ## Fase 11.7.880 - 21 de Noviembre 2026
 - **Boton Superior de Cuenta Dinamico**: Actualizada la barra superior en StoreLanguageProvider.tsx para cambiar el boton naranja 'Registro / Entrar en tu cuenta' a verde con el texto 'Cuenta de [Nombre del cliente]' al iniciar sesion, sincronizado en tiempo real con login, logout y edicion de perfil en EcommerceAccountPage.tsx.
+
+## Fase 11.7.908 - 21 de Noviembre 2026
+- **Importador Dreamlove Multi-Idioma y Desplegables por Variable**: Creado /src/lib/variationTranslator.ts para eliminar la marca antes del primer '-' (moviendola a la descripcion) y extraer Color, Talla (simples y dobles como S/M, L/XL), Medida y Numero en todos los idiomas del catalogo; actualizado fetch-feed/route.ts (corrigiendo bloque huerfano de la funcion anterior) y EcommerceProductDetailView.tsx para mostrar un desplegable independiente por cada variable traducido al idioma activo de la tienda con stock por variacion.
