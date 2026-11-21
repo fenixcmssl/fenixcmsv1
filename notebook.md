@@ -708,3 +708,6 @@
 
 ## Fase 11.7.987 - 21 de Noviembre 2026
 - **Plugin Marca de Agua Automatica (Backend + Motor sharp)**: Instalado sharp. Creado /src/lib/watermarkEngine.ts que incrusta automaticamente el logo activo del cliente (tenant.logoUrl) sobre las fotos de productos con cache aislada por tenantId (/uploads/tenants/{tenantId}/watermarked/). Creada ruta /api/watermark/[tenantId]/[...path]/route.ts y accion handleSaveWatermarkPluginSettings en /admin/plugins/actions.ts.
+
+## Fase 11.7.990 - 21 de Noviembre 2026
+- **Plugin Marca de Agua Automatica (UI Admin + Conexion Tienda)**: Anadida tarjeta de configuracion en /admin/plugins/page.tsx (activar/desactivar, posicion, opacidad, tamano y deteccion automatica del logo activo). Conectados TiendaEcommerceView.tsx y EcommerceProductDetailView.tsx para servir las imagenes de productos via /api/watermark/[tenantId]/ cuando el plugin esta activo.
