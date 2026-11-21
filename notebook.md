@@ -705,3 +705,6 @@
 
 ## Fase 11.7.969 - 21 de Noviembre 2026
 - **Alojamiento de Imagenes 100% VPS (Sin Cloudflare R2)**: Creado enlace simbolico /var/www/fenixcms_storage/uploads/shared/suppliers hacia _shared_supplier_cache para entrega directa desde Nginx. Reescrito localProductImageMirror.ts y /api/uploads/[...path]/route.ts para guardar y servir imagenes en disco local del VPS. Migradas las 990 URLs de productos del tenant cmwo6qyxl000fjxyla4hh57sh de cdn.fenixcms.es a /uploads/.
+
+## Fase 11.7.987 - 21 de Noviembre 2026
+- **Plugin Marca de Agua Automatica (Backend + Motor sharp)**: Instalado sharp. Creado /src/lib/watermarkEngine.ts que incrusta automaticamente el logo activo del cliente (tenant.logoUrl) sobre las fotos de productos con cache aislada por tenantId (/uploads/tenants/{tenantId}/watermarked/). Creada ruta /api/watermark/[tenantId]/[...path]/route.ts y accion handleSaveWatermarkPluginSettings en /admin/plugins/actions.ts.
