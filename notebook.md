@@ -690,3 +690,6 @@
 
 ## Fase 11.7.864 - 21 de Noviembre 2026
 - **Correccion de Carrito en Ficha de Producto y ?openCart=1**: Unificada la clave de carrito en fenix_ecom_cart_{tenantId} entre ficha de producto, cabecera global y tienda principal, corregida la suma exacta de cantidad al anadir y habilitada la apertura automatica del carrito con /?openCart=1.
+
+## Fase 11.7.880 - 21 de Noviembre 2026
+- **Boton Superior de Cuenta Dinamico**: Actualizada la barra superior en StoreLanguageProvider.tsx para cambiar el boton naranja 'Registro / Entrar en tu cuenta' a verde con el texto 'Cuenta de [Nombre del cliente]' al iniciar sesion, sincronizado en tiempo real con login, logout y edicion de perfil en EcommerceAccountPage.tsx.
