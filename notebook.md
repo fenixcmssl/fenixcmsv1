@@ -696,3 +696,6 @@
 
 ## Fase 11.7.908 - 21 de Noviembre 2026
 - **Importador Dreamlove Multi-Idioma y Desplegables por Variable**: Creado /src/lib/variationTranslator.ts para eliminar la marca antes del primer '-' (moviendola a la descripcion) y extraer Color, Talla (simples y dobles como S/M, L/XL), Medida y Numero en todos los idiomas del catalogo; actualizado fetch-feed/route.ts (corrigiendo bloque huerfano de la funcion anterior) y EcommerceProductDetailView.tsx para mostrar un desplegable independiente por cada variable traducido al idioma activo de la tienda con stock por variacion.
+
+## Fase 11.7.924 - 21 de Noviembre 2026
+- **Optimizacion de Velocidad en Ficha de Producto**: Sustituido findMany completo del catalogo en /src/app/[domain]/[category]/[product]/page.tsx por busqueda directa findFirst por slug/id vinculada a tenantId, fallback ligero solo de id/name y consulta dedicada take: 6 para productos relacionados.
