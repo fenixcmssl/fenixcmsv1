@@ -684,3 +684,6 @@
 
 ## Fase 11.7.854 - 21 de Noviembre 2026
 - **Cabecera Fija Completa Global (GlobalEcommerceHeader)**: Creado componente /src/components/tienda/GlobalEcommerceHeader.tsx con la cabecera completa estilo Amazon (nombre limpio, logo, buscador con categorias, carrito en vivo y barra secundaria de categorias) y conectado en ficha de producto (EcommerceProductDetailView.tsx) y /mi-cuenta (EcommerceAccountPage.tsx).
+
+## Fase 11.7.859 - 21 de Noviembre 2026
+- **Checkout y Cuenta con Contrasena y Direccion Completa**: Anadido campo Contrasena justo despues de Correo electronico y campos Codigo postal, Provincia y Pais en el formulario de checkout (FenixEcommerceDefaultTheme.tsx) y en /mi-cuenta (EcommerceAccountPage.tsx), con hash SHA-256 y guardado completo en /api/store/customer y /api/store/checkout.
