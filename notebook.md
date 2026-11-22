@@ -714,3 +714,6 @@
 
 ## Fase 11.7.1001 - 21 de Noviembre 2026
 - **Fix Marca de Agua en Portada (TiendaEcommerceView.tsx)**: Anadida consulta directa a storeSetting (watermark_enabled = YES) por tenantId en TiendaEcommerceView.tsx para garantizar que todas las imagenes de productos en la portada y categorias pasen por /api/watermark/[tenantId]/ aunque getTenantByDomain no incluya storeSettings.
+
+## Fase 11.7.1046 - 22 de Noviembre 2026
+- **Blindaje de Importacion de Productos (import-batch)**: Integrada la lectura automatica de respaldo de dreamlove_custom_category_names desde PostgreSQL (StoreSetting, aislado por tenantId) en /api/dreamlove/import-batch/route.ts para garantizar que todos los productos se enlacen siempre a las categorias personalizadas correctas.
