@@ -717,3 +717,6 @@
 
 ## Fase 11.7.1046 - 22 de Noviembre 2026
 - **Blindaje de Importacion de Productos (import-batch)**: Integrada la lectura automatica de respaldo de dreamlove_custom_category_names desde PostgreSQL (StoreSetting, aislado por tenantId) en /api/dreamlove/import-batch/route.ts para garantizar que todos los productos se enlacen siempre a las categorias personalizadas correctas.
+
+## Fase 11.7.1058 - 22 de Noviembre 2026
+- **Guardado de Seguridad del Proyecto**: Respaldo de estado actual tras estabilizar traducciones multi-idioma (6 idiomas) y respaldo de nombres de categorias personalizadas en import-batch.
